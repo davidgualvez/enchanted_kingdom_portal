@@ -38,25 +38,57 @@
 	  	        Enchanted Kingdom
 	  	      </div>
 	  	    </h2>
-	  	    <form class="ui large form">
+	  	    <form class="ui large form" action="/login" method="post">
+	  	    	@csrf
 	  	      <div class="ui stacked segment">
 	  	        <div class="field">
 	  	          <div class="ui left icon input">
 	  	            <i class="user icon"></i>
-	  	            <input type="text" name="mobile_number" placeholder="Mobile Number">
+	  	            <input type="text" name="mobile_number" placeholder="Mobile Number" required>
 	  	          </div>
 	  	        </div>
 	  	        <div class="field">
 	  	          <div class="ui left icon input">
 	  	            <i class="lock icon"></i>
-	  	            <input type="password" name="password" placeholder="Password">
+	  	            <input type="password" name="password" placeholder="Password" required>
 	  	          </div>
 	  	        </div>
-	  	        <div class="ui fluid large teal submit button">Login</div>
-	  	      </div>
-
-	  	      <div class="ui error message"></div>
-
+	  	        <button type="submit" class="ui fluid large teal submit button">Login</button> 
+	  	        @if (count($errors) > 0)
+		  	        <div class="ui error message">
+		  	          <i class="close icon"></i>
+		  	          <div class="header">
+		  	            Something went wrong
+		  	          </div>
+		  	          <ul class="list">
+		  	          	@foreach ($errors->all() as $error)
+		  	          	    <li>{{ $error }}</li>
+		  	          	@endforeach 
+		  	        </div>
+	  	            <!-- <div class="alert alert-danger">
+	  	                <ul>
+	  	                    @foreach ($errors->all() as $error)
+	  	                        <li>{{ $error }}</li>
+	  	                    @endforeach
+	  	                </ul>
+	  	            </div> -->
+	  	        @endif
+	  	        @if (session('error'))
+	  	        	<div class="ui error message"> 
+	  	        	  <ul class="list"> 
+	  	        	  	    <li>{{ session('error') }}</li> 
+	  	        	  </ul>
+	  	        	</div>
+	  	            <div class="alert alert-danger">
+	  	                {{ session('error') }}
+	  	            </div>
+	  	        @endif 
+	  	        <div class="ui error message"> 
+	  	        	  <ul class="list"> 
+	  	        	  	    <li>test</li> 
+	  	        	  </ul>
+	  	        </div>
+	  	      </div>  
 	  	    </form>
 
 	  	    <div class="ui message">
