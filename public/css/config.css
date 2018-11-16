@@ -1,0 +1,15 @@
+@media only screen and (max-width: 767px ){
+	#desktop-nav{
+		display: none;
+	}
+}
+
+@media only screen and (min-width: 768px ){
+	#mobile-nav{
+		display: none;
+	}
+}
+
+/*#main{
+	margin-top: 20px;
+}*/
