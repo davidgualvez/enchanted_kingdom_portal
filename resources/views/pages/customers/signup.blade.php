@@ -60,7 +60,7 @@
 	  	      	  		<div class="header text-left">
 	  	      	    		Something went wrong..
 	  	      	  		</div>
-	  	      	  		<p>{{ session('error') }}</p>
+	  	      	  		<p class=" text-left">{{ session('error') }}</p>
 	  	      		</div> 
                 @endif 
 	  	      	<div class="field">
