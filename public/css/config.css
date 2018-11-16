@@ -13,3 +13,19 @@
 /*#main{
 	margin-top: 20px;
 }*/
+
+/*Basic Layout*/
+.box{
+	border: 1px solid gray;
+}
+
+.text-right{
+	text-align: right;
+}
+.text-left{
+	text-align: left;
+}
+
+.g-padding{
+	padding:5px;
+}

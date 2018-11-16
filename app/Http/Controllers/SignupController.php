@@ -36,7 +36,7 @@ class SignupController extends Controller
         $mobile = str_replace('-','',$request->mobile_number);
         $c_mobile = User::findByMobile($mobile);
         if($c_mobile){
-            return redirect()->back()->with('error', 'Mobile number already in used.')->withInput();
+            return back()->withInput()->with('error', 'Mobile number already in used.');
         } 
 
         $user = new User;

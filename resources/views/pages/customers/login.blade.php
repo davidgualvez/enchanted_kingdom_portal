@@ -28,10 +28,10 @@
 	</style>
 </head>
 <body> 
-
+	<!-- <div class="ui container" style="padding-top: 25px;"> -->
 	  	<!-- CONTENT -->
-	  	<div class="ui middle aligned center aligned grid">
-	  	  <div class="column">
+	  	<div class="ui middle aligned center aligned grid ">
+	  	  <div class="column g-padding">
 	  	    <h2 class="ui teal image header">
 	  	      <img src="assets/images/cropped-EK-Fav2018-192x192.png" class="image">
 	  	      <div class="content">
@@ -40,54 +40,45 @@
 	  	    </h2>
 	  	    <form class="ui large form" action="/login" method="post">
 	  	    	@csrf
-	  	      <div class="ui stacked segment">
-	  	        <div class="field">
-	  	          <div class="ui left icon input">
-	  	            <i class="user icon"></i>
-	  	            <input type="text" name="mobile_number" placeholder="Mobile Number" required>
-	  	          </div>
+	  	      <div class="ui stacked segment"> 
+	  	      	@if (count($errors) > 0)
+	  	      	<div class="ui message">
+  		  	      	<i class="close icon"></i>
+  			  	    <div class="header text-left">
+  			  	      	Something went wrong..
+  			  	    </div>
+  		  	      	<ul class="list">
+  		  	      		@foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach 
+  		  	      	</ul>
+  		  	    </div>
+	  	      	@endif
+	  	      	@if (session('error'))
+	  	      		<div class="ui message">
+	  	      			<i class="close icon"></i>
+	  	      	  		<div class="header text-left">
+	  	      	    		Something went wrong..
+	  	      	  		</div>
+	  	      	  		<p>{{ session('error') }}</p>
+	  	      		</div> 
+                @endif 
+
+	  	        <div class="field" >
+	  	        	<label class="" style="text-align: left;">Mobile number</label>
+	  	          	<div class="ui left icon input">
+	  	            	<i class="user icon"></i>
+	  	            	<input type="text" name="mobile_number" placeholder="ex. 09xx-xxxx-xxx" value="{{ old('mobile_number') }}">
+	  	          	</div>
 	  	        </div>
 	  	        <div class="field">
-	  	          <div class="ui left icon input">
-	  	            <i class="lock icon"></i>
-	  	            <input type="password" name="password" placeholder="Password" required>
-	  	          </div>
+	  	        	<label class="" style="text-align: left;">Password</label>
+	  	          	<div class="ui left icon input">
+	  	            	<i class="lock icon"></i>
+	  	            	<input type="password" name="password" placeholder="Password" value="{{ old('password') }}">
+	  	          	</div>
 	  	        </div>
-	  	        <button type="submit" class="ui fluid large teal submit button">Login</button> 
-	  	        @if (count($errors) > 0)
-		  	        <div class="ui error message">
-		  	          <i class="close icon"></i>
-		  	          <div class="header">
-		  	            Something went wrong
-		  	          </div>
-		  	          <ul class="list">
-		  	          	@foreach ($errors->all() as $error)
-		  	          	    <li>{{ $error }}</li>
-		  	          	@endforeach 
-		  	        </div>
-	  	            <!-- <div class="alert alert-danger">
-	  	                <ul>
-	  	                    @foreach ($errors->all() as $error)
-	  	                        <li>{{ $error }}</li>
-	  	                    @endforeach
-	  	                </ul>
-	  	            </div> -->
-	  	        @endif
-	  	        @if (session('error'))
-	  	        	<div class="ui error message"> 
-	  	        	  <ul class="list"> 
-	  	        	  	    <li>{{ session('error') }}</li> 
-	  	        	  </ul>
-	  	        	</div>
-	  	            <div class="alert alert-danger">
-	  	                {{ session('error') }}
-	  	            </div>
-	  	        @endif 
-	  	        <div class="ui error message"> 
-	  	        	  <ul class="list"> 
-	  	        	  	    <li>test</li> 
-	  	        	  </ul>
-	  	        </div>
+	  	        <button type="submit" class="ui fluid large teal submit button">Login</button>   
 	  	      </div>  
 	  	    </form>
 
@@ -97,14 +88,19 @@
 	  	  </div>
 	  	</div>
 	 	<!-- END CONTENT -->
-	
+	<!-- </div> -->
 	<!-- JS -->
 	<script src="/js/app.js"></script>
 	<script src="/dist/semantic.min.js"></script>
 	<script src="/js/config.js"></script>
 	<!-- CUSTOM JS -->
 	<script>
-		
+		$('.message .close')
+		  .on('click', function() {
+		    $(this)
+		      .closest('.message')
+		      .transition('fade');
+		  });
 	</script>
 </body>
 </html> 
