@@ -1,1 +1,1 @@
-@extends('layouts.customers.main')
+@extends('layouts.playground.main')

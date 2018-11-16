@@ -13,7 +13,7 @@
 
 //TEST GROUND
 Route::get('/default', function(){
-	return view('pages.customers.default');
+	return view('pages.playground.default');
 });
 //END
 

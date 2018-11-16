@@ -19,17 +19,17 @@ class SignupController extends Controller
             'name'              => 'required',
             'email'             => 'required',
             'mobile_number'     => 'required', 
-            'password'          => 'required'
+            'password'          => 'required|min:6'
         ];
         $result = Validator::make($data,$rules);
         if($result->fails()){
-             return redirect()->back()->withErrors($result)->withInput();
+             return back()->withInput()->withErrors($result);
         }
 
         //check email
         $c_email = User::findByEmail($request->email);
         if($c_email){
-            return redirect()->back()->with('error', 'Email already in used.')->withInput();
+            return  back()->withInput()->with('error', 'Email already in used.');
         }
 
         //check mobile_number

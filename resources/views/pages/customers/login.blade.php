@@ -42,7 +42,7 @@
 	  	    	@csrf
 	  	      <div class="ui stacked segment"> 
 	  	      	@if (count($errors) > 0)
-	  	      	<div class="ui error message">
+	  	      	<div class="ui message">
   		  	      	<i class="close icon"></i>
   			  	    <div class="header text-left">
   			  	      	Something went wrong..

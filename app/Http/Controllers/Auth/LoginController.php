@@ -113,7 +113,7 @@ class LoginController extends Controller
         $data = $request->only('mobile_number','password');
         $rules = [ 
             'mobile_number'     => 'required', 
-            'password'          => 'required',
+            'password'          => 'required|min:6',
         ];
         $result = Validator::make($data,$rules);
         if($result->fails()){

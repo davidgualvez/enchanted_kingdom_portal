@@ -5,10 +5,40 @@
 	    <img src="/assets/images/cropped-EK-Fav2018-32x32.png" style="width: 32px; height: 32px;">
 	  </a>
 	  <!-- <div class="header item">Admin</div> -->
-	  <div class="right menu"> 
-        <a href="/logout" class="ui item">
-          Logout
-        </a>  
+	  <div class="right menu">  
+        @auth  
+          	<div class="ui right dropdown item">
+	    	    {{ \Auth::user()->name }}
+	    	    <i class="dropdown icon"></i>
+	    	    <div class="menu">
+	    	      <div class="item">
+		    	      	<div class="ui left labeled button" tabindex="0">
+		    	      	  <a class="ui basic right pointing label">
+		    	      	    {{ \Auth::user()->customer->wallet }}
+		    	      	  </a>
+		    	      	  <div class="ui button">
+		    	      	    <i class="tags icon"></i> eWallet
+		    	      	  </div>
+		    	      	</div>
+	    	      </div>
+	    	      <div class="item">
+	    	      		<div class="ui left labeled button" tabindex="0">
+	    	      		  <a class="ui basic right pointing label">
+	    	      		    {{ \Auth::user()->cart->count() }}
+	    	      		  </a>
+	    	      		  <div class="ui button">
+	    	      		    <i class="shopping cart icon"></i> Cart
+	    	      		  </div>
+	    	      		</div>
+	    	      </div>
+	    	      <div class="item">Account Details</div>
+	    	      <div class="divider"></div>
+	    	      <a href="/logout" class="item">Logout</a>
+	    	    </div>
+	    	</div> 
+        @else 
+          	<a href="/login" class="ui item"> Login / Register </a>
+        @endauth
 	  </div>
 	</div>
 </div>
@@ -33,14 +63,33 @@
 	    Shop
 	  </a>
 	  <div class="right menu">  
-	  	@auth
+	  	@auth 
 	  		<div class="ui right dropdown item">
-	    	    Hi! David
+	    	    {{ \Auth::user()->name }}
 	    	    <i class="dropdown icon"></i>
 	    	    <div class="menu">
-	    	      <div class="item">Applications</div>
-	    	      <div class="item">International Students</div>
-	    	      <div class="item">Scholarships</div>
+	    	      <div class="item">
+		    	      	<div class="ui left labeled button" tabindex="0">
+		    	      	  <a class="ui basic right pointing label">
+		    	      	    {{ \Auth::user()->customer->wallet }}
+		    	      	  </a>
+		    	      	  <div class="ui button">
+		    	      	    <i class="tags icon"></i> eWallet
+		    	      	  </div>
+		    	      	</div>
+	    	      </div>
+	    	      <div class="item">
+	    	      		<div class="ui left labeled button" tabindex="0">
+	    	      		  <a class="ui basic right pointing label">
+	    	      		    {{ \Auth::user()->cart->count() }}
+	    	      		  </a>
+	    	      		  <div class="ui button">
+	    	      		    <i class="shopping cart icon"></i> Cart
+	    	      		  </div>
+	    	      		</div>
+	    	      </div>
+	    	      <div class="item">Account Details</div>
+	    	      <div class="divider"></div>
 	    	      <a href="/logout" class="item">Logout</a>
 	    	    </div>
 	    	</div> 
@@ -56,7 +105,7 @@
 <!-- //SIDEBARD MENU -->
 <div id="mMenu" class="ui sidebar vertical menu">
   <a class="active item">
-    Menu - Enchanted Kingdom
+    Enchanted Kingdom
   </a>  
   <div id="mdropdownmenu" class="ui item"> 
     <!-- Home -->

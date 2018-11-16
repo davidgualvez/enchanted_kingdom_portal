@@ -65,10 +65,12 @@
                 @endif 
 	  	      	<div class="field">
 	  	      		<label class="" style="text-align: left;">Name</label>
-	  	          <div class="ui left icon input">
-	  	            <i class="user icon"></i>
-	  	            <input type="text" name="name" placeholder="Name" value="{{ old('name') }}">
-	  	          </div>
+	  	          	<div class="ui left icon input">
+	  	            	<i class="user icon"></i>
+	  	            	<input type="text" name="name" placeholder="Name" value="{{ old('name') }}">
+	  	            	
+	  	          	</div>
+
 	  	        </div>
 	  	      	<div class="field">
 	  	      		<label class="" style="text-align: left;">Email</label>
@@ -108,7 +110,12 @@
 	<script src="/js/config.js"></script>
 	<!-- CUSTOM JS -->
 	<script>
-		
+		$('.message .close')
+		  .on('click', function() {
+		    $(this)
+		      .closest('.message')
+		      .transition('fade');
+		  });
 	</script>
 </body>
 </html> 

@@ -43,6 +43,10 @@ class User extends Authenticatable
         return $this->hasOne('App\Customer','user_id');
     }
 
+    public function cart(){
+        return $this->hasMany('App\Cart','user_id');
+    }
+
     /**
      * Logic
      *
