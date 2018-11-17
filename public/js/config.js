@@ -8,13 +8,16 @@ $(document).ready(function(){
 
     btnLogin(); 
 
-});
+}); 
 
 //global variable for all page 
 var api = '';
 var routes = {
-    login:          '/signup',
-    products:        '/products'
+    login:              '/signup',
+    products:           '/products',
+    cart: {
+        addToCart :     '/cart/add_to_cart', //[product_id, qty] 
+    }
 };
 
 //
@@ -26,7 +29,9 @@ function post(url, request, callback) {
         type: "POST",
         dataType: "json",
         data: request,
-        // header : getHeader(),
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
         success: function (data) {
             callback(data);
         },

@@ -47,6 +47,10 @@ class User extends Authenticatable
         return $this->hasMany('App\Cart','user_id');
     }
 
+    public function cartPerBranch(){
+        return $this->cart()->where('branch_id', config('cpp.branch_id') );
+    }
+
     /**
      * Logic
      *

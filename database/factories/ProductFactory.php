@@ -5,7 +5,7 @@ use Faker\Generator as Faker;
 $factory->define(App\Part::class, function (Faker $faker) {
     return [
         //
-        'branch_id'     => 1,
+        'branch_id'     => config('cpp.branch_id'),
         'name'          => $faker->name,
         'description'   => $faker->text($maxNbChars = 200),
         'srp'           => rand(1,1000),

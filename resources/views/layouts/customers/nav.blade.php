@@ -11,24 +11,29 @@
 	    	    {{ \Auth::user()->name }}
 	    	    <i class="dropdown icon"></i>
 	    	    <div class="menu">
-	    	      <div class="item">
-		    	      	<div class="ui left labeled button" tabindex="0">
-		    	      	  <a class="ui basic right pointing label">
-		    	      	    {{ \Auth::user()->customer->wallet }}
-		    	      	  </a>
-		    	      	  <div class="ui button">
-		    	      	    <i class="tags icon"></i> eWallet
-		    	      	  </div>
-		    	      	</div>
-	    	      </div>
+	    	      	<div class="item">
+		    	      	 <div class="ui buttons fluid">
+		    	      	   	<button class="ui button">
+		    	      	   		<i class="copyright icon"></i>
+		    	      	   		{{ \Auth::user()->customer->wallet }}
+		    	      		</button>
+		    	      	   <div class="or"></div>
+		    	      	   	<button class="ui button">
+		    	      	   		&nbsp;
+		    	      	   		<i class="gift icon"></i>
+		    	      	   		{{ \Auth::user()->customer->points }}
+		    	      	   		
+		    	      	   	</button>
+		    	      	 </div>
+	    	      	</div> 
 	    	      <div class="item">
 	    	      		<div class="ui left labeled button" tabindex="0">
 	    	      		  <a class="ui basic right pointing label">
-	    	      		    {{ \Auth::user()->cart->count() }}
+	    	      		    {{ \Auth::user()->cartPerBranch->count() }} 
 	    	      		  </a>
-	    	      		  <div class="ui button">
-	    	      		    <i class="shopping cart icon"></i> Cart
-	    	      		  </div>
+	    	      		  <a href="/cart" class="ui button">
+	    	      		  	<i class="shopping cart icon"></i> Cart
+	    	      		  </a> 
 	    	      		</div>
 	    	      </div>
 	    	      <div class="item">Account Details</div>
@@ -50,44 +55,39 @@
     	    <img src="/assets/images/cropped-EK-Fav2018-192x192.png">
     	 </div>
   	</div>
-	  <a class="active item">
+	  <a href="/" class="active item">
 	    Home
-	  </a>
-	  <a class="item">
-	    Ticket's
-	  </a>
-	  <a class="item">
-	    Load Wallet
-	  </a>
-	  <a class="item">
-	    Shop
-	  </a>
+	  </a> 
 	  <div class="right menu">  
 	  	@auth 
 	  		<div class="ui right dropdown item">
 	    	    {{ \Auth::user()->name }}
 	    	    <i class="dropdown icon"></i>
 	    	    <div class="menu">
-	    	      <div class="item">
-		    	      	<div class="ui left labeled button" tabindex="0">
-		    	      	  <a class="ui basic right pointing label">
-		    	      	    {{ \Auth::user()->customer->wallet }}
-		    	      	  </a>
-		    	      	  <div class="ui button">
-		    	      	    <i class="tags icon"></i> eWallet
-		    	      	  </div>
-		    	      	</div>
-	    	      </div>
-	    	      <div class="item">
+	    	    	<div class="item">
+		    	      	 <div class="ui buttons fluid">
+		    	      	   	<button class="ui button">
+		    	      	   		<i class="copyright icon"></i>
+		    	      	   		{{ \Auth::user()->customer->wallet }}
+		    	      		</button>
+		    	      	   <div class="or"></div>
+		    	      	   	<button class="ui button">
+		    	      	   		&nbsp;
+		    	      	   		<i class="gift icon"></i>
+		    	      	   		{{ \Auth::user()->customer->points }} 
+		    	      	   	</button>
+		    	      	 </div>
+	    	      	</div> 
+	    	      	<div class="item">
 	    	      		<div class="ui left labeled button" tabindex="0">
 	    	      		  <a class="ui basic right pointing label">
-	    	      		    {{ \Auth::user()->cart->count() }}
+	    	      		    {{ \Auth::user()->cartPerBranch->count() }} 
 	    	      		  </a>
-	    	      		  <div class="ui button">
-	    	      		    <i class="shopping cart icon"></i> Cart
-	    	      		  </div>
+	    	      		  <a href="/cart" class="ui button">
+	    	      		  	<i class="shopping cart icon"></i> Cart
+	    	      		  </a> 
 	    	      		</div>
-	    	      </div>
+	    	      	</div>
 	    	      <div class="item">Account Details</div>
 	    	      <div class="divider"></div>
 	    	      <a href="/logout" class="item">Logout</a>
@@ -110,10 +110,7 @@
   <div id="mdropdownmenu" class="ui item"> 
     <!-- Home -->
     <div class="menu">
-      <a href=""><div class="item">Home</div></a>
-      <a href=""><div class="item">Ticket's</div></a>
-      <a href=""><div class="item">Load Wallet</div></a>
-      <a href=""><div class="item">Shop</div></a>
+      <a href="/"><div class="item">Home</div></a> 
       <!-- <div class="item">Starred</div>
       <div class="item">Sent Mail</div>
       <div class="item">Drafts (143)</div>

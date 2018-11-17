@@ -8,6 +8,7 @@
 
 @section('js')
 <script src="http://cdn.jsdelivr.net/jquery.glide/1.0.6/jquery.glide.min.js"></script>
+<script src="/js/pages/home.js"></script>
 <script> 
 	$('.slider').glide({
 	  autoplay: false,
@@ -21,15 +22,15 @@
 @section('content')
 
 <!-- SLIDER -->
-	@include('pages.components.slider')
+	@include('pages.customers.components.slider')
 <!-- END SLIDER -->
 
 
 <!-- TODAYS SPECIAL -->
-	@include('pages.components.today_special')
+	@include('pages.customers.components.today_special')
 <!-- END TODAYS SPECIAL --> 
 
 <!-- PRODUCT -->
-	@include('pages.components.products')
+	@include('pages.customers.components.products')
 <!-- END PRODUCT --> 
 @endsection
