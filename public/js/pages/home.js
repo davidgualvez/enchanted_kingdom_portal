@@ -132,6 +132,9 @@ function btnProductAddToCart(id){
         post(routes.cart.addToCart, data, function(response){
             console.log(response);
             if(response.success == false){
+                if(response.status == 401){ 
+                    redirectTo('/login'); //if not authenticated
+                } 
                 showWarning('Warning',response.message, function(){
 
                 });
@@ -141,6 +144,7 @@ function btnProductAddToCart(id){
             showSuccess('Success',response.message, function(){
 
             });
+            updateCartCount();
         });
         // showSuccess('','hello',function(){
 

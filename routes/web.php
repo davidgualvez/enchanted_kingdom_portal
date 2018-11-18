@@ -44,6 +44,8 @@ Route::get('/logout',                           'Auth\LoginController@logout');
 //CART
 //show cart
 Route::get('/cart', 							'CartController@showCart');
+//show cart count
+Route::post('/cart/count',						'CartController@cartCount');
 //parameter [ product_id ]
 Route::post('/cart/add_to_cart', 				'CartController@addToCart');
 //parameter [ product_id ]

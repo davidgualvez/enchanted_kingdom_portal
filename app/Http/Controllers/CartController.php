@@ -8,13 +8,35 @@ use Carbon\Carbon;
 use App\User;
 use App\Cart;
 
+use App\Part;
+use App\ProductPromotion;
+use App\Promotion;
+
 class CartController extends Controller
 {
     //
     public function showCart(){
         $user   = Auth::user();
         $carts  = Cart::findByUser($user->id); 
-    	return view('pages.customers.cart', compact('carts'));
+
+        //dd($carts);
+        //===============================================
+        $gross = 0;
+        $newList = [];
+        foreach ($carts as $key => $value) {
+            # code...
+            dd($value->part->activePromo);
+            array_push($newList, [
+                'part_id'   => $value->part->id,
+                'promo'     => $value->part->activePromo
+            ]);
+
+            $gross += $value->qty * $value->part->srp;
+        }
+        dd($newList, $carts, $gross);
+        //===============================================
+
+    	return view('pages.customers.cart', compact('carts','gross'));
     } 
 
     public function addToCart(Request $request){  
@@ -200,6 +222,7 @@ class CartController extends Controller
 
         return back()->with('message', 'Item has been updated.');
     }
+
     public function decrease($id){
         $user = Auth::user(); 
         $cart = Cart::find($id);
@@ -217,5 +240,24 @@ class CartController extends Controller
         $cart->save();
 
         return back()->with('message', 'Item has been updated.');
+    }
+
+    public function cartCount(){
+        //$token = $request->token; 
+        if(!Auth::check()){
+            return response()->json([
+                'success'       =>      false, 
+                'status'        =>      401,
+                'message'       =>      'Unauthorized Access'
+            ]);
+        }  
+
+        $count = Auth::user()->cartPerBranch->count();
+        
+        return response()->json([
+                'success'       =>      true, 
+                'status'        =>      200,
+                'count'         =>      $count
+            ]);
     }
 }

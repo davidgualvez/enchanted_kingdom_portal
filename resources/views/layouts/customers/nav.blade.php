@@ -28,7 +28,7 @@
 	    	      	</div> 
 	    	      <div class="item">
 	    	      		<div class="ui left labeled button" tabindex="0">
-	    	      		  <a class="ui basic right pointing label">
+	    	      		  <a class="ui basic right pointing label cart_count">
 	    	      		    {{ \Auth::user()->cartPerBranch->count() }} 
 	    	      		  </a>
 	    	      		  <a href="/cart" class="ui button">
@@ -80,7 +80,7 @@
 	    	      	</div> 
 	    	      	<div class="item">
 	    	      		<div class="ui left labeled button" tabindex="0">
-	    	      		  <a class="ui basic right pointing label">
+	    	      		  <a class="ui basic right pointing label cart_count">
 	    	      		    {{ \Auth::user()->cartPerBranch->count() }} 
 	    	      		  </a>
 	    	      		  <a href="/cart" class="ui button">

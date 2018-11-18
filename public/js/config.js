@@ -17,6 +17,7 @@ var routes = {
     products:           '/products',
     cart: {
         addToCart :     '/cart/add_to_cart', //[product_id, qty] 
+        count :         '/cart/count'
     }
 };
 
@@ -177,4 +178,27 @@ function btnLogin(){
     $('#btn-login').on('click',function(){
         window.location.href = '/login';
     });
+}
+
+
+//global app functionalities
+function updateCartCount(){ 
+    console.log('updating cart count....');
+    var data = {
+    };
+    post(routes.cart.count, data, function(response){
+        console.log(response);
+        if(response.success == false){
+            if(response.status == 401){ 
+                redirectTo('/login'); //if not authenticated
+            } 
+            showWarning('Warning',response.message, function(){
+
+            });
+            return;
+        }
+
+        $('.cart_count').text(response.count);
+    });
+    
 }

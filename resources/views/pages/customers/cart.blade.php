@@ -16,7 +16,7 @@
 		      <th class="six wide">Product</th>
 		      <th class="two wide">Qty</th>
 		      <th class="two wide">Unit Price</th>
-		      <th class="two wide">Amount</th>
+		      <th class="two wide right aligned" style="padding-right: 25px;">Amount</th>
 		    </tr>
 		  </thead>
 		  <tbody> 
@@ -25,7 +25,7 @@
   			    	<td class="ui small header"> {{ ++$key }}</td>
   			      	<td> {{ $cart->part->name }} </td> 
   			      	<td>
-  			      		<i class="question circle outline icon" data-title="Using click events" data-content="Clicked popups will close if you click away, but not if you click inside the popup"></i>
+  			      		<i class="question circle outline icon" data-title="*Note" data-content="The item will be automatically remove if the quantity reach negative value."></i>
   			      		
   			      		<form action="/cart/{{ $cart->id }}/decrease" method="post" style="display: inline;">
   			      			@csrf
@@ -44,7 +44,7 @@
   						</form> 
   			      	</td>
   			      	<td>{{ number_format( $cart->part->srp , 2, '.', ',')  }}</td>
-  			      	<td>{{ number_format( $cart->part->srp * $cart->qty , 2, '.', ',') }}</td>
+  			      	<td class="right aligned" style="padding-right: 25px;">{{ number_format( $cart->part->srp * $cart->qty , 2, '.', ',') }}</td>
   			    </tr>  
 		  	@empty
 		  		<div class="center aligned">
@@ -58,21 +58,21 @@
 		  			<th colspan="4">
 		  				<strong>Sub Total :  </strong> 
 		  			</th>
-		  			<th class="left aligned" style="padding-right: 25px;">
-		  				0.00
+		  			<th class="right aligned" style="padding-right: 25px;">
+		  				{{ number_format( $gross , 2, '.', ',')  }}
 		  			</th>
 		  		</tr> 
 		  		<tr class="right aligned">
 		  			<th colspan="4">
 		  				<strong>Discount / Voucher :  </strong> 
 		  			</th>
-		  			<th class="left aligned" style="padding-right: 25px;">
+		  			<th class="right aligned" style="padding-right: 25px;">
 		  				0.00
 		  			</th>
 		  		</tr> 
 		  		<tr>
 		  			<th colspan="5">
-		  				<div class="ui right floated small success icon button">
+		  				<div class="ui right floated small success icon primary button" id="checkout">
   				          <i class="check icon"></i> Checkout
   				        </div>
 		  			</th>
@@ -100,7 +100,7 @@
 	</div> 
   	@if (session('error')) 
 			<script>
-      			showError('Warning','{{ session('error') }}', function(){ 
+      			showWarning('Warning','{{ session('error') }}', function(){ 
       			});
       		</script> 
     @endif 
