@@ -17,6 +17,8 @@ use App\Transformers\CartTransformer;
 use App\Purchase;
 use App\PurchaseDetail;
 
+use App\AppServices\EarnPointTransactionServices;
+
 use DB;
 
 class PurchaseController extends Controller
@@ -116,9 +118,9 @@ class PurchaseController extends Controller
         	    $pd->save();
 
 
-        	    $total_gross += $selling_price;
-        	    $total_discount += $discount_amount;
-        	    $total_net += $buying_price;
+        	    $total_gross       += $selling_price;
+        	    $total_discount    += $discount_amount;
+        	    $total_net         += $buying_price;
         	}
         	//=============================================== 
 
@@ -143,6 +145,15 @@ class PurchaseController extends Controller
         	$customer = Customer::find($user->customer->id);
         	$customer->wallet = $customer->wallet - $total_net;
         	$customer->save();
+
+            //earned points 
+            $ept    = new  EarnPointTransactionServices;
+            $ep     = $ept->earnPoints($ph->id, $total_net);
+            $eps    = $ept->save();
+
+            //update customer points for new earned point
+            $customer->points   = $customer->points + $eps->earned_points;
+            $customer->save();
 
         	//remove cart from this current branch
         	$cart = Cart::removeCartByUserID($user->id);

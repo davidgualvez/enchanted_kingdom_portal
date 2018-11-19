@@ -11,9 +11,9 @@
 @section('content')
 	<div class="ui container"> 
 		<div class="ui stackable two column grid">
-			<div class="six wide column">
+			<div class="six wide column" >
 				
-				<div class="ui two column divided grid padded">
+				<div class="ui two column divided grid padded" style="padding-top: 10px;">
 					<div class="eight wide column">
 
 						<div class="ui container center aligned">
@@ -50,8 +50,7 @@
 			<div class="ten wide column ">
 				<div class="ui top attached tabular menu">
 				  	<a class="item active" data-tab="first">My Profile</a>
-				  	<a class="item" data-tab="second">Order History</a>
-				  	<a class="item" data-tab="third">Redeemtion History</a>
+				  	<a class="item" data-tab="second">Transaction History</a> 
 				</div>
 				<div class="ui bottom attached tab segment active" data-tab="first">
 	 		  	    <div class="ui large form"> 
@@ -120,12 +119,8 @@
 	 		  	    </div> 
 				</div>
 				<div class="ui bottom attached tab segment" data-tab="second">
-				  	Order History
-				</div>
-				<div class="ui bottom attached tab segment" data-tab="third">
-				  	Redeemtion History
-				</div>
-			  	   
+				  	Transaction History
+				</div>  
 			</div>
 		</div>
 	</div>
