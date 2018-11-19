@@ -28,6 +28,7 @@ class Cart extends Model
     }
 
     public static function removeCartByUserID($user_id){
-    	return static::where('user_id', $user_id)->delete();
+    	return static::where('branch_id', config('cpp.branch_id'))
+                    ->where('user_id', $user_id)->delete();
     }
 }

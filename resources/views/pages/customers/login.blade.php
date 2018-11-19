@@ -87,7 +87,7 @@
 	  	    </div>
 	  	  </div>
 	  	</div>
-	 	<!-- END CONTENT -->
+	 	<!-- END CONTENT --> 
 	<!-- </div> -->
 	<!-- JS -->
 	<script src="/js/app.js"></script>

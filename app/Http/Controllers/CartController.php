@@ -282,7 +282,7 @@ class CartController extends Controller
             return back()->with('error', 'Item not belong to the user.');
         }
 
-        if($cart->qty == 0){
+        if($cart->qty <= 1){
             $cart->delete();
             return back()->with('error', 'Item has been removed from your cart.');
         }

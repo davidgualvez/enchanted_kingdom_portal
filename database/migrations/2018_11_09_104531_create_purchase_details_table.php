@@ -16,10 +16,16 @@ class CreatePurchaseDetailsTable extends Migration
         Schema::create('purchase_details', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('purchase_id');
-            $table->integer('part_id');
-            $table->integer('product_promotion_id');
-            $table->double('srp'); 
-            $table->double('discount');
+            $table->integer('part_id'); 
+            $table->integer('product_promotion_id')->nullable();
+            $table->text('description');
+            $table->integer('qty');
+            $table->double('srp',10,2); 
+            $table->double('selling_price',10,2);
+            $table->string('discount_type')->nullable();
+            $table->double('discount_value')->nullable();
+            $table->double('discount_amount',10,2);
+            $table->double('buying_price',10,2);
             $table->string('status')->comment = "P=Pending, A=Activated";
             $table->date('valid_until');
             $table->timestamps();

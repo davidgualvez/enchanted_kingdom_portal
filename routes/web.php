@@ -39,6 +39,8 @@ Route::post('/signup',                          'SignupController@signup');
 Route::get('/login',                            'Auth\LoginController@showLogin');
 Route::post('/login',                           'Auth\LoginController@login');
 Route::get('/logout',                           'Auth\LoginController@logout');
+Route::get('/me', 								'UserController@info');
+Route::post('/me', 								'UserController@updateInfo');
 
 
 //CART
@@ -60,6 +62,8 @@ Route::post('/cart/update_cart', 				'CartController@updateCart');//pending
 Route::post('/cart/{id}/increase', 				'CartController@increase');
 Route::post('/cart/{id}/decrease',				'CartController@decrease');
 
+//checkout
+Route::post('/checkout', 						'PurchaseController@checkout');
 
 //products and promo
 Route::get('/promos',                            'ProductPromotionController@activePromo');

@@ -27,7 +27,7 @@
   			    	<td class="ui small header"> {{ ++$key }}</td>
   			      	<td> {{ $cart['name'] }} </td> 
   			      	<td>
-  			      		<i class="question circle outline icon" data-title="*Note" data-content="The item will be automatically remove if the quantity reach negative value."></i>
+  			      		<i class="question circle outline icon" data-title="*Note" data-content="The item will be automatically remove if the quantity is less than or equal to zero."></i>
   			      		
   			      		<form action="/cart/{{ $cart['cart_id'] }}/decrease" method="post" style="display: inline;">
   			      			@csrf
@@ -58,7 +58,7 @@
   			    </tr>  
 		  	@empty
 		  		<div class="center aligned">
-		  			<h3 class="ui header">Nothing to display..</h3>
+		  			<h3 class="ui header center aligned">Nothing to display..</h3>
 		  		</div>
 		  	@endforelse
 		    
@@ -90,9 +90,21 @@
 		  		</tr> 
 		  		<tr>
 		  			<th colspan="6">
-		  				<div class="ui right floated small success icon primary button" id="checkout">
-  				          <i class="check icon"></i> Checkout
-  				        </div>
+		  				<!-- <form action="/checkout" method="post"> -->
+		  				@if(count($cartList) == 0)
+		  				<button disabled class="ui right floated small success icon primary button" id="checkout">
+		  					<i class="check icon"></i> Checkout
+		  				</button>
+		  				@else
+		  				<button class="ui right floated small success icon primary button" id="checkout">
+		  					<i class="check icon"></i> Checkout
+		  				</button>
+		  				@endif
+		  				
+		  				<!-- <div class="ui right floated small success icon primary button" id="checkout">
+  				          
+  				        </div> -->
+		  				<!-- </form> --> 
 		  			</th>
 		  		</tr>
 		      	<!-- <tr>

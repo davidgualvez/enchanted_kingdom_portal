@@ -11,12 +11,14 @@
 	<!-- CSS -->
 	<link rel="stylesheet" type="text/css" href="/dist/semantic.min.css"> 
 	<link rel="stylesheet" type="text/css" href="/css/plugins/iziToast.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/plugins/jquery-confirm.min.css">
 	<link rel="stylesheet" type="text/css" href="/css/config.css">
 	
 	<!-- JS -->
 	<script src="/js/app.js"></script>
 	<script src="/dist/semantic.min.js"></script>
 	<script src="/js/plugins/iziToast.min.js"></script>
+	<script src="/js/plugins/jquery-confirm.min.js"></script>
 	<script src="/js/config.js"></script>
 
 	<!-- CUSTOM CSS -->

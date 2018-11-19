@@ -17,7 +17,8 @@ var routes = {
     products:           '/products',
     cart: {
         addToCart :     '/cart/add_to_cart', //[product_id, qty] 
-        count :         '/cart/count'
+        count :         '/cart/count',
+        checkout :      '/checkout'
     }
 };
 

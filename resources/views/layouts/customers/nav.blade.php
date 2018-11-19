@@ -36,7 +36,7 @@
 	    	      		  </a> 
 	    	      		</div>
 	    	      </div>
-	    	      <div class="item">Account Details</div>
+	    	      <a href="/me" class="item">Account Details</a>
 	    	      <div class="divider"></div>
 	    	      <a href="/logout" class="item">Logout</a>
 	    	    </div>
@@ -88,7 +88,7 @@
 	    	      		  </a> 
 	    	      		</div>
 	    	      	</div>
-	    	      <div class="item">Account Details</div>
+	    	      <a href="/me" class="item">Account Details</a>
 	    	      <div class="divider"></div>
 	    	      <a href="/logout" class="item">Logout</a>
 	    	    </div>
