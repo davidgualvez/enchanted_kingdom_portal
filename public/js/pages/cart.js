@@ -15,7 +15,7 @@ function checkOut(){
 		if (confirm('Order confirmation, do you want to continue?')) {
 			 
 			// postRequest('order/add_sales_order',{token:readCookie('token')},function(response){
-			// 	if(response.success==false){
+			// 	if(response.success==false){ 
 			// 		showWarning(response.message);
 			// 	}
 			// 	showSuccess(response.message);

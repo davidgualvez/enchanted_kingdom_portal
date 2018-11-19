@@ -8,7 +8,7 @@ class ProductPromotion extends Model
 {
     //
 
-    public function product(){
+    public function product(){ 
         return $this->belongsTo('App\Part','part_id');
     }
 

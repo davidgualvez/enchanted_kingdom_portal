@@ -98,7 +98,7 @@ function dataDisplayerProduct(data, from) {
                     '<a>'+category+'</a> '+
                   '</div>'+
                   '<div class="description">'+
-                    value.description +
+                    text_truncate(value.description, 50, '...') +
                   '</div>'+
                 '</div>'+
                 '<div class="extra content">'+

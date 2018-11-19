@@ -11,6 +11,7 @@ use App\Cart;
 use App\Part;
 use App\ProductPromotion;
 use App\Promotion;
+use App\Transformers\CartTransformer;
 
 class CartController extends Controller
 {
@@ -20,23 +21,73 @@ class CartController extends Controller
         $carts  = Cart::findByUser($user->id); 
 
         //dd($carts);
-        //===============================================
-        $gross = 0;
-        $newList = [];
+        //=============================================== 
+        $total_gross = 0;
+        $total_discount = 0;
+        $total_net = 0;
+        $cartList = [];
         foreach ($carts as $key => $value) {
-            # code...
-            dd($value->part->activePromo);
-            array_push($newList, [
-                'part_id'   => $value->part->id,
-                'promo'     => $value->part->activePromo
+            # code... 
+            //logic
+            $product_id     = $value->part->id;
+            $name           = $value->part->name;
+            $description    = null;
+            $qty            = $value->qty;
+            $srp            = $value->part->srp;
+            $discount_type  = null;
+            $discount_value = null;
+            $discount_amount= null;
+            $selling_price  = $qty * $srp;
+            $buying_price   = null;
+
+            if(is_null($value->part->activePromo)){
+                $discount_amount = 0; 
+                //getting description by part
+                $description = $value->part->description;
+            }else{
+                //getting description by promotion
+                $description = $value->part->activePromo->description;
+
+                if($value->part->activePromo->promotion->is_percent == 0){
+                    // actual amount to be deduct
+                    $discount_type  = 'real';
+                    $discount_value = $value->part->activePromo->promotion->amount;
+
+                    $discount_amount= $discount_value;
+                }else if($value->part->activePromo->promotion->is_percent == 1){
+                    // percent amount to be deduct
+                    $discount_type  = 'percent';
+                    $discount_value = $value->part->activePromo->promotion->amount;
+
+                    $discount_amount= ($discount_value / 100) * $selling_price;
+                }
+            }
+            //get the buying price
+            $buying_price   = ($selling_price) - $discount_amount;
+
+            //totals
+            array_push($cartList, [
+                'cart_id'           => $value->id,
+                'part_id'           => $product_id,
+                'name'              => $name,
+                'description'       => $description,
+                'qty'               => $qty,
+                'srp'               => $srp,
+                'selling_price'     => $selling_price,
+                'discount_type'     => $discount_type,
+                'discount_value'    => $discount_value,
+                'discount_amount'   => $discount_amount, 
+                'buying_price'      => $buying_price
             ]);
 
-            $gross += $value->qty * $value->part->srp;
+            $total_gross += $selling_price;
+            $total_discount += $discount_amount;
+            $total_net += $buying_price;
         }
-        dd($newList, $carts, $gross);
-        //===============================================
-
-    	return view('pages.customers.cart', compact('carts','gross'));
+        //=============================================== 
+    	return view('pages.customers.cart', 
+            compact('cartList','total_gross','total_discount','total_net')
+        );
     } 
 
     public function addToCart(Request $request){  

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Cart extends Model
 {
     //
-    /*----------  relationship  ----------*/
+    /*----------  relationship  ----------*/ 
     public function part(){
         return $this->belongsTo('App\Part','product_id');
     }
@@ -21,7 +21,7 @@ class Cart extends Model
     }
 
     public static function findByUser($user_id){
-    	return  static::with('part')
+    	return  static::with('part','part.activePromo','part.activePromo.promotion')
                     ->where('branch_id', config('cpp.branch_id'))
                     ->where('user_id',$user_id)  
                     ->get();
