@@ -55,8 +55,11 @@
     	    <img src="/assets/images/cropped-EK-Fav2018-192x192.png">
     	 </div>
   	</div>
-	  <a href="/" class="active item">
+	  <a href="/" class=" item">
 	    Home
+	  </a> 
+	  <a href="/rewards" class=" item">
+	    Rewards
 	  </a> 
 	  <div class="right menu">  
 	  	@auth 
@@ -110,7 +113,8 @@
   <div id="mdropdownmenu" class="ui item"> 
     <!-- Home -->
     <div class="menu">
-      <a href="/"><div class="item">Home</div></a> 
+      <a href="/"><div class="item">Home</div></a>
+      <a href="/rewards"> <div class="item">Rewards</div></a>
       <!-- <div class="item">Starred</div>
       <div class="item">Sent Mail</div>
       <div class="item">Drafts (143)</div>
@@ -118,6 +122,7 @@
       <div class="item">Spam (1009)</div>
       <div class="item">Trash</div> -->
     </div>
+    
   </div> 
   	@auth
     	<!-- <a href="/logout" class="ui item">Logout</a> -->

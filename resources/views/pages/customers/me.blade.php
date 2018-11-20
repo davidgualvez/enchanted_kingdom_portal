@@ -4,14 +4,16 @@
 @section('js')
 <script src="/js/pages/me.js"></script>
 <script>
-	
+	$('.ui.accordion')
+	  .accordion()
+	;
 </script>
 @endsection
 
 @section('content')
 	<div class="ui container"> 
 		<div class="ui stackable two column grid">
-			<div class="six wide column" >
+			<div class="six wide column box" >
 				
 				<div class="ui two column divided grid padded" style="padding-top: 10px;">
 					<div class="eight wide column">
@@ -43,6 +45,15 @@
 							</div> 
 						</div>
 
+					</div>
+				</div>
+
+				<div class="ui column grid padded">
+					<div class="column">
+						<div class="ui segment">
+							<h4 class="ui header">Active Purchase</h4>
+						  <p></p>
+						</div>
 					</div>
 				</div>
 
@@ -104,10 +115,10 @@
 	 			  	          	</div>
 	 			  	        </div>
 	 			  	        <div class="field">
-	 			  	        	<label class="" style="text-align: left;">Password</label>
+	 			  	        	<label class="" style="text-align: left;">New Password</label>
 	 			  	          	<div class="ui left icon input">
 	 			  	            	<i class="lock icon"></i>
-	 			  	            	<input type="password" id="password" placeholder="Password" value="{{ old('password') }}">
+	 			  	            	<input type="password" id="password" placeholder="New Password" value="{{ old('password') }}">
 	 			  	          	</div>
 	 			  	        </div>
 
