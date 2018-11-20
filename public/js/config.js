@@ -19,6 +19,9 @@ var routes = {
         addToCart :     '/cart/add_to_cart', //[product_id, qty] 
         count :         '/cart/count',
         checkout :      '/checkout'
+    },
+    user : {
+        updateInfo :    '/me'
     }
 };
 
