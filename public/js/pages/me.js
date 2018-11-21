@@ -4,6 +4,27 @@ $(document).ready(function(){
 	$('.menu .item').tab();
 
 	btnUpdateInfo();
+
+	$('.ui.accordion').accordion(); 
+
+	$('.btnActiveOrder').on('click', function(){
+		console.log(this.id); 
+		$('.ui.dimmer').dimmer("show");
+
+		JsBarcode("#barcode", '54321' , {
+			format: "CODE39",
+			// lineColor: "#0aa",
+			width: 3,
+			mod43:true
+			// height: 40,
+			// displayValue: false
+		});
+		
+		console.log( $('.btnActiveOrder#'+this.id).parent().prev().prev().prev().text() );
+		$('#purchase_order').text( $('.btnActiveOrder#'+this.id).parent().prev().prev().prev().text() );
+		//$('#purchase_id').text(this.id);
+	});
+
 });
 
 function btnUpdateInfo(){

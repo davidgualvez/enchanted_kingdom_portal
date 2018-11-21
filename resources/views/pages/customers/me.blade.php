@@ -2,18 +2,28 @@
 @section('title','My Cart')
 
 @section('js')
-<script src="/js/pages/me.js"></script>
-<script>
-	$('.ui.accordion')
-	  .accordion()
-	;
-</script>
+<script src="https://cdn.jsdelivr.net/jsbarcode/3.6.0/JsBarcode.all.min.js"> </script>
+<!-- <script src="https://cdn.jsdelivr.net/jsbarcode/3.6.0/barcodes/JsBarcode.ean-upc.min.js"></script> -->
+<script src="/js/pages/me.js"></script> 
 @endsection
 
 @section('content')
+<div class="ui page dimmer">
+    <div class="content">
+      	<h2 class="ui inverted icon header">
+        	<!-- <i class="barcode icon"></i> -->
+        	<svg id="barcode"></svg>
+
+       		<div id="purchase_order">
+       			
+       		</div>
+      	</h2>
+    </div>
+</div>
+
 	<div class="ui container"> 
 		<div class="ui stackable two column grid">
-			<div class="six wide column box" >
+			<div class="six wide column " >
 				
 				<div class="ui two column divided grid padded" style="padding-top: 10px;">
 					<div class="eight wide column">
@@ -48,11 +58,59 @@
 					</div>
 				</div>
 
-				<div class="ui column grid padded">
+				<div class="ui column grid"> 
 					<div class="column">
 						<div class="ui segment">
-							<h4 class="ui header">Active Purchase</h4>
-						  <p></p>
+							<div class="ui header">Active Purchase</div>
+						   	<div class="ui divided items"> 
+
+						   	  <div class="item">
+							   	    <div class="image"  style="width: 100px; height: 100px;">
+							   	      <img src="https://source.unsplash.com/random/100x100" class="">
+							   	    </div>
+							   	    <div class="content">
+							   	      <a class="header">Product name1</a>
+							   	      <div class="meta">
+							   	        <span class="cinema">Category</span>
+							   	      </div>
+							   	      <div class="description">
+							   	        <p></p>
+							   	      </div>
+							   	      <div class="extra">
+							   	        <div class="ui right floated primary tiny button btnActiveOrder" id="1">
+							   	          Show Code
+							   	          <i class="right chevron icon"></i>
+							   	        </div>
+							   	        <div class="ui mini label">Valid until</div>
+							   	        <div class="ui mini label">Qty : 1</div>
+							   	      </div>
+							   	    </div>
+						   	  </div> 
+
+						   	  <div class="item">
+							   	    <div class="image"  style="width: 100px; height: 100px;">
+							   	      <img src="https://source.unsplash.com/random/100x100" class="">
+							   	    </div>
+							   	    <div class="content">
+							   	      <a class="header">Product name2</a>
+							   	      <div class="meta">
+							   	        <span class="cinema">Category</span>
+							   	      </div>
+							   	      <div class="description">
+							   	        <p></p>
+							   	      </div>
+							   	      <div class="extra">
+							   	        <div class="ui right floated primary tiny button btnActiveOrder" id="2">
+							   	          Show Code
+							   	          <i class="right chevron icon"></i>
+							   	        </div>
+							   	        <div class="ui mini label">Valid until</div>
+							   	        <div class="ui mini label">Qty : 1</div>
+							   	      </div>
+							   	    </div>
+						   	  </div>
+
+						   	</div>
 						</div>
 					</div>
 				</div>

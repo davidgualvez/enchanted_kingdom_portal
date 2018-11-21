@@ -45,7 +45,7 @@ function checkOut(){
 		    title: 'Confirmation!',
 		    content: 'Order confirmation, do you want to continue?',
 		    type: 'dark',
-		    boxWidth: '30%',
+		    boxWidth: '50%',
     		useBootstrap: false,
 		    buttons: { 
 		        cancel: function () {
