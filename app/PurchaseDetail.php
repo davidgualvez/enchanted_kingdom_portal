@@ -8,7 +8,7 @@ class PurchaseDetail extends Model
 {
     // 
     //id
-    //[ BRANCHID , ORDERSLIPNO ]
+    //[ BRANCHID , ORDERSLIPNO ] 
     protected $table 			= 'OrderSlipDetails';
     public $timestamps 			= false;
 

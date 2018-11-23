@@ -26,7 +26,8 @@ class PurchaseController extends Controller
 {
     //
     public function checkout(Request $request){
-
+        $validity = Carbon::now()->addDay();
+        //dd( ''.$validity );
         
 
         DB::beginTransaction();
@@ -121,14 +122,15 @@ class PurchaseController extends Controller
         	    $pd->product_promotion_id 	= $product_promotion_id;
         	    $pd->description       = $description;
         	    $pd->QUANTITY          = $qty;
+                $pd->qty_remaining     = $qty;
         	    $pd->RETAILPRICE       = $srp;
         	    $pd->AMOUNT            = $selling_price;
         	    $pd->ISPERCENT         = $discount_type; 
         	    $pd->DISCRATE          = $discount_value;
         	    $pd->DISCOUNT          = $discount_amount;
         	    $pd->NETAMOUNT         = $buying_price;
-        	    $pd->status 			= 'P';
-        	    $pd->valid_until 		= Carbon::now()->addDay();
+        	    $pd->STATUS 			= 'P';
+        	    $pd->valid_until 		= ''.$validity;
         	    $pd->save();
 
 
