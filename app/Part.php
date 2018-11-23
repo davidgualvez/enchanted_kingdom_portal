@@ -8,7 +8,13 @@ use Carbon\Carbon;
 class Part extends Model
 {
     //   
+    //protected $table 		= 'partss';
+    protected $table 	 	= 'parts';
+    protected $primaryKey 	= 'PRODUCT_ID';
+    public $timestamps 		= false;
 
+
+    
     //
     public function activePromo(){
     	$now = Carbon::now();
