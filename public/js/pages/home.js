@@ -86,7 +86,7 @@ function dataDisplayerProduct(data, from) {
     current_data_product = data;
     $.each(data, function (key, value) {
         // console.log(value);
-        var category = value.category_id;
+        var category = value.group_name;
         items.append(
            '<div class="card">'+
                 '<div class="image">'+
@@ -129,6 +129,7 @@ function btnProductAddToCart(id){
             product_id : id,
             qty : 1
         };
+        
         post(routes.cart.addToCart, data, function(response){
             console.log(response);
             if(response.success == false){

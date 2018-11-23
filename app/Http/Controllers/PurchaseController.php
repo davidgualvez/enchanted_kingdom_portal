@@ -18,6 +18,7 @@ use App\Purchase;
 use App\PurchaseDetail;
 
 use App\AppServices\EarnPointTransactionServices;
+use App\AppServices\BranchLastIssuedNumberServices;
 
 use DB;
 
@@ -25,20 +26,26 @@ class PurchaseController extends Controller
 {
     //
     public function checkout(Request $request){
-    	$user   = Auth::user();
-        $carts  = Cart::findByUser($user->id); 
 
+        
 
         DB::beginTransaction();
 
+        $blin = new BranchLastIssuedNumberServices;
+        $blin->findOrCreate();    
+
+        $user   = Auth::user();
+        $carts  = Cart::findByUser($user->id);  
+
         try { 
+
         	//create a purchase header
         	$ph = new Purchase;
-        	$ph->branch_id 		= config('cpp.branch_id');
-        	$ph->user_id		= $user->id;
-        	$ph->type 			= 'WEB';
-        	$ph->save();
-
+        	$ph->BRANCHID 		= config('cpp.branch_id');
+            $ph->ORDERSLIPNO    = $blin->getNewIdForOrderSlipHeader();
+        	$ph->CUSTOMER_ID	= $user->customer->id;
+        	$ph->TRANSACTTYPEID = 1;
+        	$ph->save(); 
         	//=============================================== 
         	$total_gross = 0;
         	$total_discount = 0;
@@ -46,38 +53,43 @@ class PurchaseController extends Controller
         	$cartList = [];
         	foreach ($carts as $key => $value) {
         	    # code... 
-        	    //logic
-        	    $product_id     = $value->part->id;
-        	    $name           = $value->part->name;
-        	    $description    = null;
-        	    $qty            = $value->qty;
-        	    $srp            = $value->part->srp;
-        	    $product_promotion_id = null;
-        	    $discount_type  = null;
-        	    $discount_value = null;
-        	    $discount_amount= null;
-        	    $selling_price  = $qty * $srp;
-        	    $buying_price   = null;
+                $partt = new Part;
+                $part = $partt->where($partt->branch_id, config('cpp.branch_id'))
+                            ->where($partt->product_id, $value->product_id)
+                            ->first();
 
-        	    if(is_null($value->part->activePromo)){
+        	    //logic
+        	    $product_id     = $part->PRODUCT_ID;
+        	    $name           = $part->SHORTCODE;
+        	    $description    = '';
+        	    $qty            = $value->qty;
+        	    $srp            = $part->RETAIL;
+        	    $product_promotion_id = null;
+        	    $discount_type  = 0;
+        	    $discount_value = 0;
+        	    $discount_amount= 0;
+        	    $selling_price  = $qty * $srp;
+        	    $buying_price   = 0;
+
+        	    if(is_null($part->activePromo)){
         	        $discount_amount = 0; 
         	        //getting description by part
-        	        $description = $value->part->description;
+        	        $description = $part->DESCRIPTION;
         	    }else{
-        	    	$product_promotion_id = $value->part->activePromo->id;
+        	    	$product_promotion_id = $part->activePromo->id;
         	        //getting description by promotion
-        	        $description = $value->part->activePromo->description;
+        	        $description = $part->activePromo->description;
 
-        	        if($value->part->activePromo->promotion->is_percent == 0){
+        	        if($part->activePromo->promotion->is_percent == 0){
         	            // actual amount to be deduct
-        	            $discount_type  = 'real';
-        	            $discount_value = $value->part->activePromo->promotion->amount;
+        	            $discount_type  = 0; //real
+        	            $discount_value = $part->activePromo->promotion->amount;
 
         	            $discount_amount= $discount_value;
-        	        }else if($value->part->activePromo->promotion->is_percent == 1){
+        	        }else if($part->activePromo->promotion->is_percent == 1){
         	            // percent amount to be deduct
-        	            $discount_type  = 'percent';
-        	            $discount_value = $value->part->activePromo->promotion->amount;
+        	            $discount_type  = 1; //percent
+        	            $discount_value = $part->activePromo->promotion->amount;
 
         	            $discount_amount= ($discount_value / 100) * $selling_price;
         	        }
@@ -101,18 +113,20 @@ class PurchaseController extends Controller
         	    ]);
 
         	    //create purchase details
-        	    $pd = new PurchaseDetail; 
-        	    $pd->purchase_id 			= $ph->id; 
-        	    $pd->part_id           		= $product_id; 
+        	    $pd = new PurchaseDetail;
+                $pd->BRANCHID               = config('cpp.branch_id');
+                $pd->ORDERSLIPDETAILID      = $blin->getNewIdForOrderSlipDetails();
+        	    $pd->ORDERSLIPNO 			= $ph->ORDERSLIPNO; 
+        	    $pd->PRODUCT_ID           	= $product_id; 
         	    $pd->product_promotion_id 	= $product_promotion_id;
         	    $pd->description       = $description;
-        	    $pd->qty               = $qty;
-        	    $pd->srp               = $srp;
-        	    $pd->selling_price     = $selling_price;
-        	    $pd->discount_type     = $discount_type;
-        	    $pd->discount_value    = $discount_value;
-        	    $pd->discount_amount   = $discount_amount;
-        	    $pd->buying_price      = $buying_price;
+        	    $pd->QUANTITY          = $qty;
+        	    $pd->RETAILPRICE       = $srp;
+        	    $pd->AMOUNT            = $selling_price;
+        	    $pd->ISPERCENT         = $discount_type; 
+        	    $pd->DISCRATE          = $discount_value;
+        	    $pd->DISCOUNT          = $discount_amount;
+        	    $pd->NETAMOUNT         = $buying_price;
         	    $pd->status 			= 'P';
         	    $pd->valid_until 		= Carbon::now()->addDay();
         	    $pd->save();
@@ -136,10 +150,17 @@ class PurchaseController extends Controller
         	}
 
         	//update purchase header for total;
-        	$ph->gross_amount 		= $total_gross;
-        	$ph->total_discount 	= $total_discount;
-        	$ph->net_amount 		= $total_net;
-        	$ph->save();
+            Purchase::where('ORDERSLIPNO', $ph->ORDERSLIPNO) 
+                      ->update([
+                        'TOTALAMOUNT'        => $total_gross,
+                        'DISCOUNT'           => $total_discount,
+                        'NETAMOUNT'          => $total_net,
+                    ]);
+
+        	// $ph->TOTALAMOUNT 		= $total_gross;
+        	// $ph->DISCOUNT 	        = $total_discount;
+        	// $ph->NETAMOUNT 		    = $total_net;
+        	// $ph->update($ph->ORDERSLIPNO);
 
         	//update wallet
         	$customer = Customer::find($user->customer->id);
@@ -148,7 +169,7 @@ class PurchaseController extends Controller
 
             //earned points 
             $ept    = new  EarnPointTransactionServices;
-            $ep     = $ept->earnPoints($ph->id, $total_net);
+            $ep     = $ept->earnPoints($ph->ORDERSLIPNO, $total_net);
             $eps    = $ept->save();
 
             //update customer points for new earned point
@@ -162,6 +183,7 @@ class PurchaseController extends Controller
 		    // all good
 		} catch (\Exception $e) {
 		    DB::rollback();
+            dd($e);
 		    // something went wrong 
 		} 
 

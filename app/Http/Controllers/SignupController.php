@@ -47,8 +47,10 @@ class SignupController extends Controller
         $user->save();
 
         $customer = new Customer;
-        $customer->user_id = $user->id;
-        $customer->full_name = $user->name;
+        $customer->user_id      = $user->id;
+        $customer->full_name    = $user->name;
+        $customer->points       = 0;
+        $customer->wallet       = 0;
         $customer->save();
 
         $role = new UserRole;

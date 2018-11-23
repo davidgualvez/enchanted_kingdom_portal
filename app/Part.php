@@ -11,7 +11,7 @@ class Part extends Model
     protected $table 	 	= 'SiteParts'; 
     public $timestamps 		= false;
 
-    //custom variable
+    //custom variable used in table 
     public $product_id      = 'PRODUCT_ID';
     public $branch_id       = 'ARNOC';
     public $name            = 'SHORTCODE';
@@ -19,12 +19,17 @@ class Part extends Model
     public $srp             = 'RETAIL';
     public $category_id     = 'CATEGORY';
     public $group_id        = 'GROUP';
+    public $image           = 'IMAGE';
 
     
     //logic
+    public function groupp(){
+        return $this->belongsTo('App\Group',$this->group_id)->select('GROUPCODE','DESCRIPTION');
+    }
+
     public function activePromo(){
     	$now = Carbon::now();
-    	return $this->hasOne('App\ProductPromotion', $this->product_id)
+    	return $this->hasOne('App\ProductPromotion', 'part_id')
     				->where('start_at','<=',$now)
     				->where('end_at', '>=', $now);
     }

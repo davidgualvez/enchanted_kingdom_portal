@@ -3,14 +3,20 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Part;
 
 class Cart extends Model
 {
     //
     /*----------  relationship  ----------*/ 
-    public function part(){
-        return $this->belongsTo('App\Part','product_id');
-    }
+    // public function part(){
+    //     $part = new Part;
+    //     return $part->where($part->branch_id, config('cpp.branch_id'))
+    //             ->where($part->product_id, "{$this->product_id}")
+    //             ->first();
+
+    //     //return $this->belongsTo('App\Part','product_id');
+    // }
     
     /*----------  logic  ----------*/
     public static function findByUserAndProduct($user_id,$product_id){
@@ -21,8 +27,11 @@ class Cart extends Model
     }
 
     public static function findByUser($user_id){
-    	return  static::with('part','part.activePromo','part.activePromo.promotion')
-                    ->where('branch_id', config('cpp.branch_id'))
+    	// return  static::with('part','part.activePromo','part.activePromo.promotion')
+     //                ->where('branch_id', config('cpp.branch_id'))
+     //                ->where('user_id',$user_id)  
+     //                ->get();
+        return  static::where('branch_id', config('cpp.branch_id'))
                     ->where('user_id',$user_id)  
                     ->get();
     }

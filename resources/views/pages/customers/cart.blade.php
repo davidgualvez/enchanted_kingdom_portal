@@ -22,7 +22,7 @@
 		  </thead>
 		  <tbody>  
 
-		  	@forelse($cartList as $key=>$cart) 
+		  	@forelse($result['cartList'] as $key=>$cart) 
   			    <tr>
   			    	<td class="ui small header"> {{ ++$key }}</td>
   			      	<td> {{ $cart['name'] }} </td> 
@@ -69,7 +69,7 @@
 		  				<strong>Sub Total :  </strong> 
 		  			</th>
 		  			<th class="right aligned" style="padding-right: 25px;">
-		  				{{ number_format( $total_gross , 2, '.', ',')  }}
+		  				{{ number_format( $result['total_gross'] , 2, '.', ',')  }}
 		  			</th>
 		  		</tr> 
 		  		<tr class="right aligned">
@@ -77,7 +77,7 @@
 		  				<strong>Discounts :  </strong> 
 		  			</th>
 		  			<th class="right aligned" style="padding-right: 25px;">
-		  				{{ number_format( $total_discount , 2, '.', ',')  }}
+		  				{{ number_format( $result['total_discount'] , 2, '.', ',')  }}
 		  			</th>
 		  		</tr> 
 		  		<tr class="right aligned">
@@ -85,20 +85,20 @@
 		  				<strong>NET Amount :  </strong> 
 		  			</th>
 		  			<th class="right aligned" style="padding-right: 25px;">
-		  				{{ number_format( $total_net , 2, '.', ',')  }}
+		  				{{ number_format( $result['total_net'] , 2, '.', ',')  }}
 		  			</th>
 		  		</tr> 
 		  		<tr>
 		  			<th colspan="6">
 		  				<!-- <form action="/checkout" method="post"> -->
-		  				@if(count($cartList) == 0)
-		  				<button disabled class="ui right floated small success icon primary button" id="checkout">
-		  					<i class="check icon"></i> Checkout
-		  				</button>
+		  				@if(count($result['cartList']) == 0)
+			  				<button disabled class="ui right floated small success icon primary button" id="checkout">
+			  					<i class="check icon"></i> Checkout
+			  				</button>
 		  				@else
-		  				<button class="ui right floated small success icon primary button" id="checkout">
-		  					<i class="check icon"></i> Checkout
-		  				</button>
+			  				<button class="ui right floated small success icon primary button" id="checkout">
+			  					<i class="check icon"></i> Checkout
+			  				</button>
 		  				@endif
 		  				
 		  				<!-- <div class="ui right floated small success icon primary button" id="checkout">

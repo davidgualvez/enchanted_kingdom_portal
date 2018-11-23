@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Part;
+use App\AppServices\SitePartServices;
 use Carbon\Carbon;
 
 class PartController extends Controller
@@ -13,14 +14,14 @@ class PartController extends Controller
         $now        = Carbon::now();
         $search     = $request->search;  
         
-        $p = Part::where('branch_id',config('cpp.branch_id'))
-                ->where('name','LIKE','%'.$search.'%')         
-                ->simplePaginate(12);
-        
+        $sps    = new SitePartServices;
+        $result = $sps->getPartPerBranch($search);
+
+
         return response()->json([ 
             'success'   => true,
             'status'    => 200,
-            'data'      => $p
+            'data'      => $result
         ]); 
     }
 }
