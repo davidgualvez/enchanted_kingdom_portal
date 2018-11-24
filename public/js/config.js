@@ -21,7 +21,8 @@ var routes = {
         checkout :      '/checkout'
     },
     user : {
-        updateInfo :    '/me'
+        updateInfo :    '/me',
+        activePurchase: '/purchase/details/active'
     }
 };
 

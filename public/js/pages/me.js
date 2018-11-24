@@ -6,25 +6,8 @@ $(document).ready(function(){
 	btnUpdateInfo();
 
 	$('.ui.accordion').accordion(); 
-
-	$('.btnActiveOrder').on('click', function(){
-		console.log(this.id); 
-		$('.ui.dimmer').dimmer("show");
-
-		JsBarcode("#barcode", '54321' , {
-			format: "CODE39",
-			// lineColor: "#0aa",
-			width: 3,
-			mod43:true
-			// height: 40,
-			// displayValue: false
-		});
-		
-		console.log( $('.btnActiveOrder#'+this.id).parent().prev().prev().prev().text() );
-		$('#purchase_order').text( $('.btnActiveOrder#'+this.id).parent().prev().prev().prev().text() );
-		//$('#purchase_id').text(this.id);
-	});
-
+  
+	activePurchaseDisplayer();
 });
 
 function btnUpdateInfo(){
@@ -101,4 +84,71 @@ function updateInfo(data){
 		});
 
 	});
+}
+
+function activePurchaseDisplayer(){
+	$('#active_purchase').empty();
+
+	activePurchase();
+}
+
+function activePurchase(){ 
+	post(routes.user.activePurchase,{}, function(response){
+			
+		$.each(response.data, function (key, value) {
+			$('#active_purchase').append(
+				 '<div class="item">'+
+			   	    '<div class="image"  style="width: 100px; height: 100px;">'+
+			   	      '<img src="'+value.image+'" class="">'+
+			   	    '</div>'+
+			   	    '<div class="content">'+
+			   	      '<a class="header"> '+value.product_name+' </a>'+
+			   	      '<div class="meta">'+
+			   	        '<span class="cinema"> '+value.group_name+' </span>'+
+			   	      '</div>'+
+			   	      '<div class="description">'+
+			   	        '<p></p>'+
+			   	      '</div>'+
+			   	      '<div class="extra">'+
+			   	        '<div class="ui right floated primary tiny button btnActiveOrder" id="'+value.purchase_detail_id+'">'+
+			   	          'Show Code'+
+			   	          '<i class="right chevron icon"></i>'+
+			   	        '</div>'+
+			   	        '<div class="ui mini label">Valid until <strong> '+value.valid_until+' </strong></div>'+
+			   	        '<div class="ui mini label">Qty : ' +value.remaining_qty+ '</div>'+
+			   	      '</div>'+
+			   	    '</div>'+
+		   	  '</div>'
+			);
+
+			showBarcode(value.purchase_detail_id);
+		});
+
+		
+	});
+}
+
+function showBarcode(id){
+	$('.btnActiveOrder#'+id).on('click', function(){
+		console.log(this.id); 
+		$('.ui.dimmer').dimmer("show",
+			{
+				onHide: function(){
+					console.log('test');
+				}
+			});
+
+		JsBarcode("#barcode", ''+id , {
+			format: "CODE39",
+			// lineColor: "#0aa",
+			width: 3,
+			// mod43:true
+			// height: 40,
+			// displayValue: false
+		});
+		
+		console.log( $('.btnActiveOrder#'+this.id).parent().prev().prev().prev().text() );
+		$('#purchase_order').text( $('.btnActiveOrder#'+this.id).parent().prev().prev().prev().text() );
+		//$('#purchase_id').text(this.id);
+	}); 
 }

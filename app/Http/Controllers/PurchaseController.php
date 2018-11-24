@@ -26,7 +26,7 @@ class PurchaseController extends Controller
 {
     //
     public function checkout(Request $request){
-        $validity = Carbon::now()->addDay();
+        
         //dd( ''.$validity );
         
 
@@ -114,13 +114,14 @@ class PurchaseController extends Controller
         	    ]);
 
         	    //create purchase details
+                $validity = Carbon::now()->addDay();
         	    $pd = new PurchaseDetail;
                 $pd->BRANCHID               = config('cpp.branch_id');
                 $pd->ORDERSLIPDETAILID      = $blin->getNewIdForOrderSlipDetails();
         	    $pd->ORDERSLIPNO 			= $ph->ORDERSLIPNO; 
         	    $pd->PRODUCT_ID           	= $product_id; 
         	    $pd->product_promotion_id 	= $product_promotion_id;
-        	    $pd->description       = $description;
+        	    $pd->product_description    = $description;
         	    $pd->QUANTITY          = $qty;
                 $pd->qty_remaining     = $qty;
         	    $pd->RETAILPRICE       = $srp;
@@ -129,8 +130,10 @@ class PurchaseController extends Controller
         	    $pd->DISCRATE          = $discount_value;
         	    $pd->DISCOUNT          = $discount_amount;
         	    $pd->NETAMOUNT         = $buying_price;
-        	    $pd->STATUS 			= 'P';
-        	    $pd->valid_until 		= ''.$validity;
+        	    $pd->STATUS 		   = 'P';
+        	    $pd->valid_at 		   = $validity;
+                $pd->CUSTOMERCODE      = $user->customer->id;
+                $pd->ACCOUNTNUMBER     = $user->mobile_number;
         	    $pd->save();
 
 
@@ -195,4 +198,6 @@ class PurchaseController extends Controller
         	'message' 	=> 'success'
         ]);
     }
+
+   
 }

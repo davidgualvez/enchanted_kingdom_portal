@@ -68,3 +68,6 @@ Route::post('/checkout', 						'PurchaseController@checkout');
 //products and promo
 Route::get('/promos',                            'ProductPromotionController@activePromo');
 Route::get('/products',                          'PartController@lists');
+
+//active purchase
+Route::post('/purchase/details/active', 		'PurchaseDetailController@active');

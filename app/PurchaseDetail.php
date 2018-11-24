@@ -16,8 +16,8 @@ class PurchaseDetail extends Model
     public $id 					= 'ORDERSLIPDETAILID';
     public $purchase_id 		= 'ORDERSLIPNO';
     public $part_id 			= 'PRODUCT_ID';
-    public $product_promotion_id= 'missing';
-    public $description 		= 'missing';
+    public $product_promotion_id= 'product_promotion_id';
+    public $description 		= 'description';
     public $qty 				= 'QUANTITY';
     public $srp 				= 'RETAILPRICE';
     public $selling_price 		= 'AMOUNT';
@@ -26,5 +26,5 @@ class PurchaseDetail extends Model
     public $discount_rate 		= 'DISCRATE';
     public $buying_price 		= 'NETAMOUNT';
     public $status 				= 'STATUS';
-    public $valid_until 		= 'missing';
+    public $valid_until 		= 'valid_until';
 }

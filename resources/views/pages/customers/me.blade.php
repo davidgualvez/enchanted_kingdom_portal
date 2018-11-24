@@ -62,7 +62,7 @@
 					<div class="column">
 						<div class="ui segment">
 							<div class="ui header">Active Purchase</div>
-						   	<div class="ui divided items"> 
+						   	<div class="ui divided items" id="active_purchase"> 
 
 						   	  <div class="item">
 							   	    <div class="image"  style="width: 100px; height: 100px;">

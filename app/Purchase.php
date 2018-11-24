@@ -21,4 +21,6 @@ class Purchase extends Model
     public $net_amount 			= 'NETAMOUNT';
     public $type 				= 'TRANSACTTYPEID';
     public $type_details 		= 'TRANSACTTYPEDETAILSID'; 
+
+    
 }
