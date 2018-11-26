@@ -3,7 +3,7 @@
   Our Products
 </h4>
 
-<div class="ui six doubling cards" id="items_product">
+<div class="ui five doubling cards" id="items_product">
   <!-- <div class="card">
 	    <div class="image">
 	      <img src="https://source.unsplash.com/random/250x250">

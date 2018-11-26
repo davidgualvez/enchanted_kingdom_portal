@@ -10,13 +10,13 @@
 <script src="http://cdn.jsdelivr.net/jquery.glide/1.0.6/jquery.glide.min.js"></script>
 <script src="/js/pages/home.js"></script>
 <script> 
-	$('.slider').glide({
+	$('.slider').glide({ 
 	  autoplay: false,
 	  arrowsWrapperClass: 'slider-arrows',
 	  arrowRightText: '',
 	  arrowLeftText: ''
 	});
-</script>
+</script> 
 @endsection
 
 @section('content')

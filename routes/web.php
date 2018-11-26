@@ -17,8 +17,14 @@ Route::get('/default', function(){
 });
 //END
 
+ 
 Route::get('/', function () {
-    return view('pages.customers.home');
+	$now = \Carbon\Carbon::now();
+
+	$dash = \App\Dashboard::where('start_at' , '<=', $now)
+				->where('end_at', '>=', $now)
+				->get(); 
+    return view('pages.customers.home', compact('dash') );
 });
 
 Route::get('/shops', function(){

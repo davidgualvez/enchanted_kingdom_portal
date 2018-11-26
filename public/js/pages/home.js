@@ -103,7 +103,7 @@ function dataDisplayerProduct(data, from) {
                 '</div>'+
                 '<div class="extra content">'+
                   '<span class="right floated"> '+
-                    '<div id="btn-product-'+value.id+'" class="ui vertical animated button" tabindex="0">'+
+                    '<div id="btn-product-'+value.id+'" class="ui vertical animated  button" tabindex="0">'+
                       '<div class="hidden content">Add</div>'+
                       '<div class="visible content">'+
                         '<i class="shop icon"></i>'+

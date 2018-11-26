@@ -1,12 +1,20 @@
-<div class="slider slider1" style="height: 500px;">
-  <div class="slides">
-    <div class="slide-item item1"> 
+@if( !empty($dash) )
+    <div class="slider slider1" style="height: 500px;">
+      <div class="slides">
+        
+        @foreach( $dash as $dash_item) 
+            <div class="slide-item " style="background:url('{{ $dash_item->image }}') no-repeat center;"> 
+            </div>
+        {{-- <div class="slide-item " style="background:url('https://source.unsplash.com/random/1250x900') no-repeat center;"> 
+        </div> 
+        <div class="slide-item " style="background:url('https://source.unsplash.com/random/1250x900') no-repeat center;"> 
+        </div>
+        <div class="slide-item " style="background:url('https://source.unsplash.com/random/1250x900') no-repeat center;">
+        </div>
+        <div class="slide-item " style="background:url('https://source.unsplash.com/random/1250x900') no-repeat center;">
+        </div> --}}
+        @endforeach
+
+      </div>
     </div>
-    <div class="slide-item item2"> 
-    </div>
-    <div class="slide-item item3">
-    </div>
-    <div class="slide-item item4">
-    </div>
-  </div>
-</div>
+@endif
