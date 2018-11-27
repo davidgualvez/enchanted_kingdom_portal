@@ -18,7 +18,7 @@ class PurchaseDetailController extends Controller
         $now  = Carbon::now();
         $user = Auth::user();
         //dd($user->customer->id, $now);
-        $pd = PurchaseDetail::where('CUSTOMERCODE', $user->customer->id)
+        $pd = PurchaseDetail::where('customer_id', $user->customer->CUSTOMERID)
         		->where('valid_at','>=', $now)
         		->where('qty_remaining','>',0)
         		->get();

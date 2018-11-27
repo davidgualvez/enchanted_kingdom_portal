@@ -1,4 +1,4 @@
-<h4 class="ui horizontal divider header">
+{{-- <h4 class="ui horizontal divider header">
   <i class="tag icon"></i>
   Today's Special
 </h4>
@@ -172,4 +172,4 @@
 		  </button>
 		</div>
 	</div> 
-</div> 
+</div>  --}}

@@ -6,21 +6,27 @@ use Illuminate\Http\Request;
 use App\User; 
 use App\Customer;
 use App\UserRole;
-use Auth, Hash;
+use Auth, Hash, DB;
 use Validator;
+
+use App\AppServices\BranchLastIssuedNumberServices;
+use Carbon\Carbon;
 
 class SignupController extends Controller
 {
     //
     public function signup(Request $request){
         //validation
-        $data = $request->only('name','email','mobile_number','password');
+
+        $data = $request->only('name','email','mobile_number','password','birthdate');
         $rules = [
             'name'              => 'required',
             'email'             => 'required',
             'mobile_number'     => 'required', 
-            'password'          => 'required|min:6'
+            'password'          => 'required|min:6',
+            'birthdate'         => 'required'
         ];
+
         $result = Validator::make($data,$rules);
         if($result->fails()){
              return back()->withInput()->withErrors($result);
@@ -39,28 +45,65 @@ class SignupController extends Controller
             return back()->withInput()->with('error', 'Mobile number already in used.');
         } 
 
-        $user = new User;
-        $user->name             = $request->name;
-        $user->email            = $request->email;
-        $user->mobile_number    = $mobile;
-        $user->password         = Hash::make($request->password);
-        $user->save();
+        
+        try{
+            //begin
+            DB::beginTransaction();
 
-        $customer = new Customer;
-        $customer->user_id      = $user->id;
-        $customer->full_name    = $user->name;
-        $customer->points       = 0;
-        $customer->wallet       = 0;
-        $customer->save();
+            $user = new User;
+            $user->name             = $request->name;
+            $user->email            = $request->email;
+            $user->mobile_number    = $mobile;
+            $user->password         = md5($request->password);
+            $user->save();
 
-        $role = new UserRole;
-        $role->user_id = $user->id;
-        $role->role_id = 2;
-        $role->save();
+            if(!$user){
+                DB::rollback();
+                return back()->withInput()->with('error', 'Error saving record. Please try again.');
+            }
 
-        Auth::login($user, true);
+            $now = Carbon::now();
+            $birthdate = Carbon::parse($request->birthdate);
+            $age  = $now->year - $birthdate->year;
+            if($age > 200){
+                DB::rollback();
+                return back()->withInput()->with('error', "Opps.. Your're not a human! Please put a valid and correct birthdate.");
+            }
+            //dd($now->year, $birthdate->year, $age);
 
-        return redirect('/');
+            $b = new BranchLastIssuedNumberServices; 
+            $customer = new Customer;
+            $customer->BRANCHID     = config('cpp.branch_id');
+            $customer->CUSTOMERID   = $b->getNewIdForCustomer();
+            $customer->user_id      = $user->id;
+            $customer->NAME         = $user->name;
+            $customer->points       = 0;
+            $customer->wallet       = 0;
+            $customer->mobile_number= $mobile;
+            $customer->birthdate    = $request->birthdate;
+            $customer->save();
+
+            if(!$customer){
+                DB::rollback();
+                return back()->withInput()->with('error', 'Error saving record. Please try again.');
+            }
+
+            $role = new UserRole;
+            $role->user_id = $user->id;
+            $role->role_id = 2;
+            $role->save();
+
+            Auth::login($user, true); 
+
+            //success 
+            DB::commit();
+            return redirect('/');  
+
+        }catch (\Exception $e){
+            //fail
+            DB::rollback();
+            return back()->withInput()->with('error', $e->getMessage());
+        } 
     }
 
     public function create(){

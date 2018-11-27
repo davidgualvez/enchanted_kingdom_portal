@@ -126,7 +126,13 @@ class LoginController extends Controller
             return back()->withInput()->with('error', 'Mobile number not found!');
         } 
  
-        if (!Hash::check($request->password, $user->password)) {
+        // if (!Hash::check($request->password, $user->password)) {
+        //     // The passwords match...
+        //     return back()->withInput()->with('error', 'Invalid Password!');
+        // }
+         
+
+        if ( md5($request->password) != $user->password) {
             // The passwords match...
             return back()->withInput()->with('error', 'Invalid Password!');
         }

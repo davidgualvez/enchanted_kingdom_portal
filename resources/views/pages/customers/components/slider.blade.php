@@ -1,4 +1,5 @@
-@if( !empty($dash) )
+ 
+@if( count($dash) > 0 )
     <div class="slider slider1" style="height: 500px;">
       <div class="slides">
         

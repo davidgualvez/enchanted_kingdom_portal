@@ -19,11 +19,14 @@ class CartController extends Controller
     public function showCart(){
         $user   = Auth::user();
          
-        $carts  = Cart::findByUser($user->id); 
+        $carts  = Cart::findByUserAndType($user->id,'wallet'); 
+        $cartsReward  = Cart::findByUserAndType($user->id,'points'); 
 
         $mct    = new CartTransformer;
-        $result  = $mct->myCart($carts); 
-        //dd($carts);
+        $result         = $mct->myCart($carts); 
+        $reward_carts   = $mct->myCartReward($cartsReward);
+         
+    
         //=============================================== 
         // $total_gross = 0;
         // $total_discount = 0;
@@ -99,7 +102,7 @@ class CartController extends Controller
      //    );
 
         return view('pages.customers.cart', 
-            compact('result')
+            compact('result','reward_carts')
         );
     } 
 
@@ -140,6 +143,7 @@ class CartController extends Controller
 	    	$cart->user_id 		= $user->id;
 	    	$cart->product_id 	= $request->product_id;
 	    	$cart->qty 			= $request->qty;
+            $cart->type         = 'wallet';
 	    	$cart->save();
     	} 
 
@@ -273,10 +277,9 @@ class CartController extends Controller
     		],200);
     }
 
-    public function increase($id){
+    public function increase($id){ 
         $user = Auth::user(); 
-        $cart = Cart::find($id);
-
+        $cart = Cart::find($id); 
         if($cart->user_id != $user->id){
             return back()->with('error', 'Item not belong to the user.');
         }
@@ -307,6 +310,7 @@ class CartController extends Controller
     }
 
     public function cartCount(){
+
         //$token = $request->token; 
         if(!Auth::check()){
             return response()->json([
@@ -324,4 +328,55 @@ class CartController extends Controller
                 'count'         =>      $count
             ]);
     }
+
+    // PPPPPPPPPPPPPP  OOOOOOOOO IIIIIIIII NNNNNNNNNNN TTTTTTTT SSSSSSSSSSS
+    public function addToCartPoints(Request $request){  
+
+        $data   =   $request->only('product_id','qty');
+        $rules  =   [
+            'product_id'    =>  'required',
+            'qty'           =>  'required'
+        ];
+
+        $validator  =   Validator::make($data,$rules);
+        if($validator->fails()){
+            return response()->json([
+                'success'       =>      false, 
+                'status'        =>      200,
+                'message'       =>      'Product ID & Qty is required.'
+            ]);
+        }
+
+        //$token = $request->token; 
+        if(!Auth::check()){
+            return response()->json([
+                'success'       =>      false, 
+                'status'        =>      401,
+                'message'       =>      'Unauthorized Access'
+            ]);
+        }  
+        $user  = Auth::user(); 
+
+        $cart = Cart::findByUserAndProductPoints($user->id,$request->product_id);
+        if($cart){
+            $cart->qty = $cart->qty + $request->qty; 
+            $cart->save(); 
+        }else{
+            $cart = new Cart;
+            $cart->branch_id    = config('cpp.branch_id');
+            $cart->user_id      = $user->id;
+            $cart->product_id   = $request->product_id;
+            $cart->qty          = $request->qty;
+            $cart->type         = 'points';
+            $cart->save();
+        } 
+
+        return response()->json([
+            'success'       =>      true, 
+            'status'        =>      200,
+            'message'       =>      'Added to cart.'
+        ]);
+    }
+
+
 }

@@ -15,8 +15,19 @@ var api = '';
 var routes = {
     login:              '/signup',
     products:           '/products',
+    rewards:            '/rewards/lists',
     cart: {
-        addToCart :     '/cart/add_to_cart', //[product_id, qty] 
+        points: {
+            addToCart :     '/cart/points/add_to_cart', //[product_id, qty]  
+            count :         '/cart/points/count',
+            checkout :      '/points/checkout'
+        },
+        wallet:{
+            addToCart :     '/cart/wallet/add_to_cart', //[product_id, qty]  
+            count :         '/cart/wallet/count',
+            checkout :      '/wallet/checkout'
+        },
+        addToCart :     '/cart/add_to_cart', //[product_id, qty]  
         count :         '/cart/count',
         checkout :      '/checkout'
     },
@@ -221,3 +232,11 @@ function text_truncate(str, length, ending) {
       return str;
     }
 };
+
+function FormatNumberLength(num, length) {
+    var r = "" + num;
+    while (r.length < length) {
+        r = "0" + r;
+    }
+    return r;
+}

@@ -9,6 +9,7 @@ use App\User;
 use App\Customer;
 use App\Cart;
 
+use App\Reward;
 use App\Part;
 use App\ProductPromotion;
 use App\Promotion;
@@ -20,6 +21,8 @@ use App\PurchaseDetail;
 use App\AppServices\EarnPointTransactionServices;
 use App\AppServices\BranchLastIssuedNumberServices;
 
+use App\Redemption;
+use App\RedemptionDetail;
 use DB;
 
 class PurchaseController extends Controller
@@ -36,17 +39,24 @@ class PurchaseController extends Controller
         $blin->findOrCreate();    
 
         $user   = Auth::user();
-        $carts  = Cart::findByUser($user->id);  
+        $carts  = Cart::findByUserAndType($user->id,'wallet');  
 
         try { 
-
+            // dd(
+            //     config('cpp.branch_id'), 
+            //     $blin->getNewIdForSalesOrderHeader(),
+            //     $user->customer->id,
+            //     1
+            // );
         	//create a purchase header
+            $new_sales_order_id     = $blin->getNewIdForSalesOrderHeader();
         	$ph = new Purchase;
-        	$ph->BRANCHID 		= config('cpp.branch_id');
-            $ph->ORDERSLIPNO    = $blin->getNewIdForOrderSlipHeader();
-        	$ph->CUSTOMER_ID	= $user->customer->id;
-        	$ph->TRANSACTTYPEID = 1;
-        	$ph->save(); 
+        	$ph->branch_id 		        = config('cpp.branch_id');
+            $ph->sales_order_id         = $new_sales_order_id;
+        	$ph->customer_id	        = $user->customer->CUSTOMERID;
+        	$ph->transaction_type_id    = 1;
+        	$ph->save();  
+            
         	//=============================================== 
         	$total_gross = 0;
         	$total_discount = 0;
@@ -115,25 +125,26 @@ class PurchaseController extends Controller
 
         	    //create purchase details
                 $validity = Carbon::now()->addDay();
+                $new_sales_order_detail_id = $blin->getNewIdForSalesOrderDetails();
         	    $pd = new PurchaseDetail;
-                $pd->BRANCHID               = config('cpp.branch_id');
-                $pd->ORDERSLIPDETAILID      = $blin->getNewIdForOrderSlipDetails();
-        	    $pd->ORDERSLIPNO 			= $ph->ORDERSLIPNO; 
-        	    $pd->PRODUCT_ID           	= $product_id; 
-        	    $pd->product_promotion_id 	= $product_promotion_id;
-        	    $pd->product_description    = $description;
-        	    $pd->QUANTITY          = $qty;
-                $pd->qty_remaining     = $qty;
-        	    $pd->RETAILPRICE       = $srp;
-        	    $pd->AMOUNT            = $selling_price;
-        	    $pd->ISPERCENT         = $discount_type; 
-        	    $pd->DISCRATE          = $discount_value;
-        	    $pd->DISCOUNT          = $discount_amount;
-        	    $pd->NETAMOUNT         = $buying_price;
-        	    $pd->STATUS 		   = 'P';
-        	    $pd->valid_at 		   = $validity;
-                $pd->CUSTOMERCODE      = $user->customer->id;
-                $pd->ACCOUNTNUMBER     = $user->mobile_number;
+                $pd->branch_id           = config('cpp.branch_id');
+                $pd->sales_order_detail_id = $new_sales_order_detail_id;
+        	    $pd->sales_order_id 	 = $new_sales_order_id; 
+        	    $pd->sitepart_id         = $product_id; 
+        	    //$pd->product_promotion_id 	= $product_promotion_id;
+        	    $pd->part_description    = $description;
+        	    $pd->qty                 = $qty;
+                $pd->qty_remaining       = $qty;
+        	    $pd->srp                 = $srp;
+        	    $pd->amount              = $selling_price;
+        	    $pd->discount_ispercent  = $discount_type; 
+        	    $pd->discount_rate       = $discount_value;
+        	    $pd->discount_amount     = $discount_amount;
+        	    $pd->net_amount          = $buying_price;
+        	    $pd->status 		     = 'P';
+        	    $pd->valid_at 		     = $validity;
+                $pd->customer_id         = $user->customer->CUSTOMERID;
+                $pd->customer_number     = $user->mobile_number;
         	    $pd->save();
 
 
@@ -155,11 +166,11 @@ class PurchaseController extends Controller
         	}
 
         	//update purchase header for total;
-            Purchase::where('ORDERSLIPNO', $ph->ORDERSLIPNO) 
+            Purchase::where('sales_order_id', $new_sales_order_id) 
                       ->update([
-                        'TOTALAMOUNT'        => $total_gross,
-                        'DISCOUNT'           => $total_discount,
-                        'NETAMOUNT'          => $total_net,
+                        'total_amount'        => $total_gross,
+                        'total_discount'      => $total_discount,
+                        'net_amount'          => $total_net,
                     ]);
 
         	// $ph->TOTALAMOUNT 		= $total_gross;
@@ -168,36 +179,159 @@ class PurchaseController extends Controller
         	// $ph->update($ph->ORDERSLIPNO);
 
         	//update wallet
-        	$customer = Customer::find($user->customer->id);
-        	$customer->wallet = $customer->wallet - $total_net;
-        	$customer->save();
+        	$customer = Customer::where('CUSTOMERID',$user->customer->CUSTOMERID)
+                            ->first();
+            $customerr = Customer::where('CUSTOMERID',$user->customer->CUSTOMERID)
+                            ->update([
+                            'wallet'    => ($customer->wallet - $total_net), 
+                        ]); 
+
+         //    $customer->wallet = $customer->wallet - $total_net;
+        	// $customer->save(['CUSTOMERID' => $user->customer->CUSTOMERID]); 
 
             //earned points 
             $ept    = new  EarnPointTransactionServices;
-            $ep     = $ept->earnPoints($ph->ORDERSLIPNO, $total_net);
+            $ep     = $ept->earnPoints($new_sales_order_id, $total_net, $user->customer->CUSTOMERID);
             $eps    = $ept->save();
 
             //update customer points for new earned point
-            $customer->points   = $customer->points + $eps->earned_points;
-            $customer->save();
+            $customerrr = Customer::where('CUSTOMERID',$user->customer->CUSTOMERID)
+                            ->update([
+                            'points'    => ($customer->points + $eps->earned_points), 
+                        ]); 
+            // $customer->points   = $customer->points + $eps->earned_points;
+            // $customer->save();
 
         	//remove cart from this current branch
-        	$cart = Cart::removeCartByUserID($user->id);
+        	$cart = Cart::removeCartByUserIDAndType($user->id,'wallet');
  
 		    DB::commit();
 		    // all good
+            return response()->json([
+                'success'   => true,
+                'status'    => 200,
+                'message'   => 'success'
+            ]);
+
 		} catch (\Exception $e) {
 		    DB::rollback();
-            dd($e);
+            //dd($e);
+            return response()->json([
+                'success'   => false,
+                'status'    => 500,
+                'message'   => $e->getMessage()
+            ]);
 		    // something went wrong 
-		} 
-
-        return response()->json([
-        	'success' 	=> true,
-        	'status' 	=> 200,
-        	'message' 	=> 'success'
-        ]);
+		}  
     }
 
-   
+   public function checkoutReward(Request $request){ 
+
+        DB::beginTransaction();
+
+        $blin = new BranchLastIssuedNumberServices;
+        $blin->findOrCreate();    
+
+        $user   = Auth::user();
+        $carts  = Cart::findByUserAndType($user->id,'points');  
+
+        try { 
+            // dd(
+            //     config('cpp.branch_id'), 
+            //     $blin->getNewIdForSalesOrderHeader(),
+            //     $user->customer->id,
+            //     1
+            // );
+            //create a purchase header
+            $new_redemption_id     = $blin->getNewIdForRedemptionHeader();
+            $ph = new Redemption;
+            $ph->branch_id              = config('cpp.branch_id');
+            $ph->redemption_header_id   = $new_redemption_id;
+            $ph->customer_id            = $user->customer->CUSTOMERID;
+            //$ph->transaction_type_id    = 1;
+            $ph->save();  
+            
+            //=============================================== 
+            // $total_gross = 0;
+            // $total_discount = 0;
+            $total_points = 0;
+            $cartList = [];
+            foreach ($carts as $key => $value) {
+                # code... 
+                $rewardd = new Reward;
+                $reward = $rewardd->where('branch_id', config('cpp.branch_id'))
+                            ->where('id', $value->product_id)
+                            ->first();
+                
+                $subTotalPoints = $value->qty * $reward->required_points;
+                //create purchase details
+                $validity = Carbon::now()->addDay();
+                $new_redemption_detail_id = $blin->getNewIdForRedemptionDetails();
+                $pd = new RedemptionDetail;
+                $pd->branch_id           = config('cpp.branch_id');
+                $pd->redemption_detail_id = $new_redemption_detail_id;
+                $pd->redemption_header_id = $new_redemption_id; 
+                $pd->reward_id          = $reward->id;  
+                $pd->qty                 = $value->qty;
+                $pd->qty_remaining       = $value->qty;
+                $pd->points              = $reward->required_points; 
+                $pd->total_points        = $subTotalPoints;
+                $pd->status              = 0; 
+                $pd->customer_id         = $user->customer->CUSTOMERID; 
+                $pd->save();
+ 
+                $total_points         += $subTotalPoints;
+            }
+            //=============================================== 
+
+            //check if the e money is enough to purchase this transaction 
+            if($user->customer->points < $total_points){
+                DB::rollback();
+                return response()->json([
+                    'success'   => false,
+                    'status'    => 401,
+                    'message'   => 'Your points is not enough to redeem this item!'
+                ]);
+                //throw new Exception;
+            }
+
+            //update purchase header for total;
+            $customer = Customer::where('CUSTOMERID',$user->customer->CUSTOMERID)
+                            ->first();
+
+            Redemption::where('redemption_header_id', $new_redemption_id) 
+                      ->update([
+                        'total_points'        => $total_points, 
+                    ]);  
+
+            //update customer points for redemption
+            $customerrr = Customer::where('CUSTOMERID',$user->customer->CUSTOMERID)
+                            ->update([
+                            'points'    => ($customer->points - $total_points), 
+                        ]); 
+            // $customer->points   = $customer->points + $eps->earned_points;
+            // $customer->save();
+
+            //remove cart from this current branch
+            $cart = Cart::removeCartByUserIDAndType($user->id,'points');
+ 
+            DB::commit();
+            // all good
+            return response()->json([
+                'success'   => true,
+                'status'    => 200,
+                'message'   => 'success'
+            ]);
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            //dd($e);
+            return response()->json([
+                'success'   => false,
+                'status'    => 500,
+                'message'   => $e->getMessage()
+            ]);
+            // something went wrong 
+        }  
+    }
 }

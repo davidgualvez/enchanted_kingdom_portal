@@ -1,6 +1,6 @@
 <h4 class="ui horizontal divider header">
   <i class="gift icon"></i>
-  Our Products
+ 	Rewards
 </h4>
 	
 <div class="ui secondary menu"> 
@@ -10,15 +10,15 @@
   <div class="right menu">
     <div class="item">
       <div class="ui icon input">
-        <input type="text" id="search_our_products" placeholder="Search products...">
-        <i class="search link icon" id="btn_search_our_products"></i>
+        <input type="text" id="search_rewards" placeholder="Search rewards...">
+        <i class="search link icon" id="btn_search_rewards"></i>
       </div>
     </div>
   </div>
 </div>
 
-<div class="ui five doubling cards" id="items_product">
-  <!-- <div class="card">
+<div class="ui five doubling cards" id="items_rewards">
+{{--   <div class="card">
 	    <div class="image">
 	      <img src="https://source.unsplash.com/random/250x250">
 	    </div>
@@ -44,17 +44,17 @@
 	        <a class="ui tag label">P 0.00</a>
 	      </span>
 	    </div>
-  </div>  --> 
+  </div>   --}}
 </div> 
 
 <div class="ui grid">
 	<div class="column">
 		<div class="tiny ui buttons">
-		  <button class="ui button" id="prev_page_url_product">
+		  <button class="ui button" id="prev_page_url_rewards">
 		  	<i class="angle left icon"></i>
 		  	Prev
 		  </button> 
-		  <button class="ui button" id="next_page_url_product">
+		  <button class="ui button" id="next_page_url_rewards">
 		  	<i class="angle right icon"></i>
 		  	Next
 		  </button>

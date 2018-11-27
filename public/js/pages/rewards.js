@@ -1,96 +1,100 @@
 $(document).ready(function(){
     console.log('test');
 
-    paginateProduct();
-    btnNextProduct();
-    btnPrevProduct();
-    limitOnChangeProduct();
-
-    $('#btn_search_our_products').on('click', function(){
-        paginateProduct();
-    })
+    paginateRewards();
+    btnNextRewards();
+    btnPrevRewards();
+    limitOnChangeRewards(); 
 });
  
 //pagination================================ 
-var current_page_product = null;
-var prev_page_url_product = null;
-var next_page_url_product = null;
-var current_data_product = null;
+var current_page_rewards = null;
+var prev_page_url_rewards = null;
+var next_page_url_rewards = null;
+var current_data_rewards = null;
 
-function paginateProduct() {
-    var limit           = $('#limit_product').val();
-    var search_val      = $('#search_our_products').val(); 
+function paginateRewards() {
+    var limit           = $('#limit_rewards').val();
+    var search_val      = $('#search_our_rewards').val(); 
 
     var data = {
-        search          : search_val, 
+        search              : search_val, 
         limit               : limit, 
     };
 
     var url = null;
 
-    if (current_page_product == null) {
-        current_page_product = 1;
+    if (current_page_rewards == null) {
+        current_page_rewards = 1;
     }
 
     //test
     // console.log(data,current_page);
     // return;
     //end 
-    get(routes.products + "?page=" + current_page_product, data, function (response) {
-        current_page_product = response.data.current_page;
+    get(routes.rewards + "?page=" + current_page_rewards, data, function (response) {
+        current_page_rewards = response.data.current_page;
         console.log(response);
 
-        $('#current_page_product').html(current_page_product);
+        $('#current_page_product').html(current_page_rewards);
         if (response.data.next_page_url == null) {
-            $('#next_page_url_product').addClass('disabled');
+            $('#next_page_url_rewards').addClass('disabled');
         } else {
-            $('#next_page_url_product').removeClass('disabled');
+            $('#next_page_url_rewards').removeClass('disabled');
         }
 
         if (response.data.prev_page_url == null) {
-            $('#prev_page_url_product').addClass('disabled');
+            $('#prev_page_url_rewards').addClass('disabled');
         } else {
-            $('#prev_page_url_product').removeClass('disabled');
+            $('#prev_page_url_rewards').removeClass('disabled');
         }
 
-        dataDisplayerProduct(response.data.data, response.data.from); 
+        dataDisplayerRewards(response.data.data, response.data.from); 
     });
 }
 
-function btnNextProduct() {
-    $('#next_page_url_product').on('click', function () {
-        current_page_product++;
-        paginateProduct();
+function btnNextRewards() {
+    $('#next_page_url_rewards').on('click', function () {
+        current_page_rewards++;
+        paginateRewards();
     });
 }
 
-function btnPrevProduct() {
-    $('#prev_page_url_product').on('click', function () {
-        current_page_product--;
-        paginateProduct();
+function btnPrevRewards() {
+    $('#prev_page_url_rewards').on('click', function () {
+        current_page_rewards--;
+        paginateRewards();
     });
 }
 
-function limitOnChangeProduct() {
-    $('#limit_product').on('change', function () {
-        current_page_product = 1;
-        paginateProduct();
+function limitOnChangeRewards() {
+    $('#limit_rewards').on('change', function () {
+        current_page_rewards = 1;
+        paginateRewards();
     });
 }
 
-function dataDisplayerProduct(data, from) {
-    var items = $('#items_product');
+function dataDisplayerRewards(data, from) {
+    var items = $('#items_rewards');
     items.empty();
 
     if (from == null) {
-        $('#current_page_product').html('Nothing to display...');
+        //$('#current_page_rewards').html('Nothing to display...');
+        items.append(
+            '<div class="ui fluid card"> '+
+              '<div class="content">'+
+                '<a class="header">Nothing to display...</a>'+
+              '</div>'+
+            '</div>'
+        );
+        console.log('Nothing to display...1');
         return;
     }
 
-    current_data_product = data;
+    current_data_rewards = data;
     $.each(data, function (key, value) {
         // console.log(value);
-        var category = value.group_name;
+        var category = value.category.name;
         items.append(
            '<div class="card">'+
                 '<div class="image">'+
@@ -115,7 +119,7 @@ function dataDisplayerProduct(data, from) {
                     '</div>'+
                   '</span>'+
                   '<span> '+
-                    '<a class="ui tag label">P '+value.srp+'</a>'+
+                    '<a class="ui tag label">'+value.points+'</a>'+
                   '</span>'+
                 '</div>'+
            '</div>'
@@ -123,8 +127,11 @@ function dataDisplayerProduct(data, from) {
         from++;
         btnProductAddToCart(value.id);
     });
+    
 }
 //end of pagination================
+
+
 
 function btnProductAddToCart(id){
     $('#btn-product-'+id).on('click',function(){
@@ -133,8 +140,8 @@ function btnProductAddToCart(id){
             product_id : id,
             qty : 1
         };
-        
-        post(routes.cart.addToCart, data, function(response){
+         
+        post(routes.cart.points.addToCart, data, function(response){
             console.log(response);
             if(response.success == false){
                 if(response.status == 401){ 

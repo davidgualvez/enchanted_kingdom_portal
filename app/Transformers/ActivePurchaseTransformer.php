@@ -11,11 +11,11 @@ class ActivePurchaseTransformer {
 			# code...
 
 			$p = Part::where('ARNOC', config('cpp.branch_id'))
-					->where('PRODUCT_ID', $value->PRODUCT_ID)
+					->where('PRODUCT_ID', $value->sitepart_id)
 					->first();
 
 			array_push($newValue, [
-				'purchase_detail_id' 	=> $value->ORDERSLIPDETAILID,
+				'purchase_detail_id' 	=> $value->sales_order_detail_id,
 				'product_name' 			=> $p->SHORTCODE,
 				'group_name' 			=> $p->groupp->DESCRIPTION,
 				'image' 				=> $p->IMAGE,

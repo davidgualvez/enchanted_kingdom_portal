@@ -7,6 +7,7 @@ $(document).ready(function(){
  	});
 
  	checkOut();
+ 	checkOutReward();
 });
  
 
@@ -59,6 +60,49 @@ function checkOut(){
 		            action: function(){
 		               //$.alert('Confirmed!'); 
 		               post(routes.cart.checkout, {}, function(response){
+			               	console.log(response);
+			               	if(response.success == false){
+			               		showError('Error',response.message, function(){
+
+			               		});
+
+			               		$('#checkout').removeAttr('disabled', 'disabled');
+			               		return;
+			               	}
+			               	showSuccess('Success','Your order has been checkout!.', function(){
+			               		redirectTo('/');
+			               	});
+		               });
+		            }
+		        }
+		    }
+		});
+
+	});
+}
+
+function checkOutReward(){
+	$('#checkoutReward').on('click',function(){ 
+		$('#checkout').attr('disabled', 'disabled'); 
+
+		$.confirm({
+		    title: 'Confirmation!',
+		    content: 'Order confirmation, do you want to continue?',
+		    type: 'dark',
+		    boxWidth: '50%',
+    		useBootstrap: false,
+		    buttons: { 
+		        cancel: function () {
+		            //$.alert('Canceled!');
+		            $('#checkout').removeAttr('disabled', 'disabled');
+		        },
+		        somethingElse: {
+		            text: 'Confirm',
+		            btnClass: 'btn-green',
+		            keys: ['enter', 'shift'],
+		            action: function(){
+		               //$.alert('Confirmed!'); 
+		               post(routes.cart.points.checkout, {}, function(response){
 			               	console.log(response);
 			               	if(response.success == false){
 			               		showError('Error',response.message, function(){

@@ -86,6 +86,15 @@
 	  	            <input type="text" name="mobile_number" placeholder="Mobile Number" value="{{ old('mobile_number') }}">
 	  	          </div>
 	  	        </div>
+	
+				<div class="field">
+	  	        	<label class="" style="text-align: left;">Birthdate</label>
+	  	          <div class="ui left icon input">
+	  	            <i class="gift icon"></i>
+	  	            <input type="date" name="birthdate" placeholder="Birthdate" value="{{ old('birthdate') }}">
+	  	          </div>
+	  	        </div>
+
 	  	        <div class="field">
 	  	        	<label class="" style="text-align: left;">Password</label>
 	  	          <div class="ui left icon input">

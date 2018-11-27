@@ -23,21 +23,33 @@ class Cart extends Model
     	return  static::where('branch_id', config('cpp.branch_id') )
                     ->where('user_id',$user_id) 
     				->where('product_id',$product_id) 
+                     ->where('type', 'wallet')
                     ->first();
     }
 
-    public static function findByUser($user_id){
+    public static function findByUserAndProductPoints($user_id,$product_id){
+        return  static::where('branch_id', config('cpp.branch_id') )
+                    ->where('user_id',$user_id) 
+                    ->where('product_id',$product_id)
+                    ->where('type', 'points')
+                    ->first();
+    }
+
+    public static function findByUserAndType($user_id,$type=''){
     	// return  static::with('part','part.activePromo','part.activePromo.promotion')
      //                ->where('branch_id', config('cpp.branch_id'))
      //                ->where('user_id',$user_id)  
      //                ->get();
         return  static::where('branch_id', config('cpp.branch_id'))
                     ->where('user_id',$user_id)  
+                     ->where('type', $type)
                     ->get();
     }
 
-    public static function removeCartByUserID($user_id){
+    public static function removeCartByUserIDAndType($user_id,$type=''){
     	return static::where('branch_id', config('cpp.branch_id'))
-                    ->where('user_id', $user_id)->delete();
+                    ->where('user_id', $user_id)
+                    ->where('type', $type)
+                    ->delete();
     }
 }

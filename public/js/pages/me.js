@@ -138,10 +138,10 @@ function showBarcode(id){
 				}
 			});
 
-		JsBarcode("#barcode", ''+id , {
+		JsBarcode("#barcode", FormatNumberLength(id, 10) , {
 			format: "CODE39",
 			// lineColor: "#0aa",
-			width: 3,
+			// width: 3,
 			// mod43:true
 			// height: 40,
 			// displayValue: false

@@ -16,11 +16,11 @@ class CreatePurchasesTable extends Migration
         Schema::create('purchases', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('branch_id');
-            $table->integer('user_id');
-            $table->double('gross_amount',10,2)->nullable();
+            $table->integer('customer_id');
+            $table->double('total_amount',10,2)->nullable();
             $table->double('total_discount',10,2)->nullable();
             $table->double('net_amount',10,2)->nullable();
-            $table->string('type')->comment = "web=Web Transaction, pos=POS Transaction";
+            $table->integer('transaction_type_id')->comment = "web=Web Transaction, pos=POS Transaction";
             $table->timestamps();
         });
     }
