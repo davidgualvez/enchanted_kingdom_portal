@@ -106,3 +106,4 @@ Route::get('/rewards/lists', 					'RewardController@lists');
 
 //active purchase
 Route::post('/purchase/details/active', 		'PurchaseDetailController@active');
+Route::post('/purchase/history', 				'PurchaseController@history');

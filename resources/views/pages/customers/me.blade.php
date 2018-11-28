@@ -151,7 +151,7 @@
 	 			  	        	<label class="" style="text-align: left;">Full name</label>
 	 			  	          	<div class="ui left icon input">
 	 			  	            	<i class="user icon"></i>
-	 			  	            	<input type="text" id="full_name" placeholder="Full name" value="{{ $user->customer->full_name }}">
+	 			  	            	<input type="text" id="full_name" placeholder="Full name" value="{{ $user->customer->NAME }}">
 	 			  	          	</div>
 	 			  	        </div>
 	 			  	        <div class="field" >

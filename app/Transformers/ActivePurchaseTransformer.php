@@ -2,6 +2,7 @@
 
 namespace App\Transformers;
 use App\Part;
+use Carbon\Carbon;
 
 class ActivePurchaseTransformer {
 
@@ -14,12 +15,14 @@ class ActivePurchaseTransformer {
 					->where('PRODUCT_ID', $value->sitepart_id)
 					->first();
 
+			$d = Carbon::parse($value->valid_at);
+
 			array_push($newValue, [
 				'purchase_detail_id' 	=> $value->sales_order_detail_id,
 				'product_name' 			=> $p->SHORTCODE,
 				'group_name' 			=> $p->groupp->DESCRIPTION,
 				'image' 				=> $p->IMAGE,
-				'valid_until'	 		=> $value->valid_at,
+				'valid_until'	 		=> $d->toDayDateTimeString(),
 				'remaining_qty' 		=> $value->qty_remaining
 			]);
 		}
