@@ -6,6 +6,10 @@ $(document).ready(function(){
         $('#mMenu').sidebar('toggle');
     });
 
+    $('.main.menu').visibility({
+        type: 'fixed'
+      });
+    
     btnLogin(); 
 
 }); 
@@ -33,7 +37,8 @@ var routes = {
     },
     user : {
         updateInfo :    '/me',
-        activePurchase: '/purchase/details/active'
+        activePurchase: '/purchase/details/active',
+        purchaseHistory:'/purchase/history'
     }
 };
 

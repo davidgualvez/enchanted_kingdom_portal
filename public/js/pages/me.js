@@ -8,6 +8,7 @@ $(document).ready(function(){
 	$('.ui.accordion').accordion(); 
   
 	activePurchaseDisplayer();
+	testHistory();
 });
 
 function btnUpdateInfo(){
@@ -151,4 +152,12 @@ function showBarcode(id){
 		$('#purchase_order').text( $('.btnActiveOrder#'+this.id).parent().prev().prev().prev().text() );
 		//$('#purchase_id').text(this.id);
 	}); 
+}
+ 
+function testHistory(){
+	post(routes.user.purchaseHistory, {}, function(response){
+		$.each(response.data, function(key,value){
+			$('#purchaseHistory').append(response.data);
+		});
+	});
 }

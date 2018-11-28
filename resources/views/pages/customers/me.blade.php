@@ -189,6 +189,8 @@
 				</div>
 				<div class="ui bottom attached tab segment" data-tab="second">
 				  	Transaction History
+				  	<br>
+				  	<div id="purchaseHistory"></div>
 				</div>  
 			</div>
 		</div>

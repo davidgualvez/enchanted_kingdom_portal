@@ -223,7 +223,7 @@ class PurchaseController extends Controller
             ]);
 		    // something went wrong 
 		}  
-    }
+    } 
 
    public function checkoutReward(Request $request){ 
 
@@ -333,5 +333,20 @@ class PurchaseController extends Controller
             ]);
             // something went wrong 
         }  
+    }
+
+    public function customerHistory(Request $request){
+        $now  = Carbon::now();
+        $user = Auth::user();
+
+        $purchase = Purchase::where('customer_id', $user->customer->CUSTOMERID) 
+                ->get();
+ 
+
+        return response()->json([ 
+            'success'       => true,
+            'status'        => 200,
+            'data'          => $purchase
+        ]);
     }
 }
