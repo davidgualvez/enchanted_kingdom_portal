@@ -83,7 +83,7 @@ function checkOut(){
 
 function checkOutReward(){
 	$('#checkoutReward').on('click',function(){ 
-		$('#checkout').attr('disabled', 'disabled'); 
+		$('#checkoutReward').attr('disabled', 'disabled'); 
 
 		$.confirm({
 		    title: 'Confirmation!',
@@ -94,7 +94,7 @@ function checkOutReward(){
 		    buttons: { 
 		        cancel: function () {
 		            //$.alert('Canceled!');
-		            $('#checkout').removeAttr('disabled', 'disabled');
+		            $('#checkoutReward').removeAttr('disabled', 'disabled');
 		        },
 		        somethingElse: {
 		            text: 'Confirm',
@@ -109,7 +109,7 @@ function checkOutReward(){
 
 			               		});
 
-			               		$('#checkout').removeAttr('disabled', 'disabled');
+			               		$('#checkoutReward').removeAttr('disabled', 'disabled');
 			               		return;
 			               	}
 			               	showSuccess('Success','Your order has been checkout!.', function(){

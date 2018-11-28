@@ -93,12 +93,12 @@ function activePurchaseDisplayer(){
 }
 
 function activePurchase(){ 
-	post(routes.user.activePurchase,{}, function(response){
-			
+	post(routes.user.activePurchase,{}, function(response){ 
 		$.each(response.data, function (key, value) {
 			$('#active_purchase').append(
 				 '<div class="item">'+
-			   	    '<div class="image"  style="width: 100px; height: 100px;">'+
+			   	    // '<div class="image"  style="width: 100px; height: 100px;">'+
+			   	     '<div class="image">'+
 			   	      '<img src="'+value.image+'" class="">'+
 			   	    '</div>'+
 			   	    '<div class="content">'+
