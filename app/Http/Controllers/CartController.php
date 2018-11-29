@@ -20,11 +20,11 @@ class CartController extends Controller
         $user   = Auth::user();
          
         $carts  = Cart::findByUserAndType($user->id,'wallet'); 
-        $cartsReward  = Cart::findByUserAndType($user->id,'points'); 
+        //$cartsReward  = Cart::findByUserAndType($user->id,'points'); 
 
         $mct    = new CartTransformer;
         $result         = $mct->myCart($carts); 
-        $reward_carts   = $mct->myCartReward($cartsReward);
+        //$reward_carts   = $mct->myCartReward($cartsReward);
          
     
         //=============================================== 
@@ -102,7 +102,7 @@ class CartController extends Controller
      //    );
 
         return view('pages.customers.cart', 
-            compact('result','reward_carts')
+            compact('result')
         );
     } 
 
@@ -330,53 +330,53 @@ class CartController extends Controller
     }
 
     // PPPPPPPPPPPPPP  OOOOOOOOO IIIIIIIII NNNNNNNNNNN TTTTTTTT SSSSSSSSSSS
-    public function addToCartPoints(Request $request){  
+    // public function addToCartPoints(Request $request){  
 
-        $data   =   $request->only('product_id','qty');
-        $rules  =   [
-            'product_id'    =>  'required',
-            'qty'           =>  'required'
-        ];
+    //     $data   =   $request->only('product_id','qty');
+    //     $rules  =   [
+    //         'product_id'    =>  'required',
+    //         'qty'           =>  'required'
+    //     ];
 
-        $validator  =   Validator::make($data,$rules);
-        if($validator->fails()){
-            return response()->json([
-                'success'       =>      false, 
-                'status'        =>      200,
-                'message'       =>      'Product ID & Qty is required.'
-            ]);
-        }
+    //     $validator  =   Validator::make($data,$rules);
+    //     if($validator->fails()){
+    //         return response()->json([
+    //             'success'       =>      false, 
+    //             'status'        =>      200,
+    //             'message'       =>      'Product ID & Qty is required.'
+    //         ]);
+    //     }
 
-        //$token = $request->token; 
-        if(!Auth::check()){
-            return response()->json([
-                'success'       =>      false, 
-                'status'        =>      401,
-                'message'       =>      'Unauthorized Access'
-            ]);
-        }  
-        $user  = Auth::user(); 
+    //     //$token = $request->token; 
+    //     if(!Auth::check()){
+    //         return response()->json([
+    //             'success'       =>      false, 
+    //             'status'        =>      401,
+    //             'message'       =>      'Unauthorized Access'
+    //         ]);
+    //     }  
+    //     $user  = Auth::user(); 
 
-        $cart = Cart::findByUserAndProductPoints($user->id,$request->product_id);
-        if($cart){
-            $cart->qty = $cart->qty + $request->qty; 
-            $cart->save(); 
-        }else{
-            $cart = new Cart;
-            $cart->branch_id    = config('cpp.branch_id');
-            $cart->user_id      = $user->id;
-            $cart->product_id   = $request->product_id;
-            $cart->qty          = $request->qty;
-            $cart->type         = 'points';
-            $cart->save();
-        } 
+    //     $cart = Cart::findByUserAndProductPoints($user->id,$request->product_id);
+    //     if($cart){
+    //         $cart->qty = $cart->qty + $request->qty; 
+    //         $cart->save(); 
+    //     }else{
+    //         $cart = new Cart;
+    //         $cart->branch_id    = config('cpp.branch_id');
+    //         $cart->user_id      = $user->id;
+    //         $cart->product_id   = $request->product_id;
+    //         $cart->qty          = $request->qty;
+    //         $cart->type         = 'points';
+    //         $cart->save();
+    //     } 
 
-        return response()->json([
-            'success'       =>      true, 
-            'status'        =>      200,
-            'message'       =>      'Added to cart.'
-        ]);
-    }
+    //     return response()->json([
+    //         'success'       =>      true, 
+    //         'status'        =>      200,
+    //         'message'       =>      'Added to cart.'
+    //     ]);
+    // }
 
 
 }

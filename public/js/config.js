@@ -6,9 +6,9 @@ $(document).ready(function(){
         $('#mMenu').sidebar('toggle');
     });
 
-    $('.main.menu').visibility({
-        type: 'fixed'
-      });
+    // $('.main.menu').visibility({
+    //     type: 'fixed'
+    //   });
     
     btnLogin(); 
 

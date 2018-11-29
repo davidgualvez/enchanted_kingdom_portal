@@ -27,7 +27,7 @@
 		    margin-top: 2em;
 		  }*/
 
-		 /* .main.menu {
+		/*  .main.menu {
 		    margin-top: 4em;
 		    border-radius: 0;
 		    border: none;
@@ -37,16 +37,16 @@
 		      padding 0.5s ease
 		    ;
 		  }
-		  */
+		  
 	
 		  .main.menu .item img.logo {
 		    margin-right: 1.5em;
 		  }
 
-		  /*.overlay {
+		  .overlay {
 		    float: left;
 		    margin: 0em 3em 1em 0em;
-		  }*/
+		  }
 		  
 		  .overlay .menu {
 		    position: relative;
@@ -58,10 +58,10 @@
 		    background-color: #FFFFFF;
 		    border: 1px solid #DDD;
 		    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
-		  }
-		  .overlay.fixed .menu {
+		  }*/
+		  /*.overlay.fixed .menu {
 		    left: 800px;
-		  }
+		  }*/
 
 	</style>
 	@yield('css')

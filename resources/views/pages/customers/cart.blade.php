@@ -88,6 +88,16 @@
 		  				{{ number_format( $result['total_net'] , 2, '.', ',')  }}
 		  			</th>
 		  		</tr> 
+		  		<tr class="right aligned">
+		  			<th colspan="5">
+		  				<strong>(optional)Use Points :  </strong> 
+		  			</th>
+		  			<th class="right aligned form" style="padding-right: 25px;">
+		  				<div class="ui mini input" style="width: 75px;">
+		  				  <input type="text" placeholder="" name="points_payment" id="points_payment">
+		  				</div>
+		  			</th>
+		  		</tr> 
 		  		<tr>
 		  			<th colspan="6">
 		  				<!-- <form action="/checkout" method="post"> -->
@@ -129,7 +139,7 @@
 		</table>
 	</div> 
 
-	<div class="ui container padded" style="padding: 25px;"> 
+{{-- 	<div class="ui container padded" style="padding: 25px;"> 
 		<h3 class="ui header">My Reward Cart</h3>  
 		<!-- table -->
 		<table class="ui single line table">
@@ -225,7 +235,7 @@
 		    	</tr> -->
 			</tfoot>
 		</table>
-	</div> 
+	</div> --}} 
   	@if (session('error')) 
 			<script>
       			showWarning('Warning','{{ session('error') }}', function(){ 

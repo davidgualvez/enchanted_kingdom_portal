@@ -31,7 +31,12 @@ class PurchaseController extends Controller
     public function checkout(Request $request){
         
         //dd( ''.$validity );
-        
+        $points_payment = null;
+        if(is_null($request->points_payment)){
+            $points_payment = 0;
+        }else{
+            $points_payment = $request->points_payment;
+        }
 
         DB::beginTransaction();
 
@@ -42,12 +47,14 @@ class PurchaseController extends Controller
         $carts  = Cart::findByUserAndType($user->id,'wallet');  
 
         try { 
+
             // dd(
-            //     config('cpp.branch_id'), 
+            //     config('cpp.branch_id'),
             //     $blin->getNewIdForSalesOrderHeader(),
             //     $user->customer->id,
             //     1
             // );
+
         	//create a purchase header
             $new_sales_order_id     = $blin->getNewIdForSalesOrderHeader();
         	$ph = new Purchase;
@@ -152,10 +159,25 @@ class PurchaseController extends Controller
         	    $total_discount    += $discount_amount;
         	    $total_net         += $buying_price;
         	}
-        	//=============================================== 
+        	//===============================================  
+
+            $virtual_wallet     = $user->customer->wallet;
+            $virtual_points     = $user->customer->points; 
+
+            $wallet_payment     = $total_net - $points_payment;
+
+            // check the points entered as payment if greater than the customer wallet
+            if($points_payment > $user->customer->points){
+                DB::rollback();
+                return response()->json([
+                    'success'   => false,
+                    'status'    => 401,
+                    'message'   => 'The points you entered as payment is greater than your actual points!'
+                ]);
+            } 
 
         	//check if the e money is enough to purchase this transaction 
-        	if($user->customer->wallet < $total_net){
+        	if($user->customer->wallet < $wallet_payment ){
         		DB::rollback();
         		return response()->json([
 		        	'success' 	=> false,
@@ -165,12 +187,19 @@ class PurchaseController extends Controller
         		//throw new Exception;
         	}
 
+            $virtual_points -= $points_payment;
+            $virtual_wallet -= $wallet_payment; 
+
         	//update purchase header for total;
             Purchase::where('sales_order_id', $new_sales_order_id) 
                       ->update([
                         'total_amount'        => $total_gross,
                         'total_discount'      => $total_discount,
                         'net_amount'          => $total_net,
+                        'used_wallet'         => $wallet_payment,
+                        'used_points'         => $points_payment,
+                        'remaining_wallet'    => $virtual_wallet,
+                        'remaining_points'    => $virtual_points
                     ]);
 
         	// $ph->TOTALAMOUNT 		= $total_gross;
@@ -183,7 +212,8 @@ class PurchaseController extends Controller
                             ->first();
             $customerr = Customer::where('CUSTOMERID',$user->customer->CUSTOMERID)
                             ->update([
-                            'wallet'    => ($customer->wallet - $total_net), 
+                            'wallet'    => $virtual_wallet,
+                            'points'    => $virtual_points
                         ]); 
 
          //    $customer->wallet = $customer->wallet - $total_net;
@@ -197,13 +227,13 @@ class PurchaseController extends Controller
             //update customer points for new earned point
             $customerrr = Customer::where('CUSTOMERID',$user->customer->CUSTOMERID)
                             ->update([
-                            'points'    => ($customer->points + $eps->earned_points), 
+                            'points'    => ($virtual_points + $eps->earned_points), 
                         ]); 
             // $customer->points   = $customer->points + $eps->earned_points;
             // $customer->save();
 
         	//remove cart from this current branch
-        	$cart = Cart::removeCartByUserIDAndType($user->id,'wallet');
+        	$cart = Cart::removeCartByUserIDAndType($user->id, 'wallet');
  
 		    DB::commit();
 		    // all good
@@ -236,12 +266,14 @@ class PurchaseController extends Controller
         $carts  = Cart::findByUserAndType($user->id,'points');  
 
         try { 
+
             // dd(
             //     config('cpp.branch_id'), 
             //     $blin->getNewIdForSalesOrderHeader(),
             //     $user->customer->id,
             //     1
             // );
+
             //create a purchase header
             $new_redemption_id     = $blin->getNewIdForRedemptionHeader();
             $ph = new Redemption;
