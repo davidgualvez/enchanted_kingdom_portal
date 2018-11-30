@@ -14,6 +14,7 @@ use App\Part;
 use App\ProductPromotion;
 use App\Promotion;
 use App\Transformers\CartTransformer;
+use App\Transformers\PurchaseTransformer;
 
 use App\Purchase;
 use App\PurchaseDetail;
@@ -29,8 +30,7 @@ class PurchaseController extends Controller
 {
     //
     public function checkout(Request $request){
-        
-        //dd( ''.$validity );
+         
         $points_payment = null;
         if(is_null($request->points_payment)){
             $points_payment = 0;
@@ -46,14 +46,7 @@ class PurchaseController extends Controller
         $user   = Auth::user();
         $carts  = Cart::findByUserAndType($user->id,'wallet');  
 
-        try { 
-
-            // dd(
-            //     config('cpp.branch_id'),
-            //     $blin->getNewIdForSalesOrderHeader(),
-            //     $user->customer->id,
-            //     1
-            // );
+        try {  
 
         	//create a purchase header
             $new_sales_order_id     = $blin->getNewIdForSalesOrderHeader();
@@ -187,8 +180,19 @@ class PurchaseController extends Controller
         		//throw new Exception;
         	}
 
+
+            //-------------------------
+            //earned points 
+            $ept    = new  EarnPointTransactionServices;
+            $ep     = $ept->earnPoints($new_sales_order_id, $total_net, $user->customer->CUSTOMERID);
+            $eps    = $ept->save();
+
+
             $virtual_points -= $points_payment;
             $virtual_wallet -= $wallet_payment; 
+
+            //adding earned point to virtual points
+            $virtual_points += $eps->earned_points;
 
         	//update purchase header for total;
             Purchase::where('sales_order_id', $new_sales_order_id) 
@@ -198,40 +202,38 @@ class PurchaseController extends Controller
                         'net_amount'          => $total_net,
                         'used_wallet'         => $wallet_payment,
                         'used_points'         => $points_payment,
-                        'remaining_wallet'    => $virtual_wallet,
-                        'remaining_points'    => $virtual_points
+                        'added_points'        => $eps->earned_points,
+                        'wallet_balance'      => $virtual_wallet,
+                        'points_balance'      => $virtual_points
                     ]);
 
         	// $ph->TOTALAMOUNT 		= $total_gross;
         	// $ph->DISCOUNT 	        = $total_discount;
         	// $ph->NETAMOUNT 		    = $total_net;
         	// $ph->update($ph->ORDERSLIPNO);
-
-        	//update wallet
-        	$customer = Customer::where('CUSTOMERID',$user->customer->CUSTOMERID)
-                            ->first();
-            $customerr = Customer::where('CUSTOMERID',$user->customer->CUSTOMERID)
-                            ->update([
-                            'wallet'    => $virtual_wallet,
-                            'points'    => $virtual_points
-                        ]); 
-
-         //    $customer->wallet = $customer->wallet - $total_net;
-        	// $customer->save(['CUSTOMERID' => $user->customer->CUSTOMERID]); 
-
-            //earned points 
-            $ept    = new  EarnPointTransactionServices;
-            $ep     = $ept->earnPoints($new_sales_order_id, $total_net, $user->customer->CUSTOMERID);
-            $eps    = $ept->save();
+  
 
             //update customer points for new earned point
             $customerrr = Customer::where('CUSTOMERID',$user->customer->CUSTOMERID)
                             ->update([
-                            'points'    => ($virtual_points + $eps->earned_points), 
+                            'wallet'    => $virtual_wallet,
+                            'points'    => $virtual_points, 
                         ]); 
             // $customer->points   = $customer->points + $eps->earned_points;
             // $customer->save();
 
+        	//update wallet
+        	// $customer = Customer::where('CUSTOMERID',$user->customer->CUSTOMERID)
+         //                    ->first();
+         //    $customerr = Customer::where('CUSTOMERID',$user->customer->CUSTOMERID)
+         //                    ->update([
+         //                    'wallet'    => $virtual_wallet,
+         //                    'points'    => $virtual_points
+         //                ]); 
+
+         //    $customer->wallet = $customer->wallet - $total_net;
+        	// $customer->save(['CUSTOMERID' => $user->customer->CUSTOMERID]); 
+ 
         	//remove cart from this current branch
         	$cart = Cart::removeCartByUserIDAndType($user->id, 'wallet');
  
@@ -371,14 +373,17 @@ class PurchaseController extends Controller
         $now  = Carbon::now();
         $user = Auth::user();
 
-        $purchase = Purchase::where('customer_id', $user->customer->CUSTOMERID) 
-                ->get();
- 
+        $purchase = Purchase::with('details')
+                ->where('customer_id', $user->customer->CUSTOMERID) 
+                ->simplePaginate();
+        $pt         = new PurchaseTransformer;
+        $pt->purchaseHistory($purchase);
 
         return response()->json([ 
             'success'       => true,
             'status'        => 200,
-            'data'          => $purchase
+            'data'          => $purchase,
+            // 'pt'            => $pt
         ]);
     }
 }
