@@ -6,7 +6,7 @@ $(document).ready(function(){
     btnPrevRewards();
     limitOnChangeRewards(); 
 });
- 
+  
 //pagination================================ 
 var current_page_rewards = null;
 var prev_page_url_rewards = null;

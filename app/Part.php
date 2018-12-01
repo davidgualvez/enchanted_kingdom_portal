@@ -33,5 +33,11 @@ class Part extends Model
     				->where('start_at','<=',$now)
     				->where('end_at', '>=', $now);
     }
+
+    public static function findByIdAndBranch($product_id){
+        return static::where('ARNOC',       config('cpp.branch_id'))
+                    ->where('PRODUCT_ID',   $product_id)
+                    ->first();
+    }
  
 }

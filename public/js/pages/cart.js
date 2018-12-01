@@ -37,7 +37,7 @@ function checkOut(){
 		               //$.alert('Confirmed!'); 
 
 		               var points_payment = $('#points_payment').val();
-		               $('#checkout').removeAttr('disabled', 'disabled'); 
+		               //$('#checkout').removeAttr('disabled', 'disabled'); 
 
 		               post(routes.cart.checkout, {
 		               	points_payment : points_payment

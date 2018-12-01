@@ -13,8 +13,16 @@ class Purchase extends Model
     protected $primaryKey       = 'sales_order_id';
     //public $timestamps 			= false; 
 
+
+    //ISBUFFER == 0 / 1 for unli or not unli
+
+
     public function details(){
     	return $this->hasMany('App\PurchaseDetail','sales_order_id');
+    }
+
+    public function transType(){
+    	return $this->belongsTo('App\TransactionType', 'transaction_type_id');
     }
     
 }

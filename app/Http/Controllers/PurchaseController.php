@@ -81,7 +81,8 @@ class PurchaseController extends Controller
         	    $discount_amount= 0;
         	    $selling_price  = $qty * $srp;
         	    $buying_price   = 0;
-
+                $is_unli        = $part->SSBUFFER;
+                
         	    if(is_null($part->activePromo)){
         	        $discount_amount = 0; 
         	        //getting description by part
@@ -124,7 +125,10 @@ class PurchaseController extends Controller
         	    ]);
 
         	    //create purchase details
-                $validity = Carbon::now()->addDay();
+                $now = Carbon::now();
+                //$dd = \Carbon\Carbon::create($d->year,$d->month,$d->day,23,59,59); 
+                $validity = Carbon::create($now->year, $now->month, $now->day, 23, 59, 59);
+
                 $new_sales_order_detail_id = $blin->getNewIdForSalesOrderDetails();
         	    $pd = new PurchaseDetail;
                 $pd->branch_id           = config('cpp.branch_id');
@@ -145,6 +149,11 @@ class PurchaseController extends Controller
         	    $pd->valid_at 		     = $validity;
                 $pd->customer_id         = $user->customer->CUSTOMERID;
                 $pd->customer_number     = $user->mobile_number;
+
+                if($is_unli == 1){
+                    $pd->is_unli         = 1;
+                }
+
         	    $pd->save();
 
 
@@ -375,7 +384,9 @@ class PurchaseController extends Controller
 
         $purchase = Purchase::with('details')
                 ->where('customer_id', $user->customer->CUSTOMERID) 
-                ->simplePaginate();
+                ->orderBy('created_at', 'desc')
+                ->simplePaginate(10);
+
         $pt         = new PurchaseTransformer;
         $pt->purchaseHistory($purchase);
 

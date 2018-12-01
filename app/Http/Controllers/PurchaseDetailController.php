@@ -15,8 +15,8 @@ class PurchaseDetailController extends Controller
 {
     // 
     public function active(Request $request){
-        $now  = Carbon::now();
-        $user = Auth::user();
+        $now  = Carbon::now(); 
+        $user = Auth::user(); 
         //dd($user->customer->id, $now);
         $pd = PurchaseDetail::where('customer_id', $user->customer->CUSTOMERID)
         		->where('valid_at','>=', $now)

@@ -12,7 +12,7 @@
 <script src="/js/pages/rewards.js"></script>
 
 <script> 
-	$('.slider').glide({ 
+	$('.slider').glide({  
 	  autoplay: false,
 	  arrowsWrapperClass: 'slider-arrows',
 	  arrowRightText: '',
