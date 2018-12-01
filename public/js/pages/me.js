@@ -15,6 +15,7 @@ $(document).ready(function(){
 	btnNextPurchaseHistory();
 	btnPrevPurchaseHistory();
 	limitOnChangePurchaseHistory();
+
 });
  
 function btnUpdateInfo(){
@@ -139,12 +140,12 @@ function showBarcode(id){
 	$('.btnActiveOrder#'+id).on('click', function(){
 		console.log(this.id); 
 		$('.ui.dimmer').dimmer("show",
-			{
-				onHide: function(){
-					console.log('test');
-				}
-			});
-
+		{
+			onHide: function(){
+				console.log('test');
+			}
+		}); 
+		
 		JsBarcode("#barcode", FormatNumberLength(id, 10) , {
 			format: "CODE39",
 			// lineColor: "#0aa",
