@@ -105,6 +105,13 @@ function activePurchaseDisplayer(){
 function activePurchase(){ 
 	post(routes.user.activePurchase,{}, function(response){ 
 		$.each(response.data, function (key, value) {
+			console.log(value);
+
+			var is_unli = '';
+			if(value.is_unli == 1){
+				is_unli += '<div class="ui green mini label"> UNLIMITED </div>';
+			}
+
 			$('#active_purchase').append(
 				 '<div class="item">'+
 			   	    // '<div class="image"  style="width: 100px; height: 100px;">'+
@@ -126,19 +133,20 @@ function activePurchase(){
 			   	        '</div>'+
 			   	        '<div class="ui mini label">Valid for <strong> '+value.valid_until+' </strong> only.</div>'+
 			   	        '<div class="ui mini label">Qty : ' +value.remaining_qty+ '</div>'+
+			   	        is_unli +
 			   	      '</div>'+
 			   	    '</div>'+
 		   	  '</div>'
 			);
 
-			showBarcode(value.purchase_detail_id);
+			showBarcode(value.purchase_detail_id,value.product_id);
 		});
 
 		
 	});
 }
 
-function showBarcode(id){
+function showBarcode(id,product_id){
 	$('.btnActiveOrder#'+id).on('click', function(){
 		console.log(this.id); 
 		$('.ui.dimmer').dimmer("show",
@@ -148,7 +156,8 @@ function showBarcode(id){
 			}
 		}); 
 		
-		JsBarcode("#barcode", FormatNumberLength(id, 10) , {
+		//FormatNumberLength(id, 10)
+		JsBarcode("#barcode", id+'-'+product_id , {
 			format: "CODE39",
 			// lineColor: "#0aa",
 			// width: 3,

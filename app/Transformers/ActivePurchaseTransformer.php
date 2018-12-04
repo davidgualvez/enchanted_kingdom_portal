@@ -19,11 +19,13 @@ class ActivePurchaseTransformer {
 			 
 			array_push($newValue, [
 				'purchase_detail_id' 	=> $value->sales_order_detail_id,
+				'product_id' 			=> $value->sitepart_id,
 				'product_name' 			=> $p->SHORTCODE,
 				'group_name' 			=> $p->groupp->DESCRIPTION,
 				'image' 				=> $p->IMAGE,
 				'valid_until'	 		=> $d->toFormattedDateString() ,
-				'remaining_qty' 		=> $value->qty_remaining
+				'remaining_qty' 		=> $value->qty_remaining,
+				'is_unli'				=> $value->is_unli
 			]);
 		}
 

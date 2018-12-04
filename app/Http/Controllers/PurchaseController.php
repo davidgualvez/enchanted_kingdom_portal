@@ -49,14 +49,14 @@ class PurchaseController extends Controller
         try {  
 
         	//create a purchase header
-            $new_sales_order_id     = $blin->getNewIdForSalesOrderHeader();
+            $new_sales_order_id         = $blin->getNewIdForSalesOrderHeader();
         	$ph = new Purchase;
         	$ph->branch_id 		        = config('cpp.branch_id');
             $ph->sales_order_id         = $new_sales_order_id;
         	$ph->customer_id	        = $user->customer->CUSTOMERID;
         	$ph->transaction_type_id    = 1;
         	$ph->save();  
-            
+             
         	//=============================================== 
         	$total_gross = 0;
         	$total_discount = 0;
@@ -109,27 +109,14 @@ class PurchaseController extends Controller
         	    //get the buying price
         	    $buying_price   = ($selling_price) - $discount_amount;
 
-        	    //totals
-        	    array_push($cartList, [
-        	        'cart_id'           => $value->id,
-        	        'part_id'           => $product_id,
-        	        'name'              => $name,
-        	        'description'       => $description,
-        	        'qty'               => $qty,
-        	        'srp'               => $srp,
-        	        'selling_price'     => $selling_price,
-        	        'discount_type'     => $discount_type,
-        	        'discount_value'    => $discount_value,
-        	        'discount_amount'   => $discount_amount, 
-        	        'buying_price'      => $buying_price
-        	    ]);
+        	    //totals 
 
         	    //create purchase details
                 $now = Carbon::now();
                 //$dd = \Carbon\Carbon::create($d->year,$d->month,$d->day,23,59,59); 
-                $validity = Carbon::create($now->year, $now->month, $now->day, 23, 59, 59);
-
+                $validity = Carbon::create($now->year, $now->month, $now->day, 23, 59, 59); 
                 $new_sales_order_detail_id = $blin->getNewIdForSalesOrderDetails();
+
         	    $pd = new PurchaseDetail;
                 $pd->branch_id           = config('cpp.branch_id');
                 $pd->sales_order_detail_id = $new_sales_order_detail_id;
@@ -154,6 +141,7 @@ class PurchaseController extends Controller
                     $pd->is_unli         = 1;
                 }
 
+                //saving
         	    $pd->save();
 
 
@@ -396,5 +384,16 @@ class PurchaseController extends Controller
             'data'          => $purchase,
             // 'pt'            => $pt
         ]);
+    }
+
+    private function ifMultiTicketRides(Part $part){
+        if($part->SSBUFFER == 1 && $part->GROUP == 30301){
+            return true;
+        } 
+        return false;
+    }
+
+    private function saveMultiTicketIfRides(Part $part){
+
     }
 }

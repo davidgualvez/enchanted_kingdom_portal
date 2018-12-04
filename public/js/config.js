@@ -137,7 +137,8 @@ function showInfo(title, message, callback) {
         // backgroundColor: 'rgba(129,212,250, 1)',
         onClosed: function () {
             callback();
-        }
+        },
+        displayMode : 'replace'
     });
 }
 
@@ -148,7 +149,8 @@ function showSuccess(title, message, callback) {
         position: 'topRight',
         onClosed: function () {
             callback();
-        }
+        },
+        displayMode : 'replace'
     });
 }
 
@@ -159,7 +161,8 @@ function showWarning(title, message, callback) {
         position: 'topRight',
         onClosed: function () {
             callback();
-        }
+        },
+        displayMode : 'replace'
     });
 }
 
@@ -170,7 +173,8 @@ function showError(title, message, callback) {
         position: 'topRight',
         onClosed: function () {
             callback();
-        }
+        },
+        displayMode : 'replace'
     });
 }
 

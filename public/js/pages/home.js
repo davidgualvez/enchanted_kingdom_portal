@@ -9,7 +9,7 @@ $(document).ready(function(){
     $('#btn_search_our_products').on('click', function(){
         paginateProduct();
     })
-});
+}); 
  
 //pagination================================ 
 var current_page_product = null;

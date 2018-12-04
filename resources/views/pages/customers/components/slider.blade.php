@@ -15,7 +15,7 @@
         <div class="slide-item " style="background:url('https://source.unsplash.com/random/1250x900') no-repeat center;">
         </div> --}}
         @endforeach
-
+ 
       </div>
     </div>
 @endif
