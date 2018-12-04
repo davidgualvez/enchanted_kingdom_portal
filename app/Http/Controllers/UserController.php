@@ -20,12 +20,12 @@ class UserController extends Controller
 
     public function updateInfo(Request $request){
     	//dd($request);
-    	$data = $request->only('full_name','email','mobile_number','password','email_notification');
+    	$data = $request->only('full_name','email','mobile_number','email_notification');
     	$rules = [
     	    'full_name'         => 'required',
     	    'email'             => 'required',
     	    'mobile_number'     => 'required', 
-    	    'password'          => 'required|min:6',
+    	    //'password'          => 'required|min:6',
     	    'email_notification'=> 'required'
     	];
     	$result = Validator::make($data,$rules);
@@ -61,19 +61,27 @@ class UserController extends Controller
     	    	'status' 	=> 422,
     	    	'message' 	=> 'Mobile is already taken.'
     	    ]);
-    	}
+    	} 
 
 
     	//save/update customer
-    	$customer 	= $user->customer;
-    	$customer->full_name 	= $request->full_name;
-    	$customer->save();
+        Customer::where('CUSTOMERID', $user->customer->CUSTOMERID) 
+                      ->update([
+                        'NAME'          => $request->full_name,
+                        'mobile_number' => $request->mobile_number
+                    ]);
+
+    	// $customer 	= $user->customer;
+    	// $customer->full_name 	= $request->full_name;
+    	// $customer->save();
 
     	//save/update user
     	$user->email 			= $request->email;
     	$user->is_subscribe 	= $this->trueOrFalse($request->email_notification);
     	$user->mobile_number 	= $request->mobile_number;
-    	$user->password 		= Hash::make($request->password);
+        if(count($request->password) > 0){
+            $user->password         = md5($request->password);
+        } 
     	$user->save();
 
     	return response()->json([

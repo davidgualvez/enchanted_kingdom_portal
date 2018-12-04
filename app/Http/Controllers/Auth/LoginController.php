@@ -143,7 +143,8 @@ class LoginController extends Controller
 
     public function logout(){ 
         Auth::logout();
-        return redirect('/'); 
+        //return redirect('/'); 
+        return redirect( config('cpp.portal_logout') );
     }
  
 }

@@ -51,12 +51,14 @@ function btnUpdateInfo(){
 		//apply validation if has
 		var password 			= $('#password');
 		//console.log(password.val().trim().length);
-		if( password.val().trim().length < 6){
-			showWarning('Warning','Password must contain atlease 6 Characters!', function(){
+		if( password.val().trim().length >= 1){
+			if( password.val().trim().length < 6){
+				showWarning('Warning','Password must contain atlease 6 Characters!', function(){
 
-			});
-			return;
-		}
+				});
+				return;
+			}
+		} 
 
 		//apply validation if has
 		var email_notification 	= $('#email_notification');

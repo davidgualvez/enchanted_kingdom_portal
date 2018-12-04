@@ -2,6 +2,10 @@
 
 use Illuminate\Http\Request;
 
+header('Access-Control-Allow-Origin:  *');
+header('Access-Control-Allow-Methods:  POST, GET, OPTIONS, PUT, DELETE');
+header('Access-Control-Allow-Headers:  Content-Type, token, X-Auth-Token, Origin, Authorization');
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,4 +19,6 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
-});
+}); 
+
+Route::get('today_special', 		'Api\BannerController@todaySpecial');
