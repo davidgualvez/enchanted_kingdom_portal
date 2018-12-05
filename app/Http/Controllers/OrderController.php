@@ -3,15 +3,113 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
+use DB;
+
+//models
+use App\Cart;
+use App\SitePart;
+use App\OrderSlipHeader;
+use App\OrderSlipDetail;
+
+//services
+use App\AppServices\BranchLastIssuedNumberServices;
 
 class OrderController extends Controller
 {
     //
     public function order(Request $request){
-    	return response()->json([
-    		'success' 		=> true, 
-    		'status' 		=> 200,
-    		'data' 			=> 'test'
-    	]);
+
+    	//begin
+    	DB::beginTransaction();
+
+    	try{
+
+    		//logic 
+    		$user  = Auth::user(); 
+    		$carts = Cart::findByUserAndType($user->id, 'wallet');
+
+    		$total_amount 	= 0;
+    		$total_discount = 0;
+    		$total_net 		= 0;
+
+    		$blin = new BranchLastIssuedNumberServices;
+        	$blin->findOrCreate();
+
+    		$osh = new OrderSlipHeader;
+    		$osh->orderslip_header_id	= $blin->getNewIdForOrderSlipHeader();
+	      	$osh->branch_id 			= config('cpp.branch_id');
+	      	$osh->transaction_type_id	= 1;
+	      	$osh->total_amount			= 0;
+	      	$osh->discount_amount		= 0;
+	      	$osh->net_amount 			= 0;
+	      	$osh->status 				= 'P'; //Pending
+	      	$osh->customer_id 			= $user->customer->CUSTOMERID;
+	      	$osh->mobile_number 		= $user->mobile_number;
+	      	$osh->customer_name 		= $user->customer->NAME;
+	      	$osh->save(); 
+	      	 
+
+    		//loop the cart
+    		foreach ($carts as $key => $value) {
+    			# code...
+
+    			//read the sitepart
+    			$sp 	= SitePart::findByIdAndBranch($value->product_id);
+    			
+    			$amount = $value->qty * $sp->srp;
+    			//discount
+    			$discount 		= 0;
+    			//total sub amount
+    			$sub_amount 	= $amount - $discount;
+
+    			//get the totals
+    			$total_amount 	+= $amount;
+    			$total_discount += $discount;
+    			$total_net 		+= $sub_amount;
+
+    			//save each of the item in OrderSlip
+    			$osd = new OrderSlipDetail;
+    			$osd->orderslip_detail_id 		= $blin->getNewIdForOrderSlipDetails();
+    			$osd->orderslip_header_id 		= $osh->orderslip_header_id;
+    			$osd->branch_id 				= config('cpp.branch_id');
+    			$osd->product_id 				= $sp->sitepart_id;
+    			$osd->part_number 				= $sp->part_no;
+    			$osd->product_group_id 			= $sp->group_id;
+    			$osd->qty 						= $value->qty;
+    			$osd->srp 						= $sp->srp;
+    			$osd->amount 					= $amount;
+    			$osd->save();
+ 
+    		} 
+
+    		//save the total into OrderSlipHeader
+    		OrderSlipHeader::where('orderslip_header_id', $osh->orderslip_header_id) 
+                ->update([
+                    'TOTALAMOUNT' 		=> $total_amount,
+         			'DISCOUNT' 			=> $total_discount,
+         			'NETAMOUNT' 		=> $total_net
+                ]); 
+
+            //remove cart from this current user and branch
+        	Cart::removeCartByUserIDAndType($user->id, 'wallet');
+
+    		//end
+    		DB::commit();
+    		return response()->json([
+                'success'   => true,
+                'status'    => 200,
+                'message'   => 'success'
+            ]);
+
+    	}catch(\Exception $e){
+    		DB::rollback();
+    		return response()->json([
+                'success'   => false,
+                'status'    => 500,
+                'message'   => $e->getMessage()
+            ]);
+    	}
+    	
     }
 }

@@ -226,7 +226,8 @@ class PurchaseController extends Controller
                     $pd->valid_at            = $validity;
                     $pd->customer_id         = $user->customer->CUSTOMERID;
                     $pd->customer_number     = $user->mobile_number;
-
+                    $pd->transaction_type    = 'WEB';
+    
                     if($is_unli == 1){
                         $pd->is_unli         = 1;
                     }

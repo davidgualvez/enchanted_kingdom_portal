@@ -68,4 +68,18 @@ class BranchLastIssuedNumberServices {
 		return $this->blin->redemption_details_no;
 	}
 
+	public function getNewIdForOrderSlipHeader(){
+		$this->findOrCreate();
+		$this->blin->order_slip_header_no += 1;
+		$this->blin->save(); 
+		return $this->blin->order_slip_header_no;
+	}
+
+	public function getNewIdForOrderSlipDetails(){
+		$this->findOrCreate();
+		$this->blin->order_slip_detail_no += 1;
+		$this->blin->save(); 
+		return $this->blin->order_slip_detail_no;
+	}
+
 }
