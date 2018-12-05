@@ -99,16 +99,41 @@
 		  			</th>
 		  		</tr> 
 		  		<tr>
-		  			<th colspan="6">
+		  			<th colspan="6"> 
 		  				<!-- <form action="/checkout" method="post"> -->
 		  				@if(count($result['cartList']) == 0)
-			  				<button disabled class="ui right floated small success icon primary button" id="checkout">
+			  				{{-- <button disabled class="ui right floated small success icon primary button" id="checkout">
 			  					<i class="check icon"></i> Checkout
-			  				</button>
+			  				</button> --}}
+
+			  				<div class="ui buttons right floated">
+			  				  <button disabled class="ui blue button" id="order">
+			  				  	<i class="cart arrow down icon"></i> Order
+			  				  </button>
+
+			  				  <div class="or"></div>
+
+			  				  <button disabled class="ui positive button" id="checkout">
+			  				  	<i class="check icon"></i> Purchase
+			  				  </button>
+			  				</div>
 		  				@else
-			  				<button class="ui right floated small success icon primary button" id="checkout">
+
+		  					<div class="ui buttons right floated">
+		  					  <button class="ui blue button" id="order">
+		  					  	<i class="cart arrow down icon"></i> Order
+		  					  </button>
+
+		  					  <div class="or"></div>
+
+		  					  <button class="ui positive button" id="checkout">
+		  					  	<i class="check icon"></i> Purchase
+		  					  </button>
+		  					</div>
+
+			  				{{-- <button class="ui right floated small success icon primary button" id="checkout">
 			  					<i class="check icon"></i> Checkout
-			  				</button>
+			  				</button> --}}
 		  				@endif
 		  				
 		  				<!-- <div class="ui right floated small success icon primary button" id="checkout">

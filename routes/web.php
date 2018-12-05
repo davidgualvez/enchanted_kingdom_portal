@@ -89,21 +89,21 @@ Route::post('/cart/points/{id}/increase', 				'CartController@increasePoints');
 Route::post('/cart/points/{id}/decrease',				'CartController@decreasePoints');
 
 
-
-
-
 //checkout
-Route::post('/checkout', 						'PurchaseController@checkout');
-Route::post('/points/checkout', 					'PurchaseController@checkoutReward');
+Route::post('/checkout', 								'PurchaseController@checkout');
+Route::post('/points/checkout', 						'PurchaseController@checkoutReward');
 
 //products and promo 
-Route::get('/promos',                            'ProductPromotionController@activePromo');
-Route::get('/products',                          'PartController@lists');
+Route::get('/promos',                            		'ProductPromotionController@activePromo');
+Route::get('/products',                          		'PartController@lists');
 
 //rewards
-Route::get('/rewards', 							'RewardController@index');
-Route::get('/rewards/lists', 					'RewardController@lists');
+Route::get('/rewards', 									'RewardController@index');
+Route::get('/rewards/lists', 							'RewardController@lists');
 
 //active purchase
-Route::post('/purchase/details/active', 		'PurchaseDetailController@active');
-Route::post('/purchase/history', 				'PurchaseController@customerHistory');
+Route::post('/purchase/details/active', 				'PurchaseDetailController@active');
+Route::post('/purchase/history', 						'PurchaseController@customerHistory');
+
+//orders
+Route::post('/order', 									'OrderController@order');

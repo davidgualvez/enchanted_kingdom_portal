@@ -7,6 +7,7 @@ $(document).ready(function(){
  	});
 
  	checkOut();
+ 	order();
  	// checkOutReward(); 
  	ontest();
 });
@@ -15,18 +16,20 @@ $(document).ready(function(){
 function checkOut(){
 	$('#checkout').on('click',function(){ 
 
-		$('#checkout').attr('disabled', 'disabled'); 
+		//$('#checkout').attr('disabled', 'disabled'); 
+		disableButton();
 
 		$.confirm({
 		    title: 'Confirmation!',
-		    content: 'Checkout confirmation, do you want to continue?',
+		    content: 'Purchase confirmation, do you want to continue?',
 		    type: 'dark',
 		    boxWidth: '50%',
     		useBootstrap: false,
 		    buttons: { 
 		        cancel: function () {
 		            //$.alert('Canceled!');
-		            $('#checkout').removeAttr('disabled', 'disabled');
+		            //$('#checkout').removeAttr('disabled', 'disabled');
+		            enableButton();
 		        },
 		        somethingElse: {
 		            text: 'Confirm',
@@ -48,11 +51,13 @@ function checkOut(){
 
 			               		});
 
-			               		$('#checkout').removeAttr('disabled', 'disabled');
+
+			               		//$('#checkout').removeAttr('disabled', 'disabled');
+			               		enableButton();
 			               		return;
 			               	}
 			               	 
-			               	showSuccess('Success','Your order has been checkout!.', function(){
+			               	showSuccess('Success','Your Purchase has been checkout!.', function(){
 			               		redirectTo('/');
 			               	});
 		               });
@@ -65,6 +70,37 @@ function checkOut(){
 	});
 }
 
+function order(){
+	$('#order').on('click', function(){
+		disableButton(); 
+		$.confirm({
+		    title: 'Confirmation!',
+		    content: 'Order confirmation, do you want to continue?',
+		    type: 'dark',
+		    boxWidth: '50%',
+    		useBootstrap: false,
+		    buttons: { 
+		        cancel: function () { 
+		            enableButton();
+		        },
+		        
+		        somethingElse: {
+		            text: 'Confirm',
+		            btnClass: 'btn-green',
+		            keys: ['enter', 'shift'],
+		            action: function(){
+
+		            	post(routes.cart.order, {}, function(response){ 
+		            		console.log(response);
+		            		enableButton();
+		            	});
+		            	
+		            }
+		        }
+		    }
+		});
+	});
+}
 
 function ontest(){
 	$('#points_payment').keyup(function(){
@@ -78,46 +114,12 @@ function ontest(){
 	});
 }
 
+function disableButton(){
+	$('#checkout').attr('disabled', 'disabled'); 
+	$('#order').attr('disabled', 'disabled'); 
+}
 
-// function checkOutReward(){
-// 	$('#checkoutReward').on('click',function(){ 
-// 		$('#checkoutReward').attr('disabled', 'disabled'); 
-
-// 		$.confirm({
-// 		    title: 'Confirmation!',
-// 		    content: 'Order confirmation, do you want to continue?',
-// 		    type: 'dark',
-// 		    boxWidth: '50%',
-//     		useBootstrap: false,
-// 		    buttons: { 
-// 		        cancel: function () {
-// 		            //$.alert('Canceled!');
-// 		            $('#checkoutReward').removeAttr('disabled', 'disabled');
-// 		        },
-// 		        somethingElse: {
-// 		            text: 'Confirm',
-// 		            btnClass: 'btn-green',
-// 		            keys: ['enter', 'shift'],
-// 		            action: function(){
-// 		               //$.alert('Confirmed!'); 
-// 		               post(routes.cart.points.checkout, {}, function(response){
-// 			               	console.log(response);
-// 			               	if(response.success == false){
-// 			               		showError('Error',response.message, function(){
-// 			               		});
-
-// 			               		$('#checkoutReward').removeAttr('disabled', 'disabled');
-// 			               		return;
-// 			               	}
-
-// 			               	showSuccess('Success','Your order has been checkout!.', function(){
-// 			               		redirectTo('/');
-// 			               	});
-// 		               });
-// 		            }
-// 		        }
-// 		    }
-// 		});
-
-// 	});
-// }
+function enableButton(){
+	$('#checkout').removeAttr('disabled', 'disabled');
+	$('#order').removeAttr('disabled', 'disabled');
+}

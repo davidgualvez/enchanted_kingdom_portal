@@ -33,7 +33,8 @@ var routes = {
         },
         addToCart :     '/cart/add_to_cart', //[product_id, qty]  
         count :         '/cart/count',
-        checkout :      '/checkout'
+        checkout :      '/checkout',
+        order :         '/order'
     },
     user : {
         updateInfo :    '/me',
