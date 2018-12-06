@@ -17,13 +17,27 @@ Route::get('/default', function(){
 });
 //END
 
+use Illuminate\Support\Facades\Storage;
 Route::get('/', function () {
 	$now = \Carbon\Carbon::now();
 
 	$dash = \App\Dashboard::where('start_at' , '<=', $now)
 				->where('end_at', '>=', $now)
 				->get(); 
-				
+
+	$dash->transform(function ($x){
+		$url = Storage::url($x->image);
+		return [
+			'id' 			=> $x->id,
+	      	'image' 		=> $url,
+	      	'title' 		=> $x->title,
+	      	'title_desc' 	=> $x->title_desc,
+	     	'start_at' 		=> $x->start_at,
+	      	'end_at' 		=> $x->end_at,
+	      	'created_at' 	=> $x->created_at,
+	      ];
+	}); 
+	 
     return view('pages.customers.home', compact('dash') );
 });
 

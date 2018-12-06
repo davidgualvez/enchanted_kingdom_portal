@@ -143,7 +143,7 @@ class PurchaseController extends Controller
                                 $pd->customer_id         = $user->customer->CUSTOMERID;
                                 $pd->customer_number     = $user->mobile_number;
                                 $pd->barcode             = $new_sales_order_detail_id.'-'.$product_id;
-
+                                dd($pd->barcode);
                                 if($is_unli == 1){
                                     $pd->is_unli         = 1;
                                 }
@@ -228,7 +228,9 @@ class PurchaseController extends Controller
                     $pd->customer_id         = $user->customer->CUSTOMERID;
                     $pd->customer_number     = $user->mobile_number;
                     $pd->transaction_type    = 'WEB';
-    
+                    $pd->barcode             = $new_sales_order_detail_id.'-'.$product_id;
+                    
+
                     if($is_unli == 1){
                         $pd->is_unli         = 1;
                     }

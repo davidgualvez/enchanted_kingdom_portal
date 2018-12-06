@@ -6,7 +6,7 @@ use App\Transformers\SitePartTransformer;
 
 class SitePartServices { 
 
-	public function getPartPerBranch($search='', $limit=12){ 
+	public function getPartPerBranch($search='', $limit=10){ 
 
 		$part = new Part; 
         $p = $part->where($part->branch_id,config('cpp.branch_id'))

@@ -3,6 +3,7 @@
 namespace App\Transformers;
 use App\Part;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class ActivePurchaseTransformer {
 
@@ -17,12 +18,13 @@ class ActivePurchaseTransformer {
 
 			$d = Carbon::parse($value->valid_at);
 			 
+			$url = Storage::url($p->IMAGE);
 			array_push($newValue, [
 				'purchase_detail_id' 	=> $value->sales_order_detail_id,
 				'product_id' 			=> $value->sitepart_id,
 				'product_name' 			=> $p->SHORTCODE,
 				'group_name' 			=> $p->groupp->DESCRIPTION,
-				'image' 				=> $p->IMAGE,
+				'image' 				=> $url,
 				'valid_until'	 		=> $d->toFormattedDateString() ,
 				'remaining_qty' 		=> $value->qty_remaining,
 				'is_unli'				=> $value->is_unli

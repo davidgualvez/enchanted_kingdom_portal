@@ -18,10 +18,10 @@ class SignupController extends Controller
     public function signup(Request $request){
         //validation
 
-        $data = $request->only('name','email','mobile_number','password','birthdate');
+        $data = $request->only('name','mobile_number','password','birthdate');
         $rules = [
             'name'              => 'required',
-            'email'             => 'required',
+            // 'email'             => 'required',
             'mobile_number'     => 'required', 
             'password'          => 'required|min:6',
             'birthdate'         => 'required'
@@ -29,7 +29,7 @@ class SignupController extends Controller
 
         $result = Validator::make($data,$rules);
         if($result->fails()){
-             return back()->withInput()->withErrors($result);
+            return back()->withInput()->withErrors($result);
         }
 
         //check email
