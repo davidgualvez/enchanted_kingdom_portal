@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use DB;
+use Carbon\Carbon;
 
 //models
 use App\Cart;
@@ -15,19 +16,24 @@ use App\OrderSlipDetail;
 //services
 use App\AppServices\BranchLastIssuedNumberServices;
 
+//transformer
+use App\Transformers\OrderTransformer;
+
 class OrderController extends Controller
 {
     //
     public function order(Request $request){
 
-    	//begin
-    	DB::beginTransaction();
+    	
 
     	try{
+    		//begin
+    		DB::beginTransaction();
 
     		//logic 
     		$user  = Auth::user(); 
     		$carts = Cart::findByUserAndType($user->id, 'wallet');
+            $now   = Carbon::now();
 
     		$total_amount 	= 0;
     		$total_discount = 0;
@@ -47,7 +53,8 @@ class OrderController extends Controller
 	      	$osh->customer_id 			= $user->customer->CUSTOMERID;
 	      	$osh->mobile_number 		= $user->mobile_number;
 	      	$osh->customer_name 		= $user->customer->NAME;
-	      	$osh->save(); 
+            $osh->created_at            = $now;
+ 	      	$osh->save(); 
 	      	 
 
     		//loop the cart
@@ -84,11 +91,14 @@ class OrderController extends Controller
     		} 
 
     		//save the total into OrderSlipHeader
-    		OrderSlipHeader::where('orderslip_header_id', $osh->orderslip_header_id) 
+    		$update_osh = new OrderSlipHeader;
+    		$update_osh_map = $update_osh->getMaps();
+    		//dd($update_osh_map);
+    		$update_osh->where('orderslip_header_id', $osh->orderslip_header_id) 
                 ->update([
-                    'TOTALAMOUNT' 		=> $total_amount,
-         			'DISCOUNT' 			=> $total_discount,
-         			'NETAMOUNT' 		=> $total_net
+                    $update_osh_map['total_amount'] 		=> $total_amount,
+         			$update_osh_map['discount_amount']		=> $total_discount,
+         			$update_osh_map['net_amount']	 		=> $total_net
                 ]); 
 
             //remove cart from this current user and branch
@@ -106,10 +116,28 @@ class OrderController extends Controller
     		DB::rollback();
     		return response()->json([
                 'success'   => false,
-                'status'    => 500,
+                'status'    => 500, 
                 'message'   => $e->getMessage()
             ]);
     	}
     	
+    }
+
+    public function customerHistory(Request $request){
+        $now    = Carbon::now();
+        $user   = Auth::user();
+
+        $osh    = OrderSlipHeader::where('customer_id', $user->customer->CUSTOMERID)
+                    ->orderBy('orderslip_header_id', 'desc')
+                    ->simplePaginate(10);
+
+        $ot     = new OrderTransformer;
+        $history= $ot->orderHistory($osh);
+
+        return response()->json([ 
+            'success'       => true,
+            'status'        => 200,
+            'data'          => $osh, 
+        ]);
     }
 }

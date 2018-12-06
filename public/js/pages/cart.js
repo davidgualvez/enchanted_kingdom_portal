@@ -92,7 +92,17 @@ function order(){
 
 		            	post(routes.cart.order, {}, function(response){ 
 		            		console.log(response);
-		            		enableButton();
+		            		if(response.success == false){
+			               		showError('Error',response.message, function(){
+
+			               		});  
+			               		enableButton();
+			               		return;
+			               	}
+
+		            		showSuccess('Success','Your Order has been checkout!.', function(){
+			               		redirectTo('/');
+			               	});
 		            	});
 		            	
 		            }

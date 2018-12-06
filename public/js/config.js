@@ -34,7 +34,8 @@ var routes = {
         addToCart :     '/cart/add_to_cart', //[product_id, qty]  
         count :         '/cart/count',
         checkout :      '/checkout',
-        order :         '/order'
+        order :         '/order',
+        orderHistory :  '/order/history'
     },
     user : {
         updateInfo :    '/me',

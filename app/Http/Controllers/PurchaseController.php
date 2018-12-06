@@ -350,12 +350,11 @@ class PurchaseController extends Controller
     private function ifMultiTicketRides(Part $part){
         if($part->SSBUFFER == 1 && $part->GROUP == 30301){
             return true;
-        } 
+        }
         return false;
     }
 
     private function saveMultiTicketIfRides(Part $part){
-
     }
 
     public function checkoutReward(Request $request){ 

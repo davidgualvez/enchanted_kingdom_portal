@@ -107,3 +107,4 @@ Route::post('/purchase/history', 						'PurchaseController@customerHistory');
 
 //orders
 Route::post('/order', 									'OrderController@order');
+Route::post('/order/history', 							'OrderController@customerHistory');

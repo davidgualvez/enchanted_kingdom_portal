@@ -16,6 +16,8 @@ $(document).ready(function(){
 	btnPrevPurchaseHistory();
 	limitOnChangePurchaseHistory();
 
+	//order pagination
+	fetchHistory();
 });
  
 function btnUpdateInfo(){
@@ -402,6 +404,11 @@ function dataDisplayerPurchaseHistory(data, from) {
     });
     
 	$('.ui.accordion').accordion(); 
-
 }
 //end of pagination================
+
+function fetchHistory(){
+	post(routes.cart.orderHistory, {}, function(response){
+		console.log(response);
+	});
+}
