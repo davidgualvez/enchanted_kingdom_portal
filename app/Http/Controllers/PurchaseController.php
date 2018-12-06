@@ -142,6 +142,7 @@ class PurchaseController extends Controller
                                 $pd->valid_at            = $validity;
                                 $pd->customer_id         = $user->customer->CUSTOMERID;
                                 $pd->customer_number     = $user->mobile_number;
+                                $pd->barcode             = $new_sales_order_detail_id.'-'.$product_id;
 
                                 if($is_unli == 1){
                                     $pd->is_unli         = 1;

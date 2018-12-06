@@ -29,10 +29,11 @@ class EarnPointTransactionServices {
 
 	public function save(){
 		$ept = new EarnPointTransaction;
-		$ept->purchase_id 	= $this->purchase_id;
+		$ept->transaction_id 	= $this->purchase_id;
 		$ept->net_amount 	= $this->net_amount;
 		$ept->earned_points = $this->computed_point;
 		$ept->customer_id 	= $this->customer_id;
+		$ept->transaction_type_id = 1;
 		$ept->save();
 		
 		return $ept;

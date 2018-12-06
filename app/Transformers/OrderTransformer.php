@@ -34,7 +34,8 @@ class OrderTransformer {
 			    	'amount' 				=> $x->amount,
 				];
 			});
- 
+ 			
+ 			$d = Carbon::parse($value->created_at);
 			return [
 				'orderslip_header_id'	=> $value->orderslip_header_id,
 				'branch_id' 			=> $value->branch_id, 
@@ -47,7 +48,8 @@ class OrderTransformer {
 				'customer_id' 			=> $value->customer_id,
 				'mobile_number' 		=> $value->mobile_number,
 				'customer_name' 		=> $value->customer_name,
-				'details' 				=> $details
+				'details' 				=> $details,
+				'created_at' 			=> $d->toDayDateTimeString()
 			];
 		});
 		return $data;

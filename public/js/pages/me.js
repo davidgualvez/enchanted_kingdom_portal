@@ -524,6 +524,13 @@ function dataDisplayerOrderHistory(data, from) {
     			    	'</table>';
 
     	var status = '';
+    	if(value.status == 'p' || value.status == 'P'){
+    		status += '<a class="ui yellow label">Pending</a>'
+    	}else if(value.status == 'c' || value.status == 'C'){
+    		status += '<a class="ui green label">Completed</a>'
+    	}else if(value.status == 's' || value.status == 'S'){
+    		status += '<a class="ui green label">Serve</a>'
+    	}
 
 
         items.append(
@@ -532,7 +539,7 @@ function dataDisplayerOrderHistory(data, from) {
              			'<div class="ui middle aligned divided list">'+
              				'<div class="item">'+
 	           	  			    '<div class="right floated content">'+
-	           	  			      	'<strong>xxxx-xx-xx</strong>'+
+	           	  			      	'<strong>'+value.created_at+'</strong>'+
 	           	  			    '</div> '+
 	           	  			    '<div class="content">'+
 	           	  			      'Date/Time'+
@@ -570,6 +577,25 @@ function dataDisplayerOrderHistory(data, from) {
 	           	  			      'Net Amount'+
 	           	  			    '</div>'+
              			  	'</div> '+ 
+             			  	'<div class="item">'+
+	           	  			    '<div class="right floated content">'+
+	           	  			      	'<div class="ui right floated primary tiny button btnActiveOrder" id="'+value.orderslip_header_id+'">'+
+	      				   	          'Show Code'+
+	      				   	          '<i class="right chevron icon"></i>'+
+	      				   	        '</div>'+
+	           	  			    '</div> '+
+	           	  			    '<div class="content">'+
+	           	  			      'Barcode'+
+	           	  			    '</div>'+
+             			  	'</div> '+ 
+             			  	'<div class="item">'+
+	           	  			    '<div class="right floated content">'+
+	           	  			    	status + 
+	           	  			    '</div> '+
+	           	  			    '<div class="content">'+
+	           	  			      'Status'+
+	           	  			    '</div>'+
+             			  	'</div> '+ 
              			'</div>'+
              			'<div class="ui accordion">'+
              			  '<div class="title">'+
@@ -586,11 +612,38 @@ function dataDisplayerOrderHistory(data, from) {
              	'</div> '
         ); 
 
+        showBarcodeOrder(value.orderslip_header_id);
     });
     
 	$('.ui.accordion').accordion(); 
 }
 //end of pagination================
+
+function showBarcodeOrder(id){
+	$('.btnActiveOrder#'+id).on('click', function(){
+		console.log(this.id); 
+		$('.ui.dimmer').dimmer("show",
+		{
+			onHide: function(){
+				console.log('test');
+			}
+		}); 
+		
+		//FormatNumberLength(id, 10)
+		JsBarcode("#barcode", id , {
+			format: "CODE39",
+			// lineColor: "#0aa",
+			// width: 3,
+			// mod43:true
+			// height: 40,
+			// displayValue: false
+		});
+		
+		
+		$('#purchase_order').text(  );
+		//$('#purchase_id').text(this.id);
+	}); 
+}
 
 function fetchHistory(){
 	post(routes.cart.orderHistory, {}, function(response){
