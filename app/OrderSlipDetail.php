@@ -23,13 +23,13 @@ class OrderSlipDetail extends Model
 
       	// simple alias
     	'branch_id' 			=> 'BRANCHID', 
-    	'orderslip_detail_id' 	=> 'ORDERSLIPDETAILID' , 
-     	'orderslip_header_id' 	=> 'ORDERSLIPNO' , 
-    	'product_id' 			=> 'PRODUCT_ID' , 
+    	'orderslip_detail_id' 	=> 'ORDERSLIPDETAILID', 
+     	'orderslip_header_id' 	=> 'ORDERSLIPNO', 
+    	'product_id' 			=> 'PRODUCT_ID', 
     	'part_number'			=> 'PARTNO' , 
     	'product_group_id'		=> 'PRODUCTGROUP' , 
     	'qty' 					=> 'QUANTITY' , 
-    	'srp' 					=> 'RETAILPRICE' , 
+    	'srp' 					=> 'RETAILPRICE',
     	'amount' 				=> 'AMOUNT' ,
     ];
 }

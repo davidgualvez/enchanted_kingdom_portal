@@ -7,7 +7,7 @@ use Auth;
 use DB;
 use Carbon\Carbon;
 
-//models
+//models 
 use App\Cart;
 use App\SitePart;
 use App\OrderSlipHeader;
@@ -127,7 +127,8 @@ class OrderController extends Controller
         $now    = Carbon::now();
         $user   = Auth::user();
 
-        $osh    = OrderSlipHeader::where('customer_id', $user->customer->CUSTOMERID)
+        $osh    = OrderSlipHeader::with('transType')
+                    ->where('customer_id', $user->customer->CUSTOMERID)
                     ->orderBy('orderslip_header_id', 'desc')
                     ->simplePaginate(10);
 

@@ -38,7 +38,7 @@ class OrderSlipHeader extends Model
     }
 
     //relationship
-    // public function details(){
-    // 	return $this->hasMany('App\OrderSlipDetail', $this->maps['orderslip_header_id']);
-    // }
+    public function transType(){
+        return $this->belongsTo('App\TransactionType', $this->maps['transaction_type_id']);
+    }
 }

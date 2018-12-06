@@ -11,7 +11,7 @@
 <div class="ui page dimmer">
     <div class="content">
       	<h2 class="ui inverted icon header">
-        	<!-- <i class="barcode icon"></i> --> 
+        	<!-- <i class="barcode icon"></i> -->  
         	<svg id="barcode"></svg>
 
        		<div id="purchase_order">

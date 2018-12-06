@@ -2,7 +2,7 @@ $(document).ready(function(){
 
 	$('.ui.checkbox').checkbox();
 	$('.menu .item').tab();
-
+ 
 	btnUpdateInfo();
 
 	$('.ui.accordion').accordion();
@@ -18,6 +18,10 @@ $(document).ready(function(){
 
 	//order pagination
 	fetchHistory();
+	paginateOrderHistory();
+	btnNextOrderHistory();
+	btnPrevOrderHistory();
+	limitOnChangeOrderHistory();
 });
  
 function btnUpdateInfo(){
@@ -385,6 +389,187 @@ function dataDisplayerPurchaseHistory(data, from) {
 	           	  			      'Points Balance'+
 	           	  			    '</div>'+
              			  	'</div> '+
+             			'</div>'+
+             			'<div class="ui accordion">'+
+             			  '<div class="title">'+
+             			    '<i class="dropdown icon"></i>'+
+             			    "Detail's"+
+             			  '</div>'+
+             			  '<div class="content">'+
+             			    '<p class="transition" style="display: block !important;">'+
+             			    details+
+             				'</p>'+
+             			  '</div> '+
+             			'</div>'+
+             		'</div> '+
+             	'</div> '
+        ); 
+
+    });
+    
+	$('.ui.accordion').accordion(); 
+}
+//end of pagination================
+
+//pagination================================ 
+var current_page_order_history = null;
+var prev_page_url_order_history = null;
+var next_page_url_order_history = null;
+var current_data_order_history = null;
+
+function paginateOrderHistory() {
+    var limit           = $('#limit_order_history').val();
+    var search_val      = $('#search_our_order_history').val(); 
+
+    var data = {
+        search              : search_val, 
+        limit               : limit, 
+    };
+
+    var url = null;
+
+    if (current_page_order_history == null) {
+        current_page_order_history = 1;
+    }
+
+    //test
+    // console.log(data,current_page);
+    // return;
+    //end 
+    post(routes.cart.orderHistory + "?page=" + current_page_order_history, data, function (response) {
+        current_page_order_history = response.data.current_page;
+        //console.log(response);
+
+        $('#current_page_order_history').html(current_page_order_history);
+        if (response.data.next_page_url == null) {
+            $('#next_page_url_order_history').addClass('disabled');
+        } else {
+            $('#next_page_url_order_history').removeClass('disabled');
+        }
+
+        if (response.data.prev_page_url == null) {
+            $('#prev_page_url_order_history').addClass('disabled');
+        } else {
+            $('#prev_page_url_order_history').removeClass('disabled');
+        }
+
+        dataDisplayerOrderHistory(response.data.data, response.data.from); 
+    });
+}
+
+function btnNextOrderHistory() {
+    $('#next_page_url_order_history').on('click', function () {
+        current_page_order_history++;
+        paginateOrderHistory();
+    });
+}
+
+function btnPrevOrderHistory() {
+    $('#prev_page_url_order_history').on('click', function () {
+        current_page_order_history--;
+        paginateOrderHistory();
+    });
+}
+
+function limitOnChangeOrderHistory() {
+    $('#asd').on('change', function () {
+        current_page_order_history = 1;
+        paginateOrderHistory();
+    });
+}
+
+function dataDisplayerOrderHistory(data, from) {
+    var items = $('#orderHistory');
+    items.empty();
+
+    if (from == null) {
+    	items.append( 
+    		'<div class="center aligned">'+
+    			'<h3 class="ui header center aligned">Nothing to display..</h3>'+
+    		'</div>'
+    	);
+        //console.log('Nothing to Display...');
+        return;
+    }
+
+
+
+    current_data_purchase_history = data;
+    $.each(data, function (key, value) {
+        // console.log(value);
+        //var category = value.category.name;
+
+        //details
+        var details = '';
+        details += '<table class="ui small celled table">'+
+    		    	  '<thead>'+
+    		    	    '<tr>'+
+    		    	    	'<th>Name</th>'+
+    			    	    '<th>Srp</th>'+
+    			    	    '<th>Qty</th>'+
+    			    	    '<th>Amount</th>'+
+    		    	  	'</tr>'+
+    		    	  '</thead>'+
+    		    	  '<tbody>';
+    		    	  console.log(value.details);
+        $.each(value.details, function(key, value1){ 
+    		details +=  '<tr>'+
+    		    	      '<td>'+value1.product_name+'</td>'+
+    		    	      '<td>'+value1.srp+'</td>'+
+    		    	      '<td>'+ value1.qty +'</td>'+
+    		    	      '<td>'+ value1.amount +'</td>'+
+    		    	    '</tr> ';
+        });
+        details +=  '</tbody>'+
+    			    	'</table>';
+
+    	var status = '';
+
+
+        items.append(
+             	'<div class="ui vertical segment">'+
+             		'<div style="padding: 10px;">'+
+             			'<div class="ui middle aligned divided list">'+
+             				'<div class="item">'+
+	           	  			    '<div class="right floated content">'+
+	           	  			      	'<strong>xxxx-xx-xx</strong>'+
+	           	  			    '</div> '+
+	           	  			    '<div class="content">'+
+	           	  			      'Date/Time'+
+	           	  			    '</div>'+
+             			  	'</div> '+
+             			  	'<div class="item">'+
+	           	  			    '<div class="right floated content">'+
+	           	  			      	'<strong>'+value.trans_type+'</strong>'+
+	           	  			    '</div> '+
+	           	  			    '<div class="content">'+
+	           	  			      'Type'+
+	           	  			    '</div>'+
+             			  	'</div> '+
+             			  	'<div class="item">'+
+	           	  			    '<div class="right floated content">'+
+	           	  			      	'<strong>'+value.total_amount+'</strong>'+
+	           	  			    '</div> '+
+	           	  			    '<div class="content">'+
+	           	  			      'Total Amount'+
+	           	  			    '</div>'+
+             			  	'</div> '+
+             			  	'<div class="item">'+
+	           	  			    '<div class="right floated content">'+
+	           	  			      	'<strong>'+value.discount_amount+'</strong>'+
+	           	  			    '</div> '+
+	           	  			    '<div class="content">'+
+	           	  			      'Total Discount'+
+	           	  			    '</div>'+
+             			  	'</div> '+
+             			  	'<div class="item">'+
+	           	  			    '<div class="right floated content">'+
+	           	  			      	'<strong>'+value.net_amount+'</strong>'+
+	           	  			    '</div> '+
+	           	  			    '<div class="content">'+
+	           	  			      'Net Amount'+
+	           	  			    '</div>'+
+             			  	'</div> '+ 
              			'</div>'+
              			'<div class="ui accordion">'+
              			  '<div class="title">'+

@@ -34,11 +34,12 @@ class OrderTransformer {
 			    	'amount' 				=> $x->amount,
 				];
 			});
-
+ 
 			return [
 				'orderslip_header_id'	=> $value->orderslip_header_id,
 				'branch_id' 			=> $value->branch_id, 
 				'transaction_type_id'	=> $value->transaction_type_id,
+				'trans_type' 			=> $value->transType->desc,
 				'total_amount'			=> $value->total_amount,
 				'discount_amount'		=> $value->discount_amount,
 				'net_amount' 			=> $value->net_amount,
