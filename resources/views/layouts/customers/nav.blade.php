@@ -26,14 +26,26 @@
     	   	  			    
     	 </div> 
     @else 
-      	<a href="/login" class="ui item"> Login / Register </a>
+    	    	<div class="ui buttons fluid" style="height: 30px; margin-top: 15px; margin-bottom: 25px;">
+      			   	<button class="ui button login">
+      			   		<i class="copyright icon"></i>
+      			   		login
+      				</button>
+      			   <div class="or"></div>
+      			   	<button class="ui button register">
+      			   		&nbsp;
+      			   		<i class="gift icon"></i>
+      			   		Register
+      			   	</button> 
+      			</div>
+      	{{-- <a href="/login" class="ui item"> Login / Register </a> --}}
     @endauth
   </div>
 </div>
 {{-- </div> --}}
 
 {{-- <div id="desktop-nav" class="ui container"> --}}
-<div id="desktop-nav" class="ui secondary  menu">
+<div id="desktop-nav" class="ui container secondary  menu">
 	<div class="header item">
     	<div class="item">
     	    <img src="/assets/images/cropped-EK-Fav2018-192x192.png">
@@ -98,9 +110,22 @@
 	    	    </div>
 	    	</div> 
 	    @else  
-	    	<a href="/login" class="ui item">
+
+	    	<div class="ui buttons fluid" style="height: 30px; margin-top: 25px; margin-bottom: 25px;">
+  			   	<button class="ui button login">
+  			   		<i class="copyright icon"></i>
+  			   		login
+  				  </button>
+  			   <div class="or"></div>
+  			   	<button class="ui button register">
+  			   		&nbsp;
+  			   		<i class="gift icon"></i>
+  			   		Register
+  			   	</button> 
+  			</div>
+	    	{{-- <a href="/login" class="ui item">
 	    		Login / Register
-	    	</a> 
+	    	</a>  --}}
 	    @endauth
 	</div>
 </div>
@@ -115,7 +140,7 @@
   	<div id="mdropdownmenu" class="ui item"> 
 	    <!-- Home -->
 	    <div class="menu">
-	      <a href="/"><div class="item">Home</div></a>  
+	      <a href="/"><div class="item">	<h4>Home</h4> </div></a>  
 	    </div> 
   	</div> 
 
@@ -123,11 +148,11 @@
 	    <div class="menu"> 
 		  	@auth
 		  	  	<!-- <a href="/logout" class="ui item">Logout</a> -->
-		  	  	<a href="/me"><div class="item">Account Details</div></a>  
-		  	  	<a href="/logout"><div class="item">Logout</div></a>
+		  	  	<a href="/me"><div class="item">	<h4>Account Details</h4> </div></a>  
+		  	  	<a href="/logout"><div class="item">	<h4>Logout</h4> </div></a>
 		  	@else
 		  	  	<!-- <a href="/login" class="ui item">Login / Register</a> -->
-		  	  	<a href="/login"><div class="item">Login / Register</div></a>
+		  	  	<a href="/login"><div class="item">	<h4>Login / Register</h4> </div></a>
 		  	@endauth 
 	    </div> 
   	</div>   

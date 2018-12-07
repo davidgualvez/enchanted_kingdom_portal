@@ -6,6 +6,14 @@ $(document).ready(function(){
         $('#mMenu').sidebar('toggle');
     });
 
+    $('.login').on('click',function(){
+        redirectTo('login');
+    });
+    $('.register').on('click',function(){
+        redirectTo('signup');
+    });
+
+
     // $('.main.menu').visibility({
     //     type: 'fixed'
     //   });
