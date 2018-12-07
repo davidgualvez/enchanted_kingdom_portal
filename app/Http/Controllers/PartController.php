@@ -13,7 +13,7 @@ class PartController extends Controller
     public function lists(Request $request){
         $now        = Carbon::now();
         $search     = $request->search;
-         
+          
         $sps    = new SitePartServices;
         $result = $sps->getPartPerBranch($search);
 

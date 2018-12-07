@@ -19,7 +19,7 @@ class SitePartTransformer {
                'group_id'     => $value->groupp->GROUPCODE,
                'group_name'   => ucfirst( strtolower($value->groupp->DESCRIPTION) ),
                'image'          => $url,
-               'promo'      => $value->activePromo 
+               //'promo'      => $value->activePromo 
             ]; 
         });
         return $data;

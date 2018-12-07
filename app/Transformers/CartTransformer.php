@@ -33,7 +33,7 @@ class CartTransformer {
             $discount_value = null;
             $discount_amount= null;
             $selling_price  = $qty * $srp;
-            $buying_price   = null;
+            $buying_price   = null; 
 
             if(is_null($part->activePromo)){
                 $discount_amount = 0; 
