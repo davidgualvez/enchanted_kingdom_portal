@@ -10,6 +10,7 @@ use Auth, Hash, DB;
 use Validator;
 
 use App\AppServices\BranchLastIssuedNumberServices;
+use App\AppServices\SmsServices;
 use Carbon\Carbon;
 
 class SignupController extends Controller
@@ -33,10 +34,12 @@ class SignupController extends Controller
         }
 
         //check email
-        $c_email = User::findByEmail($request->email);
-        if($c_email){
-            return  back()->withInput()->with('error', 'Email already in used.');
-        }
+        if($request->email != '' || $request->email != null){
+            $c_email = User::findByEmail($request->email);
+            if($c_email){
+                return  back()->withInput()->with('error', 'Email already in used.');
+            }
+        } 
 
         //check mobile_number
         $mobile = str_replace('-','',$request->mobile_number);
@@ -81,6 +84,7 @@ class SignupController extends Controller
             $customer->wallet       = 0;
             $customer->mobile_number= $mobile;
             $customer->birthdate    = $request->birthdate;
+            $customer->is_loyalty   = 1;
             $customer->save();
 
             if(!$customer){
@@ -94,6 +98,10 @@ class SignupController extends Controller
             $role->save();
 
             Auth::login($user, true); 
+
+            //send welcome sms here 
+            $sms = new SmsServices;
+            $sms->sendWelcome($user->mobile_number);
 
             //success 
             DB::commit();

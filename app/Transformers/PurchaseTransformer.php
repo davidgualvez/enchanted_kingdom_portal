@@ -20,13 +20,13 @@ class PurchaseTransformer {
 					'sitepart_id' 	    => $tsk->sitepart_id,
           'part_name'         => trim($part->SHORTCODE),
           'part_desc'         => trim($part->DESCRIPTION),
-					'qty' 			        => $tsk->srp,
+					'qty' 			        => $tsk->qty,
 					'srp' 			        => $tsk->srp,
 					'amount' 		        => $tsk->amount,
 					'discount' 		      => $tsk->discount_amount,
 					'net_amount' 	      => $tsk->net_amount,
 					'valid_until' 	    => $date->toFormattedDateString() 
-				];	 
+				];
 			});
 
       $datee = Carbon::parse($value->created_at);

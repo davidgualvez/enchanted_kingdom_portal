@@ -291,7 +291,7 @@ function dataDisplayerPurchaseHistory(data, from) {
     		    	  '</thead>'+
     		    	  '<tbody>';
     		    	  console.log(value.details);
-        $.each(value.details, function(key, value1){ 
+        $.each(value.details, function(key, value1){  
     		details +=  '<tr>'+
     		    	      '<td>'+value1.part_name+'</td>'+
     		    	      '<td>'+value1.srp+'</td>'+

@@ -45,6 +45,10 @@ Route::get('/shops', function(){
     return view('pages.shop');
 });
 
+Route::get('/today_special', function(){
+	return view('pages.customers.today_special');
+});
+
 Route::get('/tickets', function(){
     return view('pages.tickets');
 });

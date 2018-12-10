@@ -70,93 +70,93 @@ class PurchaseController extends Controller
                             ->first();
 
                 //dd( $this->ifMultiTicketRides($part) );
-                if( $this->ifMultiTicketRides($part) == true ){
-                    // dd('TRUEEEE');
-                    for($x = 0 ; $x < $value->qty; $x++){
-                                //logic
-                                $product_id            = $part->PRODUCT_ID;
-                                $name                  = $part->SHORTCODE;
-                                $description           = '';
-                                $qty                   = 1;
-                                $srp                   = $part->RETAIL;
-                                $product_promotion_id  = null;
-                                $discount_type         = 0;
-                                $discount_value        = 0;
-                                $discount_amount       = 0;
-                                $selling_price         = $qty * $srp;
-                                $buying_price          = 0;
-                                $is_unli               = $part->SSBUFFER;
+                // if( $this->ifMultiTicketRides($part) == true ){
+                //     // dd('TRUEEEE');
+                //     for($x = 0 ; $x < $value->qty; $x++){
+                //                 //logic
+                //                 $product_id            = $part->PRODUCT_ID;
+                //                 $name                  = $part->SHORTCODE;
+                //                 $description           = '';
+                //                 $qty                   = 1;
+                //                 $srp                   = $part->RETAIL;
+                //                 $product_promotion_id  = null;
+                //                 $discount_type         = 0;
+                //                 $discount_value        = 0;
+                //                 $discount_amount       = 0;
+                //                 $selling_price         = $qty * $srp;
+                //                 $buying_price          = 0;
+                //                 $is_unli               = $part->SSBUFFER;
                                 
-                                if(is_null($part->activePromo)){
-                                    $discount_amount = 0; 
-                                    //getting description by part
-                                    $description = $part->DESCRIPTION;
-                                }else{
-                                    $product_promotion_id = $part->activePromo->id;
-                                    //getting description by promotion
-                                    $description = $part->activePromo->description;
+                //                 // if(is_null($part->activePromo)){
+                //                 //     $discount_amount = 0; 
+                //                 //     //getting description by part
+                //                 //     $description = $part->DESCRIPTION;
+                //                 // }else{
+                //                 //     $product_promotion_id = $part->activePromo->id;
+                //                 //     //getting description by promotion
+                //                 //     $description = $part->activePromo->description;
 
-                                    if($part->activePromo->promotion->is_percent == 0){
-                                        // actual amount to be deduct
-                                        $discount_type  = 0; //real
-                                        $discount_value = $part->activePromo->promotion->amount;
+                //                 //     if($part->activePromo->promotion->is_percent == 0){
+                //                 //         // actual amount to be deduct
+                //                 //         $discount_type  = 0; //real
+                //                 //         $discount_value = $part->activePromo->promotion->amount;
 
-                                        $discount_amount= $discount_value;
-                                    }else if($part->activePromo->promotion->is_percent == 1){
-                                        // percent amount to be deduct
-                                        $discount_type  = 1; //percent
-                                        $discount_value = $part->activePromo->promotion->amount;
+                //                 //         $discount_amount= $discount_value;
+                //                 //     }else if($part->activePromo->promotion->is_percent == 1){
+                //                 //         // percent amount to be deduct
+                //                 //         $discount_type  = 1; //percent
+                //                 //         $discount_value = $part->activePromo->promotion->amount;
 
-                                        $discount_amount= ($discount_value / 100) * $selling_price;
-                                    }
-                                }
+                //                 //         $discount_amount= ($discount_value / 100) * $selling_price;
+                //                 //     }
+                //                 // }
 
-                                //get the buying price
-                                $buying_price   = ($selling_price) - $discount_amount;
+                //                 //get the buying price
+                //                 $buying_price   = ($selling_price) - $discount_amount;
 
-                                //totals 
+                //                 //totals 
 
-                                //create purchase details
-                                $now = Carbon::now();
-                                //$dd = \Carbon\Carbon::create($d->year,$d->month,$d->day,23,59,59); 
-                                $validity = Carbon::create($now->year, $now->month, $now->day, 23, 59, 59); 
-                                $new_sales_order_detail_id = $blin->getNewIdForSalesOrderDetails();
+                //                 //create purchase details
+                //                 $now = Carbon::now();
+                //                 //$dd = \Carbon\Carbon::create($d->year,$d->month,$d->day,23,59,59); 
+                //                 $validity = Carbon::create($now->year, $now->month, $now->day, 23, 59, 59); 
+                //                 $new_sales_order_detail_id = $blin->getNewIdForSalesOrderDetails();
 
 
-                                $pd = new PurchaseDetail;
-                                $pd->branch_id           = config('cpp.branch_id');
-                                $pd->sales_order_detail_id = $new_sales_order_detail_id;
-                                $pd->sales_order_id      = $new_sales_order_id; 
-                                $pd->sitepart_id         = $product_id; 
-                                //$pd->product_promotion_id     = $product_promotion_id;
-                                $pd->part_description    = $description;
-                                $pd->qty                 = $qty;
-                                $pd->qty_remaining       = $qty;
-                                $pd->srp                 = $srp;
-                                $pd->amount              = $selling_price;
-                                $pd->discount_ispercent  = $discount_type; 
-                                $pd->discount_rate       = $discount_value;
-                                $pd->discount_amount     = $discount_amount;
-                                $pd->net_amount          = $buying_price;
-                                $pd->status              = 'P';
-                                $pd->valid_at            = $validity;
-                                $pd->customer_id         = $user->customer->CUSTOMERID;
-                                $pd->customer_number     = $user->mobile_number;
-                                $pd->barcode             = $new_sales_order_detail_id.'-'.$product_id;
-                                dd($pd->barcode);
-                                if($is_unli == 1){
-                                    $pd->is_unli         = 1;
-                                }
+                //                 $pd = new PurchaseDetail;
+                //                 $pd->branch_id           = config('cpp.branch_id');
+                //                 $pd->sales_order_detail_id = $new_sales_order_detail_id;
+                //                 $pd->sales_order_id      = $new_sales_order_id; 
+                //                 $pd->sitepart_id         = $product_id; 
+                //                 //$pd->product_promotion_id     = $product_promotion_id;
+                //                 $pd->part_description    = $description;
+                //                 $pd->qty                 = $qty;
+                //                 $pd->qty_remaining       = $qty;
+                //                 $pd->srp                 = $srp;
+                //                 $pd->amount              = $selling_price;
+                //                 $pd->discount_ispercent  = $discount_type; 
+                //                 $pd->discount_rate       = $discount_value;
+                //                 $pd->discount_amount     = $discount_amount;
+                //                 $pd->net_amount          = $buying_price;
+                //                 $pd->status              = 'P';
+                //                 $pd->valid_at            = $validity;
+                //                 $pd->customer_id         = $user->customer->CUSTOMERID;
+                //                 $pd->customer_number     = $user->mobile_number;
+                //                 $pd->barcode             = $new_sales_order_detail_id.'-'.$product_id;
+                //                 dd($pd->barcode);
+                //                 if($is_unli == 1){
+                //                     $pd->is_unli         = 1;
+                //                 }
 
-                                //saving
-                                $pd->save(); 
+                //                 //saving
+                //                 $pd->save(); 
 
-                                $total_gross       += $selling_price;
-                                $total_discount    += $discount_amount;
-                                $total_net         += $buying_price;
-                    }
+                //                 $total_gross       += $selling_price;
+                //                 $total_discount    += $discount_amount;
+                //                 $total_net         += $buying_price;
+                //     }
 
-                }else{
+                // }else{
 
                     //logic
                     $product_id            = $part->PRODUCT_ID;
@@ -172,29 +172,29 @@ class PurchaseController extends Controller
                     $buying_price          = 0;
                     $is_unli                = $part->SSBUFFER;
                     
-                    if(is_null($part->activePromo)){
-                        $discount_amount = 0; 
-                        //getting description by part
-                        $description = $part->DESCRIPTION;
-                    }else{
-                        $product_promotion_id = $part->activePromo->id;
-                        //getting description by promotion
-                        $description = $part->activePromo->description;
+                    // if(is_null($part->activePromo)){
+                    //     $discount_amount = 0; 
+                    //     //getting description by part
+                    //     $description = $part->DESCRIPTION;
+                    // }else{
+                    //     $product_promotion_id = $part->activePromo->id;
+                    //     //getting description by promotion
+                    //     $description = $part->activePromo->description;
 
-                        if($part->activePromo->promotion->is_percent == 0){
-                            // actual amount to be deduct
-                            $discount_type  = 0; //real
-                            $discount_value = $part->activePromo->promotion->amount;
+                    //     if($part->activePromo->promotion->is_percent == 0){
+                    //         // actual amount to be deduct
+                    //         $discount_type  = 0; //real
+                    //         $discount_value = $part->activePromo->promotion->amount;
 
-                            $discount_amount= $discount_value;
-                        }else if($part->activePromo->promotion->is_percent == 1){
-                            // percent amount to be deduct
-                            $discount_type  = 1; //percent
-                            $discount_value = $part->activePromo->promotion->amount;
+                    //         $discount_amount= $discount_value;
+                    //     }else if($part->activePromo->promotion->is_percent == 1){
+                    //         // percent amount to be deduct
+                    //         $discount_type  = 1; //percent
+                    //         $discount_value = $part->activePromo->promotion->amount;
 
-                            $discount_amount= ($discount_value / 100) * $selling_price;
-                        }
-                    }
+                    //         $discount_amount= ($discount_value / 100) * $selling_price;
+                    //     }
+                    // }
 
                     //get the buying price
                     $buying_price   = ($selling_price) - $discount_amount;
@@ -243,7 +243,7 @@ class PurchaseController extends Controller
                     $total_discount    += $discount_amount;
                     $total_net         += $buying_price;
 
-                }
+                // }
         	    
         	}
         	//===============================================  

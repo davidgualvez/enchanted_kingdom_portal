@@ -26,37 +26,38 @@ class CartTransformer {
             //logic
             $product_id     = $part->PRODUCT_ID;
             $name           = $part->SHORTCODE;
-            $description    = null;
+            $description    = $part->DESCRIPTION;
             $qty            = $value->qty;
             $srp            = $part->RETAIL;
-            $discount_type  = null;
-            $discount_value = null;
-            $discount_amount= null;
+            $discount_type  = 0;
+            $discount_value = 0;
+            $discount_amount= 0;
             $selling_price  = $qty * $srp;
-            $buying_price   = null; 
+            $buying_price   = 0; 
 
-            if(is_null($part->activePromo)){
-                $discount_amount = 0; 
-                //getting description by part
-                $description = $part->DESCRIPTION;
-            }else{
-                //getting description by promotion
-                $description = $part->activePromo->description;
+            // if(is_null($part->activePromo)){
+            //     $discount_amount = 0; 
+            //     //getting description by part
+            //     $description = $part->DESCRIPTION;
+            // }else{
+            //     //getting description by promotion
+            //     $description = $part->activePromo->description;
 
-                if($part->activePromo->promotion->is_percent == 0){
-                    // actual amount to be deduct
-                    $discount_type  = 0; //real
-                    $discount_value = $part->activePromo->promotion->amount;
+            //     if($part->activePromo->promotion->is_percent == 0){
+            //         // actual amount to be deduct
+            //         $discount_type  = 0; //real
+            //         $discount_value = $part->activePromo->promotion->amount;
 
-                    $discount_amount= $discount_value;
-                }else if($part->activePromo->promotion->is_percent == 1){
-                    // percent amount to be deduct
-                    $discount_type  = 1; //percent
-                    $discount_value = $part->activePromo->promotion->amount;
+            //         $discount_amount= $discount_value;
+            //     }else if($part->activePromo->promotion->is_percent == 1){
+            //         // percent amount to be deduct
+            //         $discount_type  = 1; //percent
+            //         $discount_value = $part->activePromo->promotion->amount;
 
-                    $discount_amount= ($discount_value / 100) * $selling_price;
-                }
-            }
+            //         $discount_amount= ($discount_value / 100) * $selling_price;
+            //     }
+            // }
+
             //get the buying price
             $buying_price   = ($selling_price) - $discount_amount;
 
@@ -75,9 +76,9 @@ class CartTransformer {
                 'buying_price'      => $buying_price
             ]);
 
-            $total_gross += $selling_price;
+            $total_gross    += $selling_price;
             $total_discount += $discount_amount;
-            $total_net += $buying_price;
+            $total_net      += $buying_price;
         }
 
         return [
