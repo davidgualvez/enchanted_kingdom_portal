@@ -41,9 +41,9 @@ Route::get('/', function () {
     return view('pages.customers.home', compact('dash') );
 });
 
-Route::get('/shops', function(){
-    return view('pages.shop');
-});
+Route::get('/store', 		'PageController@store');
+Route::get('/things-to-do', 'PageController@thingsToDo');
+Route::get('/site-map', 	'PageController@siteMap');
 
 Route::get('/today_special', function(){
 	return view('pages.customers.today_special');
@@ -126,3 +126,4 @@ Route::post('/purchase/history', 						'PurchaseController@customerHistory');
 //orders
 Route::post('/order', 									'OrderController@order');
 Route::post('/order/history', 							'OrderController@customerHistory');
+

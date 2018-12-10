@@ -54,7 +54,9 @@
 	<a href="/" class=" item">
 	    Home
 	</a>  
-  <a href="/today_special"><div class="item">  <h4>Today Special</h4> </div></a>  
+  <a href="/store" class=" item">
+      Store
+  </a>    
 	<div class="right menu" style="padding-right: 5px;">  
 	  	@auth 
 	  		{{-- <a href="#" class="ui item"> --}}
@@ -142,7 +144,7 @@
 	    <!-- Home -->
 	    <div class="menu">
 	      <a href="/"><div class="item">	<h4>Home</h4> </div></a>  
-        <a href="/today_special"><div class="item">  <h4>Today Special</h4> </div></a>  
+        <a href="/store"><div class="item">  <h4>Store</h4> </div></a>  
 	    </div> 
   	</div> 
 

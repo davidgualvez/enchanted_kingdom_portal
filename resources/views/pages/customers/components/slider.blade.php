@@ -2,7 +2,7 @@
 @if( count($dash) > 0 )
     <h4 class="ui horizontal divider header">
       <i class="gift icon"></i>
-      Today's Special
+      Today Special's
     </h4>
     <div class="slider slider1" style="height: 350px;">
       <div class="slides">
