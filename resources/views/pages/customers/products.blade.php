@@ -2,6 +2,9 @@
 @section('title','Store')
 
 @section('css') 
+	<style type="text/css">
+		
+	</style>
 @endsection
 
 @section('js') 

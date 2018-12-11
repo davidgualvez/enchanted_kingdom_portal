@@ -27,6 +27,7 @@ Route::get('/', function () {
 
 	$dash->transform(function ($x){
 		$url = Storage::url($x->image);
+		$url = config('app.url').$url;
 		return [
 			'id' 			=> $x->id,
 	      	'image' 		=> $url,
@@ -38,16 +39,19 @@ Route::get('/', function () {
 	      ];
 	}); 
 	 
+	 
     return view('pages.customers.home', compact('dash') );
 });
 
 Route::get('/store', 		'PageController@store');
 Route::get('/things-to-do', 'PageController@thingsToDo');
 Route::get('/site-map', 	'PageController@siteMap');
-
-Route::get('/today_special', function(){
-	return view('pages.customers.today_special');
+Route::get('/banner-detail', function(){
+	return view('pages.customers.banner-detail');
 });
+
+
+Route::get('/today_specials/{id}', 'BannerController@showDetails');
 
 Route::get('/tickets', function(){
     return view('pages.tickets');

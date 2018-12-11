@@ -18,4 +18,8 @@ class PageController extends Controller
     public function siteMap(){
     	return view('pages.customers.site-map');
     }
+
+    public function todaySpecial(){
+        return view('pages.customers.today_specials');
+    }
 }

@@ -34,45 +34,76 @@
 
 <!-- TODAYS SPECIAL -->
 	{{-- @include('pages.customers.components.today_special') --}}
-	<div  style="display: flex;align-items: center!important;flex-direction: column;/* justify-items: center; */">
-		<div class="ui people shape">
-		  <div class="sides">
-			    <div class="active side">
-			    	<img class="ui fluid massive image" src="/assets/images/default.jpg" > 
-			    </div>
-			    <div class="side">
-					<img class="ui massive image" src="/assets/images/default.jpg"> 
-			    </div>
-			    <div class="side">
-			      	<img class="ui massive image" src="/assets/images/default.jpg"> 
-			    </div>
-			    <div class="side">
-			      	<img class="ui massive image" src="/assets/images/default.jpg"> 
-			    </div>
-			    <div class="side">
-			       	<img class="ui massive image" src="/assets/images/default.jpg"> 
-			    </div>
-			    <div class="side">
-			      	<img class="ui massive image" src="/assets/images/default.jpg"> 
-			    </div>
-		  </div>
+	{{-- what to do --}}
+	<h4 class="ui horizontal divider header">
+	  <i class="gift icon"></i>
+	 	Today Special's 
+	</h4> 
+	@if( !$dash->isEmpty() )
+
+		<div  style="display: flex;align-items: center!important;flex-direction: column;/* justify-items: center; */">
+			<div class="ui people shape">
+			  <div class="sides">
+					<?php $ctr = 0; ?>
+			  		@foreach($dash as $d) 
+			  			<?php $ctr++ ?>
+			  			@if($ctr == 1)
+						    <div class="active side"> 
+								<a href="/today_specials/{{ $d['id'] }}">
+									<img class="ui massive image" src="/assets/images/default.jpg"> 
+								</a>
+						    </div>
+						@else
+						    <div class="side"> 
+								<a href="/today_specials/{{ $d['id'] }}">
+									<img class="ui massive image" src="/assets/images/default.jpg"> 
+								</a>
+						    </div>
+						@endif 
+			  		@endforeach
+
+
+				    {{-- <div class="active side">
+				    	<a href="/today_specials"><img class="ui massive image" src="/assets/images/default.jpg" > </a>
+				    </div>
+				    <div class="side">
+						<a href="/today_specials"><img class="ui massive image" src="/assets/images/default.jpg"> </a>
+				    </div>
+				    <div class="side">
+				      	<a href="/today_specials"><img class="ui massive image" src="/assets/images/default.jpg"> </a>
+				    </div>
+				    <div class="side">
+				      	<a href="/today_specials"><img class="ui massive image" src="/assets/images/default.jpg"> </a>
+				    </div>
+				    <div class="side">
+				       	<a href="/today_specials"><img class="ui massive image" src="/assets/images/default.jpg"> </a>
+				    </div>
+				    <div class="side">
+				      	<a href="/today_specials"><img class="ui massive image" src="/assets/images/default.jpg"> </a>
+				    </div> --}}
+			  </div>
+			</div>
 		</div>
-	</div>
-	
-	<div class="ui container" style="margin-top: 10px;">
-		<div class="ui animated button left floated" tabindex="0" id="btnPrev">
-		  	<div class="visible content">Prev</div>
-		  	<div class="hidden content">
-		    	<i class="left arrow icon"></i>
-		  	</div>
+		
+		<div class="ui container" style="margin-top: 10px;">
+			<div class="ui animated button left floated" tabindex="0" id="btnPrev">
+			  	<div class="visible content">Prev</div>
+			  	<div class="hidden content">
+			    	<i class="left arrow icon"></i>
+			  	</div>
+			</div>
+			<div class="ui animated button right floated" tabindex="0" id="btnNext">
+			  <div class="visible content">Next</div>
+			  <div class="hidden content">
+			    <i class="right arrow icon"></i>
+			  </div>
+			</div>
 		</div>
-		<div class="ui animated button right floated" tabindex="0" id="btnNext">
-		  <div class="visible content">Next</div>
-		  <div class="hidden content">
-		    <i class="right arrow icon"></i>
-		  </div>
+	@else
+		<div class="ui container center aligned">
+			<h3>Nothing to display...</h3>
 		</div>
-	</div>
+	@endif
 <!-- END TODAYS SPECIAL --> 
 <br>
 {{-- what to do --}}
