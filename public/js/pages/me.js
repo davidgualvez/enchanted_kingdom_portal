@@ -579,7 +579,7 @@ function dataDisplayerOrderHistory(data, from) {
              			  	'</div> '+ 
              			  	'<div class="item">'+
 	           	  			    '<div class="right floated content">'+
-	           	  			      	'<div class="ui right floated primary tiny button btnActiveOrder" id="'+value.orderslip_header_id+'">'+
+	           	  			      	'<div class="ui right floated primary tiny button btnActiveOrder" data-id="'+value.orderslip_header_id+'">'+
 	      				   	          'Show Code'+
 	      				   	          '<i class="right chevron icon"></i>'+
 	      				   	        '</div>'+
@@ -620,8 +620,11 @@ function dataDisplayerOrderHistory(data, from) {
 //end of pagination================
 
 function showBarcodeOrder(id){
-	$('.btnActiveOrder#'+id).on('click', function(){
+	$('.btnActiveOrder').on('click', function(){
 		console.log(this.id); 
+
+        var _id = $(this).data('id');
+
 		$('.ui.dimmer').dimmer("show",
 		{
 			onHide: function(){
@@ -630,7 +633,7 @@ function showBarcodeOrder(id){
 		}); 
 		
 		//FormatNumberLength(id, 10)
-		JsBarcode("#barcode", id , {
+		JsBarcode("#barcode", _id , {
 			format: "CODE39",
 			// lineColor: "#0aa",
 			// width: 3,

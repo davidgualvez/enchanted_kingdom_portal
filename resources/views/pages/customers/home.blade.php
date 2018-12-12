@@ -6,17 +6,8 @@
 	<link rel="stylesheet" type="text/css" href="/css/plugins/slider.css">
 @endsection
 
-@section('js')
-	<script src="http://cdn.jsdelivr.net/jquery.glide/1.0.6/jquery.glide.min.js"></script>
-	<script src="/js/pages/home.js"></script>
-	<script> 
-		$('.slider').glide({ 
-		  autoplay: false,
-		  arrowsWrapperClass: 'slider-arrows',
-		  arrowRightText: '',
-		  arrowLeftText: '' 
-		});
-	</script> 
+@section('js') 
+	<script src="/js/pages/home.js"></script> 
 @endsection
 
 @section('content')

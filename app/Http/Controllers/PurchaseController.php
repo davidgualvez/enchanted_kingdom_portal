@@ -69,6 +69,17 @@ class PurchaseController extends Controller
                             ->where($partt->product_id, $value->product_id)
                             ->first();
 
+                //if the product is a group of wallet
+                // do not allow to proceed and display a warning message
+                if($part->GROUP == 30102){
+                    DB::rollback();
+                    return response()->json([
+                        'success'   => false,
+                        'status'    => 401,
+                        'message'   => 'You cannot purchase e-Wallet using a e-Wallet'
+                    ]);
+                }
+
                 //dd( $this->ifMultiTicketRides($part) );
                 // if( $this->ifMultiTicketRides($part) == true ){
                 //     // dd('TRUEEEE');
