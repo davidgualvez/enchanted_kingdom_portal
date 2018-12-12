@@ -138,7 +138,7 @@ class LoginController extends Controller
         }
         
         Auth::login($user, true);
-        return redirect('/');
+        return redirect('/store');
     }
 
     public function logout(){ 

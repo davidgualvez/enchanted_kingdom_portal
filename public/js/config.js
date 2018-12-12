@@ -7,10 +7,10 @@ $(document).ready(function(){
     });
 
     $('.login').on('click',function(){
-        redirectTo('login');
+        redirectTo('/login');
     });
     $('.register').on('click',function(){
-        redirectTo('signup');
+        redirectTo('/signup');
     });
 
 

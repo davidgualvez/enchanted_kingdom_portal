@@ -23,14 +23,20 @@ function checkOut(){
 		    title: 'Confirmation!',
 		    content: 'Purchase confirmation, do you want to continue?',
 		    type: 'dark',
-		    boxWidth: '50%',
-    		useBootstrap: false,
+		    boxWidth: '80%',
+    		useBootstrap: false, 
+    		closeIcon: function(){
+    		        //return false; // to prevent close the modal.
+    		        // or
+    		        //return 'aRandomButton'; // set a button handler, 'aRandomButton' prevents close.
+    		        enableButton();
+    		    },
 		    buttons: { 
-		        cancel: function () {
-		            //$.alert('Canceled!');
-		            //$('#checkout').removeAttr('disabled', 'disabled');
-		            enableButton();
-		        },
+		        // cancel: function () {
+		        //     //$.alert('Canceled!');
+		        //     //$('#checkout').removeAttr('disabled', 'disabled');
+		        //     enableButton();
+		        // },
 		        somethingElse: {
 		            text: 'Confirm',
 		            btnClass: 'btn-green',
@@ -58,7 +64,7 @@ function checkOut(){
 			               	}
 			               	 
 			               	showSuccess('Success','Your Purchase has been checkout!.', function(){
-			               		redirectTo('/');
+			               		redirectTo('/me');
 			               	});
 		               });
 
@@ -77,12 +83,18 @@ function order(){
 		    title: 'Confirmation!',
 		    content: 'Order confirmation, do you want to continue?',
 		    type: 'dark',
-		    boxWidth: '50%',
+		    boxWidth: '80%',
     		useBootstrap: false,
+    		closeIcon: function(){
+    		        //return false; // to prevent close the modal.
+    		        // or
+    		        //return 'aRandomButton'; // set a button handler, 'aRandomButton' prevents close.
+    		        enableButton();
+    		    },
 		    buttons: { 
-		        cancel: function () { 
-		            enableButton();
-		        },
+		        // cancel: function () { 
+		        //     enableButton();
+		        // },
 		        
 		        somethingElse: {
 		            text: 'Confirm',
@@ -101,7 +113,7 @@ function order(){
 			               	}
 
 		            		showSuccess('Success','Your Order has been checkout!.', function(){
-			               		redirectTo('/');
+			               		redirectTo('/me');
 			               	});
 		            	});
 		            	

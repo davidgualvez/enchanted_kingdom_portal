@@ -37,7 +37,7 @@
 	{{-- what to do --}}
 	<h4 class="ui horizontal divider header">
 	  <i class="gift icon"></i>
-	 	Today Special's 
+	 	Today's Specials
 	</h4> 
 	@if( !$dash->isEmpty() )
 
@@ -108,20 +108,21 @@
 <br>
 {{-- what to do --}}
 <h4 class="ui horizontal divider header">
-  <i class="gift icon"></i>
- 	What to do?
+  	<i class="gift icon"></i>
+ 		&nbsp;&nbsp;Fun Things to Do!&nbsp;&nbsp;
+ 	<i class="arrow down icon"></i>
 </h4>
 <div class="ui three column stackable grid" style="padding: 25px;">
   <div class="column" >
   	
-  	<div class="ui fluid card" style="padding: 20px;">
+  	<div class="ui fluid card" style="">
   		<div class="image">
-  		   <img src="/assets/images/products/default.jpg">
+  		   <img src="/assets/images/route.png" style="padding: 50px;">
   		</div>
 	    <div class="content">
 	      <div class="header">Site Map!</div>
 	      <div class="description">
-	        ...
+	        First time going to Enchanted Kingdom? Check out our handy park map below to know where to go on the day of your visit!
 	      </div>
 	    </div>
 	    <a href="/site-map" class="ui bottom attached button">
@@ -130,16 +131,17 @@
   	</div>
   </div>
 
-  <div class="column" >
+  <div class="column center aligned" >
 	
-  	<div class="ui fluid card" style="padding: 20px;">
+  	<div class="ui fluid card" style="">
   		<div class="image">
-  		   <img src="/assets/images/products/default.jpg">
+  		   <img src="/assets/images/store.png" style="padding: 50px;">
   		</div>
 	    <div class="content">
 	      <div class="header">Order Something.</div>
 	      <div class="description">
-	        ...
+	        Now there’s more magic and more memories to create with the EKsperience the Magic eWallet!
+Enjoy EKsclusive perks and start your magical year today!
 	      </div>
 	    </div>
 	    <a href="/store" class="ui bottom attached button">
@@ -150,14 +152,15 @@
 
   <div class="column" >
 	
-  	<div class="ui fluid card" style="padding: 20px;">
+  	<div class="ui fluid card" style="">
   		<div class="image">
-  		   <img src="/assets/images/products/default.jpg">
+  		   <img src="/assets/images/to-do.png" style="padding: 50px;">
   		</div>
 	    <div class="content">
 	      <div class="header">Things to do</div>
 	      <div class="description">
-	        ...
+	        We have a variety of world-class themed rides and attractions for all our guests, big or small, young or the young at heart!
+From family friendly to exhilarating and extreme thrill rides!
 	      </div>
 	    </div>
 	    <a href="/things-to-do" class="ui bottom attached button">

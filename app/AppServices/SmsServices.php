@@ -19,21 +19,29 @@ class SmsServices {
 
 		try{
 
-			$message = 'Welcome to Enchanted Kingdom! You are now a Loyalty Member. You may now load up your wallet to purchase anything from the store and earn a points for every purchase. Enjoy!';
+			$message = "Welcome to Enchanted Kingdom! You are now a Loyalty Member. You may now load up your wallet to purchase anything from the store. Enjoy!";
 
-			// Log::debug('recepient: '.$mobile_number.', message: '.$message);
+			// Log::debug('recepient: '.$mobile_number.', message: '.$message); 
 			$msg = new Message;
-			$msg->number 	= $mobile_number;
+			$msg->number 	= $this->numberFormater($mobile_number);
 			$msg->message 	= $message;
 			$msg->status 	= 0;
-			$msg->save();
-
-			return true;
-
-		}catch(\Exception $e){
-			Log::debug('SMS :'.$e.getMessage() );
+			$msg->save(); 
+			return true; 
+		}catch(\Exception $e){ 
+			Log::debug('SMS :'.$e->getMessage() );
 			return false;
 		}
 		
+	}
+
+	private function numberFormater($number){
+		$to_replace = '+63'; 
+		$hooked_value = substr($number ,0, 3); 
+		if($to_replace != $hooked_value){
+			$to_be_append = substr($number ,1, strlen($number) - 1); 
+			return ''.$to_replace.$to_be_append; 
+		} 
+		return ''.$number;
 	}
 }

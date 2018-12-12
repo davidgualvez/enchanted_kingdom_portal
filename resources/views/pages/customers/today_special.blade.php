@@ -11,6 +11,12 @@
 
 @section('content')
 
+
+<h4 class="ui horizontal divider header">
+  <i class="gift icon"></i>
+ 	Today Special's 
+</h4> 
+	
 <div class="item-banner">
 	<img src="{{ $banner_img }}" class="ui fluid image">
 </div>
