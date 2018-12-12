@@ -2,6 +2,8 @@
 
 namespace App\AppServices;  
 use Log;
+use App\Message;
+
 class SmsServices { 
 
 	// -- Successful registration -- 
@@ -19,10 +21,17 @@ class SmsServices {
 
 			$message = 'Welcome to Enchanted Kingdom! You are now a Loyalty Member. You may now load up your wallet to purchase anything from the store and earn a points for every purchase. Enjoy!';
 
-			Log::debug('recepient: '.$mobile_number.', message: '.$message);
+			// Log::debug('recepient: '.$mobile_number.', message: '.$message);
+			$msg = new Message;
+			$msg->number 	= $mobile_number;
+			$msg->message 	= $message;
+			$msg->status 	= 0;
+			$msg->save();
+
 			return true;
 
 		}catch(\Exception $e){
+			Log::debug('SMS :'.$e.getMessage() );
 			return false;
 		}
 		

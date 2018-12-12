@@ -11,6 +11,7 @@ use Validator;
 
 use App\AppServices\BranchLastIssuedNumberServices;
 use App\AppServices\SmsServices;
+use App\AppServices\MailServices;
 use Carbon\Carbon;
 
 class SignupController extends Controller
@@ -102,6 +103,12 @@ class SignupController extends Controller
             //send welcome sms here 
             $sms = new SmsServices;
             $sms->sendWelcome($user->mobile_number);
+
+            //send welcome email here
+            if($request->email != null || $request->email != ''){
+                $_email = new MailServices;
+                $_email->welcomeMessage($request->email, $request->name);
+            }
 
             //success 
             DB::commit();
