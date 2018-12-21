@@ -2,17 +2,20 @@
 @section('title','My Cart')
 
 @section('js')
-<script src="https://cdn.jsdelivr.net/jsbarcode/3.6.0/JsBarcode.all.min.js"> </script>
+{{-- <script src="https://cdn.jsdelivr.net/jsbarcode/3.6.0/JsBarcode.all.min.js"> </script> --}}
 <!-- <script src="https://cdn.jsdelivr.net/jsbarcode/3.6.0/barcodes/JsBarcode.ean-upc.min.js"></script> -->
-<script src="/js/pages/me.js"></script> 
+{{-- <script src="/js/plugins/jquery.qrcode.js"></script> --}}
+<script src="/js/plugins/qrcode.js"></script>
+<script src="/js/pages/me.js"></script>  
 @endsection
-
+ 
 @section('content')
 <div class="ui page dimmer">
     <div class="content">
       	<h2 class="ui inverted icon header">
         	<!-- <i class="barcode icon"></i> -->  
-        	<svg id="barcode"></svg>
+        	{{-- <svg id="barcode"></svg> --}}
+        	<div id="barcode" style="padding: 5px; background-color: white;"></div>
 
        		<div id="purchase_order">
        			

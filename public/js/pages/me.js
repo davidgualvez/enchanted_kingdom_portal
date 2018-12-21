@@ -111,7 +111,7 @@ function activePurchaseDisplayer(){
 function activePurchase(){ 
 	post(routes.user.activePurchase,{}, function(response){ 
 		$.each(response.data, function (key, value) {
-			console.log(value);
+			//console.log(value);
 
 			var is_unli = '';
 			if(value.is_unli == 1){
@@ -134,7 +134,7 @@ function activePurchase(){
 			   	      '</div>'+
 			   	      '<div class="extra">'+
 			   	        '<div class="ui right floated primary tiny button btnActiveOrder" id="'+value.purchase_detail_id+'">'+
-			   	          'Show Code'+
+			   	          'Show QRCode'+
 			   	          '<i class="right chevron icon"></i>'+
 			   	        '</div>'+
 			   	        '<div class="ui mini label">Valid for <strong> '+value.valid_until+' </strong> only.</div>'+
@@ -154,26 +154,36 @@ function activePurchase(){
 
 function showBarcode(id,product_id){
 	$('.btnActiveOrder#'+id).on('click', function(){
-		console.log(this.id); 
+		 
 		$('.ui.dimmer').dimmer("show",
 		{
 			onHide: function(){
-				console.log('test');
+				//console.log('test');
 			}
 		}); 
 		
-		//FormatNumberLength(id, 10)
-		JsBarcode("#barcode", id+'-'+product_id , {
-			format: "CODE39",
-			// lineColor: "#0aa",
-			// width: 3,
-			// mod43:true
-			// height: 40,
-			// displayValue: false
-		});
+		// //FormatNumberLength(id, 10)
+		// JsBarcode("#barcode", id+'-'+product_id , {
+		// 	format: "CODE39",
+		// 	// lineColor: "#0aa",
+		// 	// width: 3,
+		// 	// mod43:true
+		// 	// height: 40,
+		// 	// displayValue: false
+		// });
+        //jquery('#barcode').qrcode({width: 64,height: 64,text: _id});
+        $('#barcode').empty(); 
+        var qrcode = new QRCode(document.getElementById("barcode"), {
+            text: id+'-'+product_id , 
+            width: 128,
+            height: 128,
+            colorDark : "#000000",
+            colorLight : "#ffffff",
+            correctLevel : QRCode.CorrectLevel.H
+        });  
 		
-		console.log( $('.btnActiveOrder#'+this.id).parent().prev().prev().prev().text() );
-		$('#purchase_order').text( $('.btnActiveOrder#'+this.id).parent().prev().prev().prev().text() );
+		//console.log( $('.btnActiveOrder#'+this.id).parent().prev().prev().prev().text() );
+		//$('#purchase_order').text( $('.btnActiveOrder#'+this.id).parent().prev().prev().prev().text() );
 		//$('#purchase_id').text(this.id);
 	}); 
 }
@@ -290,7 +300,7 @@ function dataDisplayerPurchaseHistory(data, from) {
     		    	  	'</tr>'+
     		    	  '</thead>'+
     		    	  '<tbody>';
-    		    	  console.log(value.details);
+    		    	  //console.log(value.details);
         $.each(value.details, function(key, value1){  
     		details +=  '<tr>'+
     		    	      '<td>'+value1.part_name+'</td>'+
@@ -511,7 +521,7 @@ function dataDisplayerOrderHistory(data, from) {
     		    	  	'</tr>'+
     		    	  '</thead>'+
     		    	  '<tbody>';
-    		    	  console.log(value.details);
+    		    	  //console.log(value.details);
         $.each(value.details, function(key, value1){ 
     		details +=  '<tr>'+
     		    	      '<td>'+value1.product_name+'</td>'+
@@ -579,8 +589,8 @@ function dataDisplayerOrderHistory(data, from) {
              			  	'</div> '+ 
              			  	'<div class="item">'+
 	           	  			    '<div class="right floated content">'+
-	           	  			      	'<div class="ui right floated primary tiny button btnActiveOrder" data-id="'+value.orderslip_header_id+'">'+
-	      				   	          'Show Code'+
+	           	  			      	'<div class="ui right floated primary tiny button btnOrderCode" data-id="'+value.orderslip_header_id+'">'+
+	      				   	          'Show QRCode'+
 	      				   	          '<i class="right chevron icon"></i>'+
 	      				   	        '</div>'+
 	           	  			    '</div> '+
@@ -620,36 +630,46 @@ function dataDisplayerOrderHistory(data, from) {
 //end of pagination================
 
 function showBarcodeOrder(id){
-	$('.btnActiveOrder').on('click', function(){
-		console.log(this.id); 
-
+	$('.btnOrderCode').on('click', function(){ 
+ 
         var _id = $(this).data('id');
 
 		$('.ui.dimmer').dimmer("show",
 		{
 			onHide: function(){
-				console.log('test');
+				//console.log('test');
 			}
 		}); 
 		
-		//FormatNumberLength(id, 10)
-		JsBarcode("#barcode", _id , {
-			format: "CODE39",
-			// lineColor: "#0aa",
-			// width: 3,
-			// mod43:true
-			// height: 40,
-			// displayValue: false
-		});
-		
-		
-		$('#purchase_order').text(  );
+		// //FormatNumberLength(id, 10)
+		// JsBarcode("#barcode", _id , {
+		// 	format: "CODE39",
+		// 	// lineColor: "#0aa",
+		// 	// width: 3,
+		// 	// mod43:true
+		// 	// height: 40,
+		// 	// displayValue: false
+		// }); 
+
+        $('#barcode').empty(); 
+        var qrcode = new QRCode(document.getElementById("barcode"), {
+            text: ''+_id , 
+            width: 128,
+            height: 128,
+            colorDark : "#000000",
+            colorLight : "#ffffff",
+            correctLevel : QRCode.CorrectLevel.H
+        });  
+
+        //jquery('#barcode').qrcode({width: 64,height: 64,text: _id});
+	
+		//$('#purchase_order').text(  );
 		//$('#purchase_id').text(this.id);
 	}); 
 }
 
 function fetchHistory(){
 	post(routes.cart.orderHistory, {}, function(response){
-		console.log(response);
+		//console.log(response);
 	});
 }
