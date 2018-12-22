@@ -27,6 +27,7 @@ var api = '';
 var routes = {
     login:              '/signup',
     products:           '/products',
+    productCategories:  '/products/groups',
     rewards:            '/rewards/lists',
     cart: {
         points: {

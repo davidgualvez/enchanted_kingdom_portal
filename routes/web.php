@@ -118,6 +118,7 @@ Route::post('/points/checkout', 						'PurchaseController@checkoutReward');
 //products and promo 
 Route::get('/promos',                            		'ProductPromotionController@activePromo');
 Route::get('/products',                          		'PartController@lists');
+Route::get('/products/groups', 							'PartController@groups');
 
 //rewards
 Route::get('/rewards', 									'RewardController@index');

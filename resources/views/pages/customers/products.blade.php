@@ -94,7 +94,7 @@
 	      	     	</span>
 	      	     	&nbsp;&nbsp;&nbsp;
 	      	     	<span style="float: right;">
-	      	       		<div id="" class="ui violet vertical animated  button" tabindex="0">
+	      	       		<div id="btn_single_add_to_cart" data-id="" class="ui violet vertical animated  button" tabindex="0">
 	      	         		<div class="hidden content">Add</div>
 		      	         	<div class="visible content">
 		      	           		<i class="shop icon"></i>
@@ -106,6 +106,6 @@
 	      	 </div>
 	    </div>
 	</div>
-
+	<br>
 
 @endsection

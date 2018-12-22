@@ -1,6 +1,4 @@
-$(document).ready(function(){
-	
-	console.log('Loaded..');
+$(document).ready(function(){ 
 
 	//product pagination
 	paginateProduct();
@@ -12,8 +10,8 @@ $(document).ready(function(){
 	    paginateProduct();
 	})
 
-
-
+    btnSingleAddToCart();
+    getCategories();
 });
 
 //pagination================================ 
@@ -35,15 +33,11 @@ function paginateProduct() {
 
     if (current_page_product == null) {
         current_page_product = 1;
-    }
+    } 
 
-    //test
-    // console.log(data,current_page);
-    // return;
     //end 
     get(routes.products + "?page=" + current_page_product, data, function (response) {
-        current_page_product = response.data.current_page;
-        console.log(response);
+        current_page_product = response.data.current_page; 
 
         $('#current_page_product').html(current_page_product);
         if (response.data.next_page_url == null) {
@@ -93,8 +87,7 @@ function dataDisplayerProduct(data, from) {
     }
 
     current_data_product = data;
-    $.each(data, function (key, value) {
-        // console.log(value);
+    $.each(data, function (key, value) { 
         var category = value.group_name;
         items.append(
            '<div class="card">'+
@@ -136,44 +129,20 @@ function dataDisplayerProduct(data, from) {
     });
 
      productImageOnClick();
+
 }
 //end of pagination================
 
 function btnProductAddToCart(id){
-    $('#btn-product-'+id).on('click',function(){
-        console.log(id); 
-        var data = {
-            product_id : id,
-            qty : 1
-        };
-        
-        post(routes.cart.addToCart, data, function(response){
-            console.log(response);
-            if(response.success == false){
-                if(response.status == 401){ 
-                    redirectTo('/login'); //if not authenticated
-                } 
-                showWarning('Warning',response.message, function(){
-
-                });
-                return;
-            }
-
-            showSuccess('Success',response.message, function(){
-
-            });
-            updateCartCount();
-        });
-        // showSuccess('','hello',function(){
-
-        // });  
+    $('#btn-product-'+id).on('click',function(){  
+        addToCart(id); 
     });
 }
 
 
 function productImageOnClick(){
-    $('.product_image').on('click', function(){
-        console.log('.... : ' + $(this).data('id'));
+    $('.product_image').on('click', function(){ 
+
         // left button
         $('.dimmer').dimmer('toggle');
 
@@ -189,5 +158,45 @@ function productImageOnClick(){
         //price
         $('#product_price').text( $(this).data('price') );
 
+        //adding an id to the #btn_single_add_to_cart
+        $('#btn_single_add_to_cart').data('id', $(this).data('id')); 
+
+    });
+}
+
+function btnSingleAddToCart(){
+    $('#btn_single_add_to_cart').on('click',function(){  
+        var id = $(this).data('id');
+        addToCart(id);
+    });
+}
+
+function addToCart(id){
+    var data = {
+        product_id : id  ,
+        qty : 1
+    };
+    
+    post(routes.cart.addToCart, data, function(response){ 
+        if(response.success == false){
+            if(response.status == 401){ 
+                redirectTo('/login'); //if not authenticated
+            } 
+            showWarning('Warning',response.message, function(){
+
+            });
+            return;
+        }
+
+        showSuccess('Success',response.message, function(){
+        });
+        $('.dimmer').dimmer('hide');
+        updateCartCount();
+    });
+}
+
+function getCategories(){
+    get(routes.productCategories, {}, function(response){
+        console.log(response);
     });
 }
