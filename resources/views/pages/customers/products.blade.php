@@ -74,4 +74,38 @@
 		</div> 
 	</div> 
 
+	{{-- //DIMMER --}}
+	<div class="ui page dimmer">
+	    <div class="content">
+	      	 <div class="ui piled segment">
+	      	   <h4 class="ui header" id="product_name"></h4>
+				
+				<div>
+
+                  <img id="product_image" src="">
+                </div>
+
+
+	      	   <p style="color: black; text-align: left; padding: 10px;" id="product_description"></p>
+
+	      	   	<div style="text-align: left;">
+	      	   		<span>
+	      	       		<a class="ui violet tag label" id="product_price">P 0.00</a>
+	      	     	</span>
+	      	     	&nbsp;&nbsp;&nbsp;
+	      	     	<span style="float: right;">
+	      	       		<div id="" class="ui violet vertical animated  button" tabindex="0">
+	      	         		<div class="hidden content">Add</div>
+		      	         	<div class="visible content">
+		      	           		<i class="shop icon"></i>
+		      	         	</div>
+	      	       		</div>
+	      	     	</span>
+	      	     	
+	      	   	</div>
+	      	 </div>
+	    </div>
+	</div>
+
+
 @endsection

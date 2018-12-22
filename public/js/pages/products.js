@@ -12,6 +12,8 @@ $(document).ready(function(){
 	    paginateProduct();
 	})
 
+
+
 });
 
 //pagination================================ 
@@ -96,8 +98,14 @@ function dataDisplayerProduct(data, from) {
         var category = value.group_name;
         items.append(
            '<div class="card">'+
-                '<div class="image">'+
-                  '<img src="'+value.image+'">'+
+                '<div class="image">'+ 
+                  ' <img class="product_image" src="'+value.image+'" '+
+                  ' data-id="'+value.id+'"' +
+                  ' data-name="'+(value.name).trim()+'"' +
+                  ' data-image="'+value.image+'"' +
+                  ' data-description="'+(value.description).trim()+'"' +
+                  ' data-price="'+value.srp+'" ' +
+                  ' >' +
                 '</div>'+
                 '<div class="content">'+
                   '<div class="header">'+value.name+'</div>'+
@@ -110,7 +118,7 @@ function dataDisplayerProduct(data, from) {
                 '</div>'+
                 '<div class="extra content">'+
                   '<span class="right floated"> '+
-                    '<div id="btn-product-'+value.id+'" class="ui vertical animated  button" tabindex="0">'+
+                    '<div id="btn-product-'+value.id+'" class="ui tiny violet vertical animated  button" tabindex="0">'+
                       '<div class="hidden content">Add</div>'+
                       '<div class="visible content">'+
                         '<i class="shop icon"></i>'+
@@ -118,7 +126,7 @@ function dataDisplayerProduct(data, from) {
                     '</div>'+
                   '</span>'+
                   '<span> '+
-                    '<a class="ui tag label">P '+value.srp+'</a>'+
+                    '<a class="ui tiny violet tag label">P '+value.srp+'</a>'+
                   '</span>'+
                 '</div>'+
            '</div>'
@@ -126,6 +134,8 @@ function dataDisplayerProduct(data, from) {
         from++;
         btnProductAddToCart(value.id);
     });
+
+     productImageOnClick();
 }
 //end of pagination================
 
@@ -157,5 +167,27 @@ function btnProductAddToCart(id){
         // showSuccess('','hello',function(){
 
         // });  
+    });
+}
+
+
+function productImageOnClick(){
+    $('.product_image').on('click', function(){
+        console.log('.... : ' + $(this).data('id'));
+        // left button
+        $('.dimmer').dimmer('toggle');
+
+        //name
+        $('#product_name').text( $(this).data('name') );
+
+        //image
+        $('#product_image').attr('src', $(this).data('image') );
+
+        //description
+        $('#product_description').text( $(this).data('description') );
+
+        //price
+        $('#product_price').text( $(this).data('price') );
+
     });
 }
