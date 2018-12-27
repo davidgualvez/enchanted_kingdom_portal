@@ -18,15 +18,59 @@
 	  	Our Products
 	</h4>
 		
-	<div class="ui secondary menu"> 
-	  <div class="right menu">
-	    <div class="item">
-	      <div class="ui icon input">
-	        <input type="text" id="search_our_products" placeholder="Search products...">
-	        <i class="search link icon" id="btn_search_our_products"></i>
-	      </div>
-	    </div>
-	  </div>
+	<div class="ui secondary menu">
+		
+		<div class="ui multiple dropdown">
+		  <input type="hidden" name="filters">
+		  <i class="filter icon"></i>
+		  <span class="text">Select Categories</span>
+		  <div class="menu">
+		    <div class="ui icon search input">
+		      <i class="search icon"></i>
+		      <input type="text" placeholder="Search tags...">
+		    </div>
+		    <div class="divider"></div>
+		    <div class="header">
+		      <i class="tags icon"></i>
+		      Tag Label
+		    </div>
+		    <div class="scrolling menu" id="categories">
+		      <div class="item" data-value="important"> 
+		        Important
+		      </div>
+		      <div class="item" data-value="announcement"> 
+		        Announcement
+		      </div>
+		      <div class="item" data-value="cannotfix"> 
+		        Cannot Fix
+		      </div>
+		      <div class="item" data-value="news"> 
+		        News
+		      </div>
+		      <div class="item" data-value="enhancement"> 
+		        Enhancement
+		      </div>
+		      <div class="item" data-value="off-topic"> 
+		        Off Topic
+		      </div>
+		      <div class="item" data-value="interesting"> 
+		        Interesting
+		      </div>
+		      <div class="item" data-value="discussion"> 
+		        Discussion
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+	  	<div class="right menu">
+		    <div class="item">
+		      <div class="ui icon input">
+		        <input type="text" id="search_our_products" placeholder="Search products...">
+		        <i class="search link icon" id="btn_search_our_products"></i>
+		      </div>
+		    </div>
+	  	</div>
 	</div>
 
 	<div class="ui five doubling cards" id="items_product">
@@ -105,7 +149,6 @@
 	      	   	</div>
 	      	 </div>
 	    </div>
-	</div>
-	<br>
+	</div> 
 
 @endsection

@@ -74,6 +74,9 @@
 			<!-- END OF CONTENT --> 
 		</div>
 	</div>
+
+	{{-- footer --}}
+	@include('layouts.customers.footer')
 	
 	<!-- JS -->
 	<script src="/js/app.js"></script>

@@ -2,12 +2,22 @@
 	#desktop-nav{
 		display: none;
 	}
+
+	#footer-c3,#footer-c2,#footer-c1{
+		text-align: center!important;
+		color:red;
+	}
 }
 
 @media only screen and (min-width: 768px ){
 	#mobile-nav{
 		display: none;
 	}
+
+	/*#footer-c3{
+		text-align: right!important;
+		color:red;
+	}*/
 }
 
 /*#main{
@@ -32,4 +42,16 @@
 
 .g-padding{
 	padding:5px;
+}
+
+#footer-c2{
+	color: #696969;
+	font-weight: 700;
+	
+}
+.footer-link{
+	color: #696969;
+}
+.footer-link:hover{
+	color: #470a67;
 }

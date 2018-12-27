@@ -36,7 +36,7 @@ From family friendly to exhilarating and extreme thrill rides!</p>
 					<img src="/assets/images/things-to-do/3.jpg" class="ui fluid image">
 				</div>
 				<div class="featured-text">
-					<h2 class="title">DINNING</h2>
+					<h2 class="title">DINING</h2>
 					<p class="description">Having fed your hunger for magic and thrills, why not treat yourself to a delectable meal in one of our great food places located all throughout the park?</p> 
 				</div>
 			</div>  

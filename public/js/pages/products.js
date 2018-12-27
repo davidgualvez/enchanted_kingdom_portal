@@ -8,7 +8,14 @@ $(document).ready(function(){
 
 	$('#btn_search_our_products').on('click', function(){
 	    paginateProduct();
-	})
+	});
+    $('#search_our_products').on('change', function(){
+        paginateProduct();
+    });
+
+    $('.ui.multiple.dropdown').dropdown('setting', 'onChange', function(){
+        paginateProduct();
+    });
 
     btnSingleAddToCart();
     getCategories();
@@ -18,15 +25,20 @@ $(document).ready(function(){
 var current_page_product = null;
 var prev_page_url_product = null;
 var next_page_url_product = null;
-var current_data_product = null;
+var current_data_product = null; 
 
 function paginateProduct() {
+    //
+    var filtered_value      = $('.ui.multiple.dropdown').dropdown('get value');
+    var selected_categories = filtered_value.split(","); 
+    //
     var limit           = $('#limit_product').val();
     var search_val      = $('#search_our_products').val(); 
 
     var data = {
         search          : search_val, 
-        limit               : limit, 
+        limit           : limit, 
+        categories      : selected_categories
     };
 
     var url = null;
@@ -196,7 +208,16 @@ function addToCart(id){
 }
 
 function getCategories(){
-    get(routes.productCategories, {}, function(response){
-        console.log(response);
+    get(routes.productCategories, {}, function(response){ 
+        var cat = $('#categories');
+        cat.empty();
+        $.each(response.data, function(key, val){ 
+            //populate the categories from this response 
+            cat.append(
+                '<div class="categories item" data-value="'+val.group_code+'">'+
+                  val.description+
+                '</div>'
+            );
+        });
     });
 }
