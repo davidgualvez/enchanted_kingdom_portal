@@ -32,7 +32,9 @@ class SitePart extends Model
       	'category_id' 			=> 'CATEGORY',
       	'group_id' 				=> 'GROUP',
         'img_url' 				=> 'IMAGE',
-        'pre_part_no'           => 'PREPARTNO' // this is use to identify the admission 0|1  to exclude from the list
+        'pre_part_no'           => 'PREPARTNO', // this is use to identify the admission 0|1  to exclude from the list
+        'is_food'               => 'MSGROUP',
+        'is_unli'               => 'SSBUFFER'
     ];
     protected $getterMutators = [
     	'product_name' 			=> 'trim',

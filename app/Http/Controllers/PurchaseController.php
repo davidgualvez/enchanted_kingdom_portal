@@ -11,6 +11,7 @@ use App\Cart;
 
 use App\Reward;
 use App\Part;
+use App\SitePart;
 use App\ProductPromotion;
 use App\Promotion;
 use App\Transformers\CartTransformer;
@@ -64,14 +65,14 @@ class PurchaseController extends Controller
         	$cartList = [];
         	foreach ($carts as $key => $value) {
         	    # code... 
-                $partt = new Part;
-                $part = $partt->where($partt->branch_id, config('cpp.branch_id'))
-                            ->where($partt->product_id, $value->product_id)
+                $partt = new SitePart;
+                $part = $partt->where('branch_id', config('cpp.branch_id'))
+                            ->where('sitepart_id', $value->product_id)
                             ->first();
 
                 //if the product is a group of wallet
                 // do not allow to proceed and display a warning message
-                if($part->GROUP == 30102){
+                if($part->group_id == 30102){
                     DB::rollback();
                     return response()->json([
                         'success'   => false,
@@ -170,18 +171,18 @@ class PurchaseController extends Controller
                 // }else{
 
                     //logic
-                    $product_id            = $part->PRODUCT_ID;
-                    $name                  = $part->SHORTCODE;
+                    $product_id            = $part->sitepart_id;
+                    $name                  = $part->product_name;
                     $description           = '';
                     $qty                   = $value->qty;
-                    $srp                   = $part->RETAIL;
+                    $srp                   = $part->srp;
                     $product_promotion_id  = null;
                     $discount_type         = 0;
                     $discount_value        = 0;
                     $discount_amount       = 0;
                     $selling_price         = $qty * $srp;
                     $buying_price          = 0;
-                    $is_unli                = $part->SSBUFFER;
+                    $is_unli               = $part->is_unli;
                     
                     // if(is_null($part->activePromo)){
                     //     $discount_amount = 0; 
@@ -240,7 +241,7 @@ class PurchaseController extends Controller
                     $pd->customer_number     = $user->mobile_number;
                     $pd->transaction_type    = 'WEB';
                     $pd->barcode             = $new_sales_order_detail_id.'-'.$product_id;
-                    
+                    $pd->is_food             = $part->is_food;
 
                     if($is_unli == 1){
                         $pd->is_unli         = 1;
