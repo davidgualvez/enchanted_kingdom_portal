@@ -18,16 +18,16 @@
 
 	    <div id="footer-c3" class="right aligned four wide column">
 	    	<div class="">
-	    	 	<a class="footer-link" href="https://www.facebook.com/enchantedkingdom.ph/">
+	    	 	<a class="footer-link" target="_blank" href="https://www.facebook.com/enchantedkingdom.ph/">
 	    	 		<i class="facebook f icon"></i>
 	    	 	</a>
-	    	 	<a class="footer-link" href="https://www.twitter.com/ek_philippines/">
+	    	 	<a class="footer-link" target="_blank" href="https://www.twitter.com/ek_philippines/">
 	    	 		<i class="twitter icon"></i>
 	    	 	</a>
-				<a class="footer-link" href="https://www.instagram.com/ek_philippines/">
+				<a class="footer-link" target="_blank" href="https://www.instagram.com/ek_philippines/">
 	    	 		<i class="instagram icon"></i>
 	    	 	</a>
-	    	 	<a class="footer-link" href="https://www.youtube.com/EKMagicVideos/">
+	    	 	<a class="footer-link" target="_blank" href="https://www.youtube.com/EKMagicVideos/">
 	    	 		<i class="youtube icon"></i>
 	    	 	</a> 
 	    	</div>

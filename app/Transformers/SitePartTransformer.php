@@ -10,15 +10,15 @@ class SitePartTransformer {
 
             $url = Storage::url($value->IMAGE);
             return [
-               'id'         => $value->PRODUCT_ID,
-               'branch_id'      => $value->ARNOC,
-               'name'           => $value->SHORTCODE,
-               'description'    => $value->DESCRIPTION,
-               'srp'            => $value->RETAIL,
-               'category_id'    => $value->CATEGORY, 
-               'group_id'     => $value->groupp->GROUPCODE,
-               'group_name'   => ucfirst( strtolower($value->groupp->DESCRIPTION) ),
-               'image'          => $url,
+               'id'              => $value->sitepart_id,
+               'branch_id'       => $value->branch_id,
+               'name'            => $value->product_name,
+               'description'     => $value->product_description,
+               'srp'             => $value->srp,
+               'category_id'     => $value->category_id, 
+               'group_id'        => $value->group_id,
+               'group_name'      => $value->group->description,
+               'image'           => $url,
                //'promo'      => $value->activePromo 
             ]; 
         });

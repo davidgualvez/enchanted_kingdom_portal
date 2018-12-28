@@ -34,7 +34,7 @@ class Group extends Model
      */
     protected $getterMutators = [ 
         'bs_unit_code'      =>  'trim', 
-        'description'       =>  'trim', 
+        'description'       =>  'trim|strtolower|ucfirst', 
     ];
 
     /**

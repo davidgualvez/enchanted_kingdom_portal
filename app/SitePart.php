@@ -17,7 +17,7 @@ class SitePart extends Model
     //model mapping
     protected $maps = [
       // implicit relation mapping:
-      //'profile' => ['first_name', 'last_name'],
+      'group' => ['group_code', 'description'],
 
       // explicit relation mapping:
       //'picture' => 'profile.picture_path',
@@ -31,7 +31,8 @@ class SitePart extends Model
       	'srp' 					=> 'RETAIL',
       	'category_id' 			=> 'CATEGORY',
       	'group_id' 				=> 'GROUP',
-      	'img_url' 				=> 'IMAGE'
+        'img_url' 				=> 'IMAGE',
+        'pre_part_no'           => 'PREPARTNO' // this is use to identify the admission 0|1  to exclude from the list
     ];
     protected $getterMutators = [
     	'product_name' 			=> 'trim',
@@ -46,5 +47,7 @@ class SitePart extends Model
     }
 
     //relationship
-
+    public function group(){
+        return $this->belongsTo('App\Group', 'GROUP');
+    }
 }

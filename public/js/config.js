@@ -154,6 +154,7 @@ function showInfo(title, message, callback) {
 }
 
 function showSuccess(title, message, callback) {
+    
     iziToast.success({
         title: title,
         message: message,
@@ -163,6 +164,7 @@ function showSuccess(title, message, callback) {
         },
         displayMode : 'replace'
     });
+
 }
 
 function showWarning(title, message, callback) {
