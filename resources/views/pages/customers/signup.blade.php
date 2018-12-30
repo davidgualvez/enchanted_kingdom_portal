@@ -37,10 +37,24 @@
 	  	      <div class="content">
 	  	        Enchanted Kingdom
 	  	      </div>
-	  	    </h2>
-	  	    <form class="ui large form" method="post" action="/signup">
+					</h2>
+					
+					<div class="ui segment">
+							<div style=" display:block; text-align:left;">
+								<div class="ui small breadcrumb">
+									<a href="/" class="section">
+										<i class="home icon"></i>
+										Home
+									</a>
+									<i class="right chevron icon divider"></i> 
+									<div class="active section">Registration</div>
+								</div>
+							</div> 
+					</div>
+
+					<form class="ui large form" method="post" action="/signup"> 
 	  	    @csrf
-	  	      <div class="ui stacked segment">
+	  	      <div class="ui stacked segment"> 
 	  	      	@if (count($errors) > 0)
 	  	      	<div class="ui message">
   		  	      	<i class="close icon"></i>
@@ -62,13 +76,13 @@
 	  	      	  		</div>
 	  	      	  		<p class=" text-left">{{ session('error') }}</p>
 	  	      		</div> 
-                @endif 
+							@endif  
+
 	  	      	<div class="field">
 	  	      		<label class="" style="text-align: left;">Name</label>
 	  	          	<div class="ui left icon input">
 	  	            	<i class="user icon"></i>
-	  	            	<input type="text" name="name" placeholder="Name" value="{{ old('name') }}">
-	  	            	
+	  	            	<input type="text" name="name" placeholder="Name" value="{{ old('name') }}"> 
 	  	          	</div>
 
 	  	        </div>

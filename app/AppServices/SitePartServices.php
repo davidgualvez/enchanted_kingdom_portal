@@ -25,24 +25,6 @@ class SitePartServices {
                                 ->orderBy('sitepart_id','desc')
                                 ->simplePaginate($limit);
                 }
-
-		// $part = new Part; 
-		// $p = null;
-		// if( is_null($categories[0]) || $categories[0] == '' ){ 
-                //         $p = $part->where($part->branch_id,config('cpp.branch_id'))
-                //         ->where('pre_part_no', 0)
-                //         ->where($part->name,'LIKE','%'.$search.'%')
-                //         ->orderBy('PRODUCT_ID','desc')
-                //         ->simplePaginate($limit);
-                // }else{
-                //         $p = $part->where($part->branch_id,config('cpp.branch_id'))
-                //         ->where('pre_part_no', 0)
-                //         ->where($part->name,'LIKE','%'.$search.'%')
-                //         ->whereIn('GROUP', $categories)
-                //         ->orderBy('PRODUCT_ID','desc')
-                //         ->simplePaginate($limit);
-                // }
-
         
                 $spt = new SitePartTransformer; 
         
