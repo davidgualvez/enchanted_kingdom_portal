@@ -2,6 +2,7 @@
 
 ### Dec 29, 2018
 - Added back to home page button in login and signup page.
+- Fixed the checkout/order when the items in cart is empty
 
 ### Dec 28, 2018
 - Exclude the some Sitepart from the list of master product when the PrePartNo is set to 1
