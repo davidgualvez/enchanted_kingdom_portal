@@ -11,7 +11,7 @@ use App\Cart;
 use App\Part;
 use App\ProductPromotion;
 use App\Promotion;
-use App\Transformers\CartTransformer;
+use App\Transformers\CartTransformer; 
 
 class CartController extends Controller
 {

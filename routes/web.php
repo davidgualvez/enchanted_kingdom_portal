@@ -16,32 +16,9 @@ Route::get('/default', function(){
 	return view('pages.playground.default');
 });
 //END
-
-use Illuminate\Support\Facades\Storage;
-Route::get('/', function () {
-	$now = \Carbon\Carbon::now();
-
-	$dash = \App\Dashboard::where('start_at' , '<=', $now)
-				->where('end_at', '>=', $now)
-				->get(); 
-
-	$dash->transform(function ($x){
-		$url = Storage::url($x->image);
-		$url = config('app.url').$url;
-		return [
-			'id' 			=> $x->id,
-	      	'image' 		=> $url,
-	      	'title' 		=> $x->title,
-	      	'title_desc' 	=> $x->title_desc,
-	     	'start_at' 		=> $x->start_at,
-	      	'end_at' 		=> $x->end_at,
-	      	'created_at' 	=> $x->created_at,
-	      ];
-	}); 
-	 
-	 
-    return view('pages.customers.home', compact('dash') );
-});
+ 
+Route::get('/', 			'HomeController@index');
+Route::get('/home',      	'HomeController@index');
 
 Route::get('/store', 		'PageController@store');
 Route::get('/things-to-do', 'PageController@thingsToDo');
@@ -73,7 +50,7 @@ Route::post('/me', 								'UserController@updateInfo');
 
 //CART wallet
 //show cart
-Route::get('/cart', 							'CartController@showCart');
+Route::get('/cart', 							'CartController@showCart')->middleware('auth');
 //show cart count
 Route::post('/cart/count',						'CartController@cartCount');
 //parameter [ product_id ]

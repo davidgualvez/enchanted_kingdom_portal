@@ -45,9 +45,20 @@ class PurchaseController extends Controller
         $blin->findOrCreate();    
 
         $user   = Auth::user();
-        $carts  = Cart::findByUserAndType($user->id,'wallet');  
+        $carts  = Cart::findByUserAndType($user->id,'wallet');   
 
         try {  
+
+            //check if the cart has not contain an item 
+            if($carts->isEmpty()){
+                DB::rollback();
+                return response()->json([
+                    'success'   => false,
+                    'status'    => 401,
+                    'message'   => 'Please maintain atleast 1 item from your cart to continue.'
+                ]);
+            }
+
 
         	//create a purchase header
             $new_sales_order_id         = $blin->getNewIdForSalesOrderHeader();

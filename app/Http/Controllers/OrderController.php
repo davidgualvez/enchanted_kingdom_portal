@@ -33,7 +33,17 @@ class OrderController extends Controller
     		//logic 
     		$user  = Auth::user(); 
     		$carts = Cart::findByUserAndType($user->id, 'wallet');
-            $now   = Carbon::now();
+			$now   = Carbon::now();
+			
+			//check if the cart has not contain an item 
+            if($carts->isEmpty()){
+                DB::rollback();
+                return response()->json([
+                    'success'   => false,
+                    'status'    => 401,
+                    'message'   => 'Please maintain atleast 1 item from your cart to continue.'
+                ]);
+            }
 
     		$total_amount 	= 0;
     		$total_discount = 0;
