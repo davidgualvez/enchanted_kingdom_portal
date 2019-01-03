@@ -44,6 +44,12 @@ class SignupController extends Controller
 
         //check mobile_number
         $mobile = str_replace('-','',$request->mobile_number);
+
+        //regex
+        if( !preg_match("/^(09|\+639)\d{9}$/",$mobile) ) {
+            return back()->withInput()->withErrors( array('Invalid Mobile Number! Please try again.') );
+        }
+        
         $c_mobile = User::findByMobile($mobile);
         if($c_mobile){
             return back()->withInput()->with('error', 'Mobile number already in used.');
