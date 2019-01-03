@@ -62,13 +62,13 @@ Route::post('/signup',                          'SignupController@signup');
 Route::get('/login',                            'Auth\LoginController@showLogin')->name('login');
 Route::post('/login',                           'Auth\LoginController@login');
 Route::get('/logout',                           'Auth\LoginController@logout');
-Route::get('/me', 								'UserController@info');
-Route::post('/me', 								'UserController@updateInfo');
+Route::get('/me', 								'UserController@info')->middleware('auth');
+Route::post('/me', 								'UserController@updateInfo')->middleware('auth');
 
 
 //CART wallet 
 //show cart
-Route::get('/cart', 							'CartController@showCart');
+Route::get('/cart', 							'CartController@showCart')->middleware('auth');
 //show cart count
 Route::post('/cart/count',						'CartController@cartCount');
 //parameter [ product_id ]

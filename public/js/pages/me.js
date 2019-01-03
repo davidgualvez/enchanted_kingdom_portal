@@ -64,7 +64,7 @@ function btnUpdateInfo(){
 				});
 				return;
 			}
-		} 
+		}
 
 		//apply validation if has
 		var email_notification 	= $('#email_notification');
