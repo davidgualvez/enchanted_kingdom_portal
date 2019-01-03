@@ -52,7 +52,7 @@
 							</div> 
 					</div>
 
-	  	    <form class="ui large form" action="/login" method="post">
+	  	    <form id="form-login" class="ui large form" action="/login" method="post">
 	  	    	@csrf
 	  	      <div class="ui stacked segment">  
 	  	      	@if (count($errors) > 0)
@@ -61,10 +61,10 @@
   			  	    <div class="header text-left">
   			  	      	Something went wrong..
   			  	    </div>
-  		  	      	<ul class="list">
+  		  	      	<ul class="list"> 
   		  	      		@foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
-                        @endforeach 
+                    @endforeach 
   		  	      	</ul>
   		  	    </div>
 	  	      	@endif
@@ -76,13 +76,13 @@
 	  	      	  		</div>
 	  	      	  		<p class="text-left">{{ session('error') }}</p>
 	  	      		</div> 
-								@endif  
+							@endif  
 
 	  	        <div class="field" >
 	  	        	<label class="" style="text-align: left;">Mobile number</label>
 	  	          	<div class="ui left icon input">
 	  	            	<i class="user icon"></i>
-	  	            	<input type="text" name="mobile_number" placeholder="ex. 09xx-xxxx-xxx" value="{{ old('mobile_number') }}">
+	  	            	<input id="mobile_number" type="text" name="mobile_number" placeholder="ex. 09xx-xxxx-xxx" value="{{ old('mobile_number') }}">
 	  	          	</div>
 	  	        </div>
 	  	        <div class="field">
@@ -107,7 +107,7 @@
 	<script src="/js/app.js"></script>
 	<script src="/dist/semantic.min.js"></script>
 	<script src="/js/config.js"></script>
-	<!-- CUSTOM JS -->
+	<!-- CUSTOM JS --> 
 	<script>
 		$('.message .close')
 		  .on('click', function() {

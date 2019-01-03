@@ -117,10 +117,17 @@ class LoginController extends Controller
         ];
         $result = Validator::make($data,$rules);
         if($result->fails()){
+             
              return back()->withInput()->withErrors($result);
         }
         //check mobile_number
         $mobile = str_replace('-','',$request->mobile_number);
+
+        //regex
+        if( !preg_match("/^(09|\+639)\d{9}$/",$mobile) ) {
+            return back()->withInput()->withErrors( array('Invalid Mobile Number! Please try again.') );
+        }
+
         $user = User::findByMobile($mobile);
         if(!$user){
             return back()->withInput()->with('error', 'Mobile number not found!');

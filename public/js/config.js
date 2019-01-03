@@ -204,7 +204,7 @@ function validateEmail(email) {
 
 function validateContactNumber(value) {
     //var regEx = /^([ 0-9\(\)\+\-]{8,})*$/; // accept any phone or mobile number
-    var regEx = /^(09|\+639)\d{9}$/; // accept only PH Mobile number
+    var regEx = /^(09|\+639)\d{9}$/; // accept only PH Mobile number 
     if (!value.match(regEx)) {
         return false;
     }
