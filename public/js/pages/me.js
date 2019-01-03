@@ -610,7 +610,7 @@ function dataDisplayerOrderHistory(data, from) {
              			'<div class="ui accordion">'+
              			  '<div class="title">'+
              			    '<i class="dropdown icon"></i>'+
-             			    "Detail's"+
+             			    "Details"+
              			  '</div>'+
              			  '<div class="content">'+
              			    '<p class="transition" style="display: block !important;">'+

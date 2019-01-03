@@ -37,6 +37,7 @@ class SitePart extends Model
         'is_unli'               => 'SSBUFFER',
         'postmix'               => 'POSTMIX'
     ];
+    
     protected $getterMutators = [
     	'product_name' 			=> 'trim',
     	'product_description' 	=> 'trim',
