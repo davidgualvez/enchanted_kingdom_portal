@@ -14,9 +14,27 @@
 //TEST GROUND
 Route::get('/default', function(){
 	return view('pages.playground.default');
-});
+})->middleware('auth');
 //END
  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Route::get('/', 			'HomeController@index');
 Route::get('/home',      	'HomeController@index');
 
@@ -41,16 +59,16 @@ Route::get('/wallet', function(){
 //user
 Route::get('/signup',                           'SignupController@create');
 Route::post('/signup',                          'SignupController@signup');
-Route::get('/login',                            'Auth\LoginController@showLogin');
+Route::get('/login',                            'Auth\LoginController@showLogin')->name('login');
 Route::post('/login',                           'Auth\LoginController@login');
 Route::get('/logout',                           'Auth\LoginController@logout');
 Route::get('/me', 								'UserController@info');
 Route::post('/me', 								'UserController@updateInfo');
 
 
-//CART wallet
+//CART wallet 
 //show cart
-Route::get('/cart', 							'CartController@showCart')->middleware('auth');
+Route::get('/cart', 							'CartController@showCart');
 //show cart count
 Route::post('/cart/count',						'CartController@cartCount');
 //parameter [ product_id ]

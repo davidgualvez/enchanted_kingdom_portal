@@ -12,6 +12,17 @@ use Validator;
 
 class UserController extends Controller
 {
+	/**
+     * Create a new controller instance.  
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+	}
+	
+
     //
     public function info(){
     	$user =  Auth::user(); 
@@ -23,7 +34,7 @@ class UserController extends Controller
     	$data = $request->only('full_name','email','mobile_number','email_notification');
     	$rules = [
     	    'full_name'         => 'required',
-    	    'email'             => 'required',
+    	    //'email'             => 'required',
     	    'mobile_number'     => 'required', 
     	    //'password'          => 'required|min:6',
     	    'email_notification'=> 'required'
@@ -54,7 +65,8 @@ class UserController extends Controller
     	//scan for mobile
     	$ifMobileExist = User::where('mobile_number', $request->mobile)
     						->where('mobile_number' , '!=', $user->mobile_number)
-    						->first();
+							->first();
+							
     	if($ifMobileExist){
     		return response()->json([
     	    	'success' 	=> false,

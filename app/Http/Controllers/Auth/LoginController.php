@@ -40,70 +40,9 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+ 
 
-    /**
-     * Redirect the user to the GitHub authentication page.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function redirectToProvider($provider)
-    {
-        return Socialite::driver($provider)->redirect();
-    }
-
-    /**
-     * Obtain the user information from GitHub.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function handleProviderCallback($provider)
-    {
-        $user = Socialite::driver($provider)->user();
-        //dd($user);
-        //$authenticateUser = $this->findOrCreateUSer($user, $provider);
-
-        $authenticateUser = User::where('provider_id', $user->id)->first();
-        if (!$authenticateUser) { 
-
-            //storing data to session
-            // Via the global helper...
-            Session::flush();
-            session::put('signup_provider_id',      $user->id); 
-            session::put('signup_provider',         $provider); 
-            session::put('signup_avatar',           $user->avatar); 
-            session::put('signup_name',             $user->name); 
-            session::put('signup_email',            $user->email); 
-            return redirect('/signup');
-            //return view('pages.signup',compact('user','provider'));
-        }
-
-        $result = Auth::login($authenticateUser, true);
-
-        return redirect($this->redirectTo);
-        // $user->token;
-    } 
-
-     /**
-     * If a user has registered before using social auth, return the user
-     * else, create a new user object. 
-     * @param  $user Socialite user object
-     * @param $provider Social auth provider
-     * @return  User
-     */
-    public function findOrCreateUser($user, $provider)
-    { 
-        $authUser = User::where('provider_id', $user->id)->first();
-        if ($authUser) {
-            return $authUser;
-        }
-        // return User::create([
-        //      'name'     => $user->name,
-        //      'email'    => $user->email, 
-        //      'provider' => $provider,
-        //      'provider_id' => $user->id
-        // ]); 
-    }
-
+    
     public function showLogin(){
         return view('pages.customers.login');
     }

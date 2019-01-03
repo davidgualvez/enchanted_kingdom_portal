@@ -38,7 +38,7 @@ function btnUpdateInfo(){
 
 		//apply validation if has
 		var email 				= $('#email');
-		if( !validateEmail(email.val().trim() ) ){
+		if( !validateEmail(email.val().trim() ) && email.val().trim() != '' ){
 			showWarning('Warning','Email address is not valid!', function(){
 
 			});
