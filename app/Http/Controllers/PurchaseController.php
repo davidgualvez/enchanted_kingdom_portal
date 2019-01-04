@@ -157,9 +157,7 @@ class PurchaseController extends Controller
         	//===============================================  
 
             $virtual_wallet     = $user->customer->wallet;
-            $virtual_points     = $user->customer->points; 
-
-            $wallet_payment     = $total_net - $points_payment;
+            $virtual_points     = $user->customer->points;  
 
             // check the points entered as payment if greater than the customer wallet
             if($points_payment > $user->customer->points){
@@ -170,6 +168,18 @@ class PurchaseController extends Controller
                     'message'   => 'The points you entered as payment is greater than your actual points!'
                 ]);
             } 
+
+            // check and not allow if the points payment is greater than the total net
+            if($points_payment > $total_net){
+                DB::rollback();
+                return response()->json([
+                    'success'   => false,
+                    'status'    => 401,
+                    'message'   => 'The points you entered as payment must be equal or less than the NET Amount!'
+                ]);
+            }
+
+            $wallet_payment     = $total_net - $points_payment;
 
         	//check if the e money is enough to purchase this transaction 
         	if($user->customer->wallet < $wallet_payment ){
@@ -244,114 +254,6 @@ class PurchaseController extends Controller
             return true;
         }
         return false;
-    }
-
-    private function saveMultiTicketIfRides(Part $part){
-    }
-
-    public function checkoutReward(Request $request){ 
-
-        DB::beginTransaction();
-
-        $blin = new BranchLastIssuedNumberServices;
-        $blin->findOrCreate();    
-
-        $user   = Auth::user();
-        $carts  = Cart::findByUserAndType($user->id,'points');  
-
-        try {  
-
-            //create a purchase header
-            $new_redemption_id     = $blin->getNewIdForRedemptionHeader();
-            $ph = new Redemption;
-            $ph->branch_id              = config('cpp.branch_id');
-            $ph->redemption_header_id   = $new_redemption_id;
-            $ph->customer_id            = $user->customer->CUSTOMERID;
-            //$ph->transaction_type_id    = 1;
-            $ph->save();  
-            
-            //=============================================== 
-            // $total_gross = 0;
-            // $total_discount = 0;
-            $total_points = 0;
-            $cartList = [];
-            foreach ($carts as $key => $value) {
-                # code... 
-                $rewardd = new Reward;
-                $reward = $rewardd->where('branch_id', config('cpp.branch_id'))
-                            ->where('id', $value->product_id)
-                            ->first();
-                
-                $subTotalPoints = $value->qty * $reward->required_points;
-                //create purchase details
-                $validity = Carbon::now()->addDay();
-                $new_redemption_detail_id = $blin->getNewIdForRedemptionDetails();
-                $pd = new RedemptionDetail;
-                $pd->branch_id           = config('cpp.branch_id');
-                $pd->redemption_detail_id = $new_redemption_detail_id;
-                $pd->redemption_header_id = $new_redemption_id; 
-                $pd->reward_id          = $reward->id;  
-                $pd->qty                 = $value->qty;
-                $pd->qty_remaining       = $value->qty;
-                $pd->points              = $reward->required_points; 
-                $pd->total_points        = $subTotalPoints;
-                $pd->status              = 0; 
-                $pd->customer_id         = $user->customer->CUSTOMERID; 
-                $pd->save();
- 
-                $total_points         += $subTotalPoints;
-            }
-            //=============================================== 
-
-            //check if the e money is enough to purchase this transaction 
-            if($user->customer->points < $total_points){
-                DB::rollback();
-                return response()->json([
-                    'success'   => false,
-                    'status'    => 401,
-                    'message'   => 'Your points is not enough to redeem this item!'
-                ]);
-                //throw new Exception;
-            }
-
-            //update purchase header for total;
-            $customer = Customer::where('CUSTOMERID',$user->customer->CUSTOMERID)
-                            ->first();
-
-            Redemption::where('redemption_header_id', $new_redemption_id) 
-                      ->update([
-                        'total_points'        => $total_points, 
-                    ]);  
-
-            //update customer points for redemption
-            $customerrr = Customer::where('CUSTOMERID',$user->customer->CUSTOMERID)
-                            ->update([
-                            'points'    => ($customer->points - $total_points), 
-                        ]); 
-            // $customer->points   = $customer->points + $eps->earned_points;
-            // $customer->save();
-
-            //remove cart from this current branch
-            $cart = Cart::removeCartByUserIDAndType($user->id,'points');
- 
-            DB::commit();
-            // all good
-            return response()->json([
-                'success'   => true,
-                'status'    => 200,
-                'message'   => 'success'
-            ]);
-
-        } catch (\Exception $e) {
-            DB::rollback();
-            
-            return response()->json([
-                'success'   => false,
-                'status'    => 500,
-                'message'   => $e->getMessage()
-            ]);
-            // something went wrong 
-        }  
     }
 
     public function customerHistory(Request $request){
