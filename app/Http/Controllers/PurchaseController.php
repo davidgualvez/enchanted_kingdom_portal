@@ -65,7 +65,7 @@ class PurchaseController extends Controller
         	$ph = new Purchase;
         	$ph->branch_id 		        = config('cpp.branch_id');
             $ph->sales_order_id         = $new_sales_order_id;
-        	$ph->customer_id	        = $user->customer->CUSTOMERID;
+        	$ph->customer_id	        = $user->customer->customer_id;
         	$ph->transaction_type_id    = 1;
         	$ph->save();  
              
@@ -135,7 +135,7 @@ class PurchaseController extends Controller
                 $pd->net_amount          = $buying_price;
                 $pd->status              = 'P';
                 $pd->valid_at            = $validity;
-                $pd->customer_id         = $user->customer->CUSTOMERID;
+                $pd->customer_id         = $user->customer->customer_id;
                 $pd->customer_number     = $user->mobile_number;
                 $pd->transaction_type    = 'WEB';
                 $pd->barcode             = $new_sales_order_detail_id.'-'.$product_id;
@@ -195,7 +195,12 @@ class PurchaseController extends Controller
             //-------------------------
             //earned points 
             $ept    = new  EarnPointTransactionServices;
-            $ep     = $ept->earnPoints($new_sales_order_id, $total_net, $user->customer->CUSTOMERID);
+            $ep     = $ept->earnPoints(
+                            $new_sales_order_id, 
+                            $total_net, 
+                            $user->customer->customer_id, 
+                            $points_payment //this will be the amount excemption for points earning
+                        );
             $eps    = $ept->save();
 
 
@@ -216,10 +221,10 @@ class PurchaseController extends Controller
                         'added_points'        => $eps->earned_points,
                         'wallet_balance'      => $virtual_wallet,
                         'points_balance'      => $virtual_points
-                    ]); 
+                    ]);
 
             //update customer points for new earned point
-            $customerrr = Customer::where('CUSTOMERID',$user->customer->CUSTOMERID)
+            $customerrr = Customer::where('CUSTOMERID',$user->customer->customer_id)
                             ->update([
                             'wallet'    => $virtual_wallet,
                             'points'    => $virtual_points, 
