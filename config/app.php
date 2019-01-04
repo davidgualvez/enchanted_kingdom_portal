@@ -2,6 +2,15 @@
 
 return [
 
+    //=========================================================
+    /* 
+    / THIS IS A CUSTOM SETUP FOR THIS APP!
+    */
+    'branch_id'         =>  env('APP_BRANCH_ID', ''),
+    'group_wallet_id'   =>  env('APP_GROUP_WALLET_ID',''),
+    'portal_logout'     => 	env('PORTAL_LOGOUT_URL','#'),
+    //=========================================================
+
     /*
     |--------------------------------------------------------------------------
     | Application Name

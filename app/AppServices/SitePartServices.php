@@ -14,12 +14,14 @@ class SitePartServices {
 		if( is_null($categories[0]) || $categories[0] == '' ){ 
                         $p = $part->where('branch_id',config('cpp.branch_id'))
                                 ->where('pre_part_no', 0)
+                                ->where('is_unli',0)
                                 ->where('product_name','LIKE','%'.$search.'%')
                                 ->orderBy('sitepart_id','desc')
                                 ->simplePaginate($limit);
                 }else{
                         $p = $part->where('branch_id',config('cpp.branch_id'))
                                 ->where('pre_part_no', 0)
+                                ->where('is_unli', 0)
                                 ->where('product_name','LIKE','%'.$search.'%')
                                 ->whereIn('group_id', $categories)
                                 ->orderBy('sitepart_id','desc')

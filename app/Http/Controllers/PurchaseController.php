@@ -8,8 +8,8 @@ use Carbon\Carbon;
 use App\User;
 use App\Customer;
 use App\Cart;
-
-use App\Reward;
+use App\Postmix;
+ 
 use App\Part;
 use App\SitePart;
 use App\ProductPromotion;
@@ -22,9 +22,7 @@ use App\PurchaseDetail;
 
 use App\AppServices\EarnPointTransactionServices;
 use App\AppServices\BranchLastIssuedNumberServices;
-
-use App\Redemption;
-use App\RedemptionDetail;
+ 
 use DB;
 
 class PurchaseController extends Controller
@@ -59,11 +57,10 @@ class PurchaseController extends Controller
                 ]);
             }
 
-
         	//create a purchase header
             $new_sales_order_id         = $blin->getNewIdForSalesOrderHeader();
         	$ph = new Purchase;
-        	$ph->branch_id 		        = config('cpp.branch_id');
+        	$ph->branch_id 		        = config('app.branch_id');
             $ph->sales_order_id         = $new_sales_order_id;
         	$ph->customer_id	        = $user->customer->customer_id;
         	$ph->transaction_type_id    = 1;
@@ -77,82 +74,57 @@ class PurchaseController extends Controller
         	foreach ($carts as $key => $value) {
         	    # code... 
                 $partt = new SitePart;
-                $part = $partt->where('branch_id', config('cpp.branch_id'))
+                $part = $partt->where('branch_id', config('app.branch_id'))
                             ->where('sitepart_id', $value->product_id)
                             ->first();
+ 
+                if($part->postmix == 1 && $part->is_food == 0){ 
 
-                //if the product is a group of wallet
-                // do not allow to proceed and display a warning message
-                if($part->group_id == 30102){
-                    DB::rollback();
-                    return response()->json([
-                        'success'   => false,
-                        'status'    => 401,
-                        'message'   => 'You cannot purchase e-Wallet using a e-Wallet'
-                    ]);
-                }  
+                    // the all the postmix items at postmix
+                    $postmix = Postmix::where('parent_id', $part->sitepart_id)
+                                ->get();
 
-                //logic
-                $product_id            = $part->sitepart_id;
-                $name                  = $part->product_name;
-                $description           = '';
-                $qty                   = $value->qty;
-                $srp                   = $part->srp;
-                $product_promotion_id  = null;
-                $discount_type         = 0;
-                $discount_value        = 0;
-                $discount_amount       = 0;
-                $selling_price         = $qty * $srp;
-                $buying_price          = 0;
-                $is_unli               = $part->is_unli; 
+                    for($i = 0 ; $i < $value->qty; $i++){
+                        foreach($postmix as $pm){  
 
-                //get the buying price
-                $buying_price   = ($selling_price) - $discount_amount;
+                            $ppart = SitePart::where('branch_id', config('app.branch_id'))
+                                    ->where('sitepart_id', $pm->PARTSID)
+                                    ->first();
 
-                //totals 
+                            $result = $this->saveToSalesOrderDetail($user, $ppart, (int)$pm->QUANTITY, $new_sales_order_id);
 
-                //create purchase details
-                $now = Carbon::now();
-                //$dd = \Carbon\Carbon::create($d->year,$d->month,$d->day,23,59,59); 
-                $validity = Carbon::create($now->year, $now->month, $now->day, 23, 59, 59); 
-                $new_sales_order_detail_id = $blin->getNewIdForSalesOrderDetails();
+                        } 
+                    }
+                    
+                    //logic
+                    $product_id            = $part->sitepart_id;
+                    $name                  = $part->product_name;
+                    $description           = '';
+                    $qty                   = $value->qty;
+                    $srp                   = $part->srp;
+                    $product_promotion_id  = null;
+                    $discount_type         = 0;
+                    $discount_value        = 0;
+                    $discount_amount       = 0;
+                    $selling_price         = $qty * $srp;
+                    $buying_price          = 0;
+                    $is_unli               = $part->is_unli;
 
+                    //get the buying price
+                    $buying_price   = ($selling_price) - $discount_amount;
 
-                $pd = new PurchaseDetail;
-                $pd->branch_id           = config('cpp.branch_id');
-                $pd->sales_order_detail_id = $new_sales_order_detail_id;
-                $pd->sales_order_id      = $new_sales_order_id; 
-                $pd->sitepart_id         = $product_id; 
-                //$pd->product_promotion_id     = $product_promotion_id;
-                $pd->part_description    = $description;
-                $pd->qty                 = $qty;
-                $pd->qty_remaining       = $qty;
-                $pd->srp                 = $srp;
-                $pd->amount              = $selling_price;
-                $pd->discount_ispercent  = $discount_type; 
-                $pd->discount_rate       = $discount_value;
-                $pd->discount_amount     = $discount_amount;
-                $pd->net_amount          = $buying_price;
-                $pd->status              = 'P';
-                $pd->valid_at            = $validity;
-                $pd->customer_id         = $user->customer->customer_id;
-                $pd->customer_number     = $user->mobile_number;
-                $pd->transaction_type    = 'WEB';
-                $pd->barcode             = $new_sales_order_detail_id.'-'.$product_id;
-                $pd->is_food             = $part->is_food;
+                    $total_gross       += $selling_price;
+                    $total_discount    += $discount_amount;
+                    $total_net         += $buying_price;
 
-                if($is_unli == 1){
-                    $pd->is_unli         = 1;
-                }
+                }else{
 
-                //saving
-                $pd->save();
+                    $result = $this->saveToSalesOrderDetail($user, $part, $value->qty, $new_sales_order_id);
 
-
-                $total_gross       += $selling_price;
-                $total_discount    += $discount_amount;
-                $total_net         += $buying_price; 
-        	    
+                    $total_gross       += $result['selling_price'];
+                    $total_discount    += $result['discount_amount'];
+                    $total_net         += $result['buying_price'];
+                } 
         	}
         	//===============================================  
 
@@ -279,4 +251,86 @@ class PurchaseController extends Controller
             'data'          => $purchase, 
         ]);
     } 
+
+    private function saveToSalesOrderDetail($user, $part, $qty, $new_sales_order_id){
+
+        //if the product is a group of wallet
+        // do not allow to proceed and display a warning message
+        if($part->group_id == config('app.group_wallet_id')){
+            DB::rollback();
+            return response()->json([
+                'success'   => false,
+                'status'    => 401,
+                'message'   => 'You cannot purchase e-Wallet using a e-Wallet'
+            ]);
+        }  
+
+        
+
+        //logic
+        $product_id            = $part->sitepart_id;
+        $name                  = $part->product_name;
+        $description           = '';
+        $qty                   = $qty;
+        $srp                   = $part->srp;
+        $product_promotion_id  = null;
+        $discount_type         = 0;
+        $discount_value        = 0;
+        $discount_amount       = 0;
+        $selling_price         = $qty * $srp;
+        $buying_price          = 0;
+        $is_unli               = $part->is_unli;
+
+        //get the buying price
+        $buying_price   = ($selling_price) - $discount_amount;
+
+        //totals 
+        
+
+        //create purchase details
+        $now = Carbon::now();
+        //$dd = \Carbon\Carbon::create($d->year,$d->month,$d->day,23,59,59); 
+        $validity = Carbon::create($now->year, $now->month, $now->day, 23, 59, 59); 
+
+        // get a new id for sales order details
+        $blins = new BranchLastIssuedNumberServices;
+        $new_sales_order_detail_id = $blins->getNewIdForSalesOrderDetails();
+        
+        $pd = new PurchaseDetail;
+        $pd->branch_id           = config('cpp.branch_id');
+        $pd->sales_order_detail_id = $new_sales_order_detail_id;
+        $pd->sales_order_id      = $new_sales_order_id; 
+        $pd->sitepart_id         = $product_id; 
+ 
+        //$pd->product_promotion_id     = $product_promotion_id;
+        $pd->part_description    = $description;
+        $pd->qty                 = $qty;
+        $pd->qty_remaining       = $qty;
+        $pd->srp                 = $srp;
+        $pd->amount              = $selling_price;
+        $pd->discount_ispercent  = $discount_type; 
+        $pd->discount_rate       = $discount_value;
+        $pd->discount_amount     = $discount_amount;
+        $pd->net_amount          = $buying_price;
+        $pd->status              = 'P';
+        $pd->valid_at            = $validity;
+        $pd->customer_id         = $user->customer->customer_id;
+        $pd->customer_number     = $user->mobile_number;
+        $pd->transaction_type    = 'WEB';
+        $pd->barcode             = $new_sales_order_detail_id.'-'.$product_id;
+        $pd->is_food             = $part->is_food;
+
+        if($is_unli == 1){
+            $pd->is_unli         = 1;
+        }
+
+        //saving
+        $pd->save();
+
+        return [
+            'selling_price' => $selling_price,
+            'discount_amount' => $discount_amount,
+            'buying_price' => $buying_price
+        ];
+    }
 }

@@ -15,7 +15,7 @@ class Postmix extends Model
     protected $table 		= 'Postmix';
     public $timestamps 		= false;
 
-    //model mapping
+    //model mapping 
     protected $maps = [
 
         'sitePart' => [
@@ -36,11 +36,21 @@ class Postmix extends Model
         'extend_cost'      => 'EXTENDCOST',
         'type'             => 'TYPE',
         'description'      => 'DESCRIPTION',
+        'partno'           => 'PARTNO',
         'yield'            => 'YIELD'
     ];
 
     protected $getterMutators = [
         //'custom_column_name => 'string_manipulation'
+        'parent_id'        => 'PRODUCT_ID',
+        'product_id'       => 'PARTSID',
+        'quantity'         => 'QUANTITY',
+        'unit_cost'        => 'UNITCOST',
+        'extend_cost'      => 'EXTENDCOST',
+        'type'             => 'TYPE',
+        'description'      => 'trim',
+        'partno'           => 'trim',
+        'yield'            => 'YIELD'
     ];
 
     //relationship
