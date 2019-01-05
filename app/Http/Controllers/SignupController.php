@@ -31,8 +31,16 @@ class SignupController extends Controller
 
         $result = Validator::make($data,$rules);
         if($result->fails()){
-            return back()->withInput()->withErrors($result);
+            return back()->withInput()->withErrors($reksult);
         }
+
+        //regex
+        if($request->email != '' || $request->email != null){
+            if( !preg_match("/^(([^<>()\[\]\\.,;:\s@']+(\.[^<>()\[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/", $request->email) ) {
+                return back()->withInput()->withErrors( array('Invalid Email Address! Please try again.') );
+            }
+        }
+        
 
         //check email
         if($request->email != '' || $request->email != null){
