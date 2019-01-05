@@ -217,6 +217,7 @@ class PurchaseController extends Controller
 		} catch (\Exception $e) {
 		    DB::rollback();
             //dd($e);
+            dd($e);
             return response()->json([
                 'success'   => false,
                 'status'    => 500,
