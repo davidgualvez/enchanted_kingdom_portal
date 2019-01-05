@@ -1,7 +1,7 @@
 <?php 
 
 namespace App\Transformers;
-use App\Part;
+use App\SitePart;
 
 use Carbon\Carbon;
 
@@ -13,7 +13,7 @@ class PurchaseTransformer {
        
 			$dtls = $value->details;  
 			$dtls->transform( function($tsk){
-        $part = Part::findByIdAndBranch($tsk->sitepart_id);
+        $part = SitePart::findByIdAndBranch($tsk->sitepart_id);
         $date = Carbon::parse($tsk->valid_at);
 				return [
 					'details_id' 	      => $tsk->sales_order_detail_id,
