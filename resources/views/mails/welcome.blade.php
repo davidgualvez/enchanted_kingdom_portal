@@ -302,9 +302,20 @@
 
             <!-- START CENTERED WHITE CONTAINER -->
             <span class="preheader">This is preheader text. Some clients will show this text as a preview.</span>
-            <table role="presentation" class="main">
 
+            <table role="presentation" class="main">
               <!-- START MAIN CONTENT AREA -->
+              <tr>
+                <td class="wrapper">
+                  <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td class="content-block">
+                        <h3>Enchanted Kingdom</h3>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
               <tr>
                 <td class="wrapper">
                   <table role="presentation" border="0" cellpadding="0" cellspacing="0">
@@ -332,7 +343,6 @@
                   </table>
                 </td>
               </tr>
-
             <!-- END MAIN CONTENT AREA -->
             </table>
 
