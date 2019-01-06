@@ -30,6 +30,9 @@ class PurchaseTransformer {
 			});
 
       $datee = Carbon::parse($value->created_at);
+
+      dd($datee, $value->created_at,$value->points_balance);
+
       $nValue = [
          'sales_order_id' 	=> $value->sales_order_id,
          'branch_id' 			  => $value->branch_id,
