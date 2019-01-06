@@ -326,7 +326,15 @@ function dataDisplayerPurchaseHistory(data, from) {
 	           	  			    '<div class="content">'+
 	           	  			      'Date/Time'+
 	           	  			    '</div>'+
-             			  	'</div> '+
+							'</div> '+   
+							'<div class="item">' +
+								'<div class="right floated content">' +
+									'<strong>' + value.sales_order_id + '</strong>' +
+							    '</div> ' +
+							    '<div class="content">' +
+							    	'Reference-#' +
+							    '</div>' +
+							'</div> ' +
              			  	'<div class="item">'+
 	           	  			    '<div class="right floated content">'+
 	           	  			      	'<strong>'+value.type+'</strong>'+
