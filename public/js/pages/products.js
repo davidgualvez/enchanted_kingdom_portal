@@ -95,6 +95,10 @@ function dataDisplayerProduct(data, from) {
 
     if (from == null) {
         $('#current_page_product').html('Nothing to display...');
+        showWarning('','No Result...', function(){
+
+        });
+        
         return;
     }
 
