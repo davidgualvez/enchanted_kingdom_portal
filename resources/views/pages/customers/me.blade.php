@@ -127,7 +127,7 @@
 				  
 				  	
 				</div>
-				<div class="ui bottom attached tab segment active" data-tab="first">
+				<div class="ui bottom attached tab segment" data-tab="first">
 	 		  	    <div class="ui large form"> 
 	 		  	      	<div class="ui stacked segment"> 
 	 		  	      		@if (count($errors) > 0)
@@ -340,7 +340,7 @@
 				  	<br>
 				  	
 				</div>  
-				<div class="ui bottom attached tab segment" data-tab="third">
+				<div class="ui bottom attached tab segment  active" data-tab="third">
 					<h4 class="ui header">Summary of all Orders</h4>
 				  	{{-- =============================================== --}} 
 				  	<div id="orderHistory">
