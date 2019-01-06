@@ -121,9 +121,9 @@
 			</div>
 			<div class="ten wide column ">
 				<div class="ui top attached tabular menu">
-						<a class="item" data-tab="third">Order History</a> 
+						<a class="item active" data-tab="third">Order History</a> 
 						<a class="item" data-tab="second">Purchase History</a> 
-				  	<a class="item active" data-tab="first">My Profile</a>
+				  	<a class="item" data-tab="first">My Profile</a>
 				  
 				  	
 				</div>
