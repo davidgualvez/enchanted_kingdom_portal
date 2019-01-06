@@ -198,7 +198,7 @@
 				  	{{-- =============================================== --}} 
 				  	<div id="purchaseHistory">
 				  		
-			  		  	<div class="ui vertical segment">
+			  		  	{{-- <div class="ui vertical segment">
 			  		  		<div style="padding: 10px;">
 			  		  			<div class="ui middle aligned divided list">
 			  		  				<div class="item">
@@ -288,8 +288,7 @@
 			  		  			    Detail's
 			  		  			  </div>
 			  		  			  <div class="content">
-			  		  			    <p class="transition" style="display: block !important;">
-			  		  			    	{{-- //--- --}}
+			  		  			    <p class="transition" style="display: block !important;"> 
 			  		  			    	<table class="ui small celled table">
 			  		  			    	  <thead>
 			  		  			    	    <tr>
@@ -313,13 +312,12 @@
 			  		  			    	      <td></td>
 			  		  			    	    </tr> 
 			  		  			    	  </tbody>
-			  		  			    	</table>
-			  		  			    	{{-- //--- --}}
+			  		  			    	</table> 
 			  		  				</p>
 			  		  			  </div> 
 			  		  			</div>
 			  		  		</div> 
-			  		  	</div> 
+			  		  	</div>  --}}
 
 				  	</div>
 				  	{{-- =============================================== --}}
@@ -345,7 +343,7 @@
 				  	{{-- =============================================== --}} 
 				  	<div id="orderHistory">
 				  		
-			  		  	<div class="ui vertical segment">
+			  		  	{{-- <div class="ui vertical segment">
 			  		  		<div style="padding: 10px;">
 			  		  			<div class="ui middle aligned divided list">
 			  		  				<div class="item">
@@ -404,8 +402,7 @@
 			  		  			    Details
 			  		  			  </div>
 			  		  			  <div class="content">
-			  		  			    <p class="transition" style="display: block !important;">
-			  		  			    	{{-- //--- --}}
+			  		  			    <p class="transition" style="display: block !important;"> 
 			  		  			    	<table class="ui small celled table">
 			  		  			    	  <thead>
 			  		  			    	    <tr>
@@ -427,13 +424,12 @@
 			  		  			    	      <td></td> 
 			  		  			    	    </tr> 
 			  		  			    	  </tbody>
-			  		  			    	</table>
-			  		  			    	{{-- //--- --}}
+			  		  			    	</table> 
 			  		  				</p>
 			  		  			  </div> 
 			  		  			</div>
 			  		  		</div> 
-			  		  	</div> 
+			  		  	</div>  --}}
 
 				  	</div>
 				  	{{-- =============================================== --}}
