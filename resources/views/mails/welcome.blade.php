@@ -326,9 +326,7 @@
                               </td>
                             </tr>
                           </tbody>
-                        </table> --}}
-                        <p>This is a really simple email template. Its sole purpose is to get the recipient to click the button with no distractions.</p>
-                        <p>Good luck! Hope it works.</p>
+                        </table> --}} 
                       </td>
                     </tr>
                   </table>
@@ -343,13 +341,13 @@
               <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                 <tr>
                   <td class="content-block">
-                    <span class="apple-link">Company Inc, 3 Abbey Road, San Francisco CA 94102</span>
-                    <br> Don't like these emails? <a href="http://i.imgur.com/CScmqnj.gif">Unsubscribe</a>.
+                    <span class="apple-link">RSBS Boulevard, San Lorenzo South, Sta. Rosa City, Laguna, Philippines 4026</span>
+                    <br> Don't like these emails? <a href="#">Unsubscribe</a>.
                   </td>
                 </tr>
                 <tr>
                   <td class="content-block powered-by">
-                    Powered by <a href="http://htmlemail.io">ek.com.ph</a>.
+                    Powered by <a href="http://ek.com.ph">ek.com.ph</a>.
                   </td>
                 </tr>
               </table>
