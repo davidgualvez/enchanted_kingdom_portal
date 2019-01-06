@@ -554,8 +554,16 @@ function dataDisplayerOrderHistory(data, from) {
 	           	  			    '<div class="content">'+
 	           	  			      'Date/Time'+
 	           	  			    '</div>'+
-             			  	'</div> '+
-             			  	'<div class="item">'+
+             			  	'</div> '+  
+							'<div class="item">' +
+								'<div class="right floated content">' +
+								'<strong>' + value.orderslip_header_id + '</strong>' +
+								'</div> ' +
+									'<div class="content">' +
+									'Reference-#' +
+									'</div>' +
+							'</div> ' +
+							'<div class="item">'+
 	           	  			    '<div class="right floated content">'+
 	           	  			      	'<strong>'+value.trans_type+'</strong>'+
 	           	  			    '</div> '+
