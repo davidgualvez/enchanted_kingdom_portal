@@ -39,8 +39,9 @@ class SitePart extends Model
     ];
     
     protected $getterMutators = [
-    	'product_name' 			=> 'trim',
-    	'product_description' 	=> 'trim',
+    	'product_name' 			=>  'trim',
+        'product_description' 	=>  'trim',
+        'group_id'              =>  'trim'
     ];
 
     //logic
