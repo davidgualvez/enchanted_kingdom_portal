@@ -301,7 +301,7 @@
           <div class="content">
 
             <!-- START CENTERED WHITE CONTAINER -->
-            <span class="preheader">Welcome to Enchanted Kingdom!</span>
+            {{-- <span class="preheader">Welcome to Enchanted Kingdom!</span> --}}
 
             <table role="presentation" class="main">
               <!-- START MAIN CONTENT AREA --> 
@@ -311,7 +311,7 @@
                     <tr>
                       <td>
                         <p>Hi there,</p>
-                        <p>Welcome to Enchanted Kingdom! You are now a Loyalty Member. You may now load up your wallet to purchase anything from the store and earn a points for every purchase. Enjoy!</p>
+                        <p>You are now a Loyalty Member. You may now load up your wallet to purchase anything from the store and earn a points for every purchase. Enjoy!</p>
                         {{-- <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                           <tbody>
                             <tr>

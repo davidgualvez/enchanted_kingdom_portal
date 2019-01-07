@@ -14,7 +14,7 @@ class MailServices {
 			$message = 'Welcome to Enchanted Kingdom! You are now a Loyalty Member. You may now load up your wallet to purchase anything from the store and earn a points for every purchase. Enjoy!';
 			
 			//
-			$email_subject = "Enchanted Kingdom | Welcome"; 
+			$email_subject = "Welcome"; 
     		Mail::send('mails.welcome',[
 	            //pass a variable into blade here
 	            'name' 	=> $name
