@@ -304,18 +304,7 @@
             <span class="preheader">Welcome to Enchanted Kingdom!</span>
 
             <table role="presentation" class="main">
-              <!-- START MAIN CONTENT AREA -->
-              <tr>
-                <td class="wrapper">
-                  <table role="presentation" border="0" cellpadding="0" cellspacing="0">
-                    <tr>
-                      <td class="content-block">
-                        <h3>Enchanted Kingdom</h3>
-                      </td>
-                    </tr>
-                  </table>
-                </td>
-              </tr>
+              <!-- START MAIN CONTENT AREA --> 
               <tr>
                 <td class="wrapper">
                   <table role="presentation" border="0" cellpadding="0" cellspacing="0">
