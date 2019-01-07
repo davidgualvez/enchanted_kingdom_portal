@@ -31,7 +31,7 @@ class SignupController extends Controller
 
         $result = Validator::make($data,$rules);
         if($result->fails()){
-            return back()->withInput()->withErrors($reksult);
+            return back()->withInput()->withErrors($result);
         }
 
         //regex
