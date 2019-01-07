@@ -91,6 +91,17 @@ class PurchaseController extends Controller
                                     ->where('sitepart_id', $pm->PARTSID)
                                     ->first();
 
+                            //if the product is a group of wallet
+                            // do not allow to proceed and display a warning message
+                            if($ppart->group_id == config('app.group_wallet_id')){
+                                DB::rollback();
+                                return response()->json([
+                                    'success'   => false,
+                                    'status'    => 401,
+                                    'message'   => 'You cannot purchase e-Wallet using a e-Wallet'
+                                ]);
+                            }  
+
                             $result = $this->saveToSalesOrderDetail($user, $ppart, (int)$pm->QUANTITY, $new_sales_order_id);
 
                         } 
@@ -118,6 +129,17 @@ class PurchaseController extends Controller
                     $total_net         += $buying_price;
 
                 }else{
+
+                    //if the product is a group of wallet
+                    // do not allow to proceed and display a warning message
+                    if($part->group_id == config('app.group_wallet_id')){
+                        DB::rollback();
+                        return response()->json([
+                            'success'   => false,
+                            'status'    => 401,
+                            'message'   => 'You cannot purchase e-Wallet using a e-Wallet'
+                        ]);
+                    }  
 
                     $result = $this->saveToSalesOrderDetail($user, $part, $value->qty, $new_sales_order_id);
 
@@ -253,20 +275,7 @@ class PurchaseController extends Controller
         ]);
     } 
 
-    private function saveToSalesOrderDetail($user, $part, $qty, $new_sales_order_id){
-
-        //if the product is a group of wallet
-        // do not allow to proceed and display a warning message
-        if($part->group_id == config('app.group_wallet_id')){
-            DB::rollback();
-            return response()->json([
-                'success'   => false,
-                'status'    => 401,
-                'message'   => 'You cannot purchase e-Wallet using a e-Wallet'
-            ]);
-        }  
-
-        
+    private function saveToSalesOrderDetail($user, $part, $qty, $new_sales_order_id){ 
 
         //logic
         $product_id            = $part->sitepart_id;
@@ -329,9 +338,9 @@ class PurchaseController extends Controller
         $pd->save();
 
         return [
-            'selling_price' => $selling_price,
-            'discount_amount' => $discount_amount,
-            'buying_price' => $buying_price
+            'selling_price'     => $selling_price,
+            'discount_amount'   => $discount_amount,
+            'buying_price'      => $buying_price
         ];
     }
 }
