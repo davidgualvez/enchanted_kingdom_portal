@@ -31,5 +31,6 @@ class ProcessWelcomeEmail implements ShouldQueue
     {
         //
         // Process
+        // place the method that you used in the controller to automate the job.
     }
 }
