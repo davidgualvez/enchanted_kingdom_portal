@@ -17,22 +17,21 @@
     	   		&nbsp;
     	   		<i class="gift icon"></i>
     	   		{{ \Auth::user()->customer->points }} 
-    	   	</button>
-			
-			<a  href="/cart" class="ui green button item ">
+    	   	</button> 
+			<a  href="/cart" class="ui green button item cart">
 				<i class="shopping cart icon"></i>
   			   	<div class="floating ui red label cart_count">{{ \Auth::user()->cartPerBranch->count() }} </div> 
       		</a> 
     	   	  			    
     	 </div> 
     @else 
-    	    	<div class="ui buttons fluid" style="height: 30px; margin-top: 15px; margin-bottom: 25px;">
-      			   	<button class="ui button login">
+    	    	<div class="ui buttons fluid" style="height: 30px; margin-top: 15px; margin-bottom: 25px;" >
+      			   	<button class="ui button login"  id=step1 >
       			   		<i class="copyright icon"></i>
       			   		login
       				</button>
       			   <div class="or"></div>
-      			   	<button class="ui button register">
+      			   	<button class="ui button register" id="step2">
       			   		&nbsp;
       			   		<i class="gift icon"></i>
       			   		Register
@@ -143,8 +142,8 @@
   	<div id="mdropdownmenu" class="ui item"> 
 	    <!-- Home -->
 	    <div class="menu">
-	      <a href="/"><div class="item">	<h4>Home</h4> </div></a>  
-        <a href="/store"><div class="item">  <h4>Store</h4> </div></a>  
+	      	<a href="/"><div class="item">	<h4>Home</h4> </div></a>  
+          	<a href="/store"><div class="item">  <h4>Store</h4> </div></a>  
 	    </div> 
   	</div> 
 
@@ -152,13 +151,14 @@
 	    <div class="menu"> 
 		  	@auth
 		  	  	<!-- <a href="/logout" class="ui item">Logout</a> --> 
-				<a href="/purchase/history"><div class="item">	<h4>Purchased History</h4> </div></a>  
-				<a href="/order/history"><div class="item">	<h4>Ordered History</h4> </div></a>
-				<a href="/me"><div class="item">	<h4>My Account</h4> </div></a>  
-		  	  	<a href="/logout"><div class="item">	<h4>Logout</h4> </div></a>
+				<a href="/purchase/history">	<div class="item">	<h4>Purchased History</h4> </div></a>  
+				<a href="/order/history">		<div class="item">	<h4>Ordered History</h4> </div></a>
+				<a href="/me">					<div class="item">	<h4>My Account</h4> </div></a>  
+		  	  	<a href="/logout">				<div class="item">	<h4>Logout</h4> </div></a>
 		  	@else
 		  	  	<!-- <a href="/login" class="ui item">Login / Register</a> -->
-		  	  	<a href="/login"><div class="item">	<h4>Login / Register</h4> </div></a>
+				<a href="/login">				<div class="item">	<h4>Login</h4> </div></a>
+				<a href="/signup">				<div class="item">	<h4>Register</h4> </div></a>
 		  	@endauth 
 	    </div> 
   	</div>   

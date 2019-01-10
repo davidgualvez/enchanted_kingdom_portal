@@ -19,6 +19,8 @@ $(document).ready(function(){
 
     btnSingleAddToCart();
     getCategories();
+
+    initGuide();
 });
 
 //pagination================================ 
@@ -224,4 +226,43 @@ function getCategories(){
             );
         });
     });
+}
+
+
+//GUIDE FOR THIS PAGE
+function initGuide() {
+    if (getStorage('guide-store') != 1) {
+        startGuide();
+    }
+}
+
+function startGuide() {
+    var intro = introJs();
+    intro.setOptions({
+        steps: [{
+                element: '.step1',
+                intro: 'Choose Category from the list to filter the result',
+                position: 'right'
+            },
+            {
+                element: '.step2',
+                intro: 'Enter any product name to be search...',
+                position: 'left'
+            },
+            {
+                element: '.step3',
+                intro: 'This is the area where the product list is display.'
+            },
+            {
+                element: '.step4',
+                intro: 'To go to previous page click [Prev], To go to the next page Click [Next].'
+            }
+        ]
+    });
+
+    intro.onexit(function () {
+        setStorage('guide-store', 1);
+        console.log('exit');
+    });
+    intro.start();
 }

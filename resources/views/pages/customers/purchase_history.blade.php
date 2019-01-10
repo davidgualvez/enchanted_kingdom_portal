@@ -24,7 +24,7 @@
                 <div class="sub header">Summary of all Purchases.</div>
             </h3>  
             {{-- pagination content --}}
-            <div id="purchaseHistory" style="padding: 25px 0xpx 0px 0px;"> 
+            <div class="step1" id="purchaseHistory" style="padding: 25px 0xpx 0px 0px;"> 
                 {{-- <div class="ui vertical segment">
                     <div style="padding: 10px;">
                         <div class="ui middle aligned divided list">

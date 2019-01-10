@@ -8,14 +8,11 @@ $(document).ready(function(){
 	$('.ui.accordion').accordion();
   
 	activePurchaseDisplayer();
-	// testHistory();
+	// testHistory();  
 
-	//order pagination
-	fetchHistory();
-	paginateOrderHistory();
-	btnNextOrderHistory();
-	btnPrevOrderHistory();
-	limitOnChangeOrderHistory();
+	setTimeout(() => {
+		initGuide();
+	}, 500);
 });
  
 function btnUpdateInfo(){
@@ -166,12 +163,48 @@ function showBarcode(id,product_id){
 		
 		$('#code-name').text('ref # : ' + id + '-' + product_id);
 	}); 
-}
- 
-function testHistory(){
-	post(routes.user.purchaseHistory, {}, function(response){
-		$.each(response.data, function(key,value){
-			$('#purchaseHistory').append(response.data);
-		});
-	});
 } 
+
+
+
+//GUIDE FOR THIS PAGE
+function initGuide() {
+    if (getStorage('guide-me') != 1) {
+        startGuide();
+    }
+}
+
+function startGuide() {
+    var intro = introJs();
+    intro.setOptions({
+        steps: [ 
+			{
+			    element: '.cart',
+			    intro: 'To view all added item from your Cart. Click here',
+			},
+			{
+			    element: '.step1',
+			    intro: 'This area shows your Wallet Balance.',
+			},
+			{
+			    element: '.step2',
+				intro: 'This area shows your Points Balance.',
+				position: 'left'
+			},
+			{
+			    element: '.step3',
+			    intro: 'This area shows your Active Purchases from the Store. To claim it just press the Show QRCode button from the list and go to the nearest claiming area.',
+			},
+			{
+			    element: '.step4',
+			    intro: 'This area where you can update your information.',
+			},
+		]
+    });
+
+    intro.onexit(function () {
+        setStorage('guide-me', 1);
+        console.log('exit');
+    });
+    intro.start();
+}

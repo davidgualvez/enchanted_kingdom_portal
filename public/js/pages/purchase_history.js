@@ -5,7 +5,11 @@ $(document).ready(function(){
     btnNextPurchaseHistory();
     btnPrevPurchaseHistory();
     limitOnChangePurchaseHistory();
- 
+    
+    setTimeout(() => {
+        initGuide();
+    }, 500);
+    
 });
 
 
@@ -240,3 +244,29 @@ function dataDisplayerPurchaseHistory(data, from) {
     $('.ui.accordion').accordion();
 }
 //end of pagination================ 
+
+
+
+//GUIDE FOR THIS PAGE
+function initGuide() {
+    if (getStorage('guide-purchase_history') != 1) {
+        startGuide();
+    }
+}
+
+function startGuide() {
+    var intro = introJs();
+    intro.setOptions({
+        steps: [{
+                element: '.step1',
+                intro: 'This is the area where you can view all your purchases from the start, filtered from latest to the last record'
+            }
+        ]
+    });
+
+    intro.onexit(function () {
+        setStorage('guide-purchase_history', 1);
+        console.log('exit');
+    });
+    intro.start();
+}

@@ -9,7 +9,7 @@
 	<div class="ui container padded" style="padding: 25px;"> 
 		<h3 class="ui header">My Wallet Cart</h3>  
 		<!-- table -->
-		<table class="ui single line table">
+		<table class="ui single line table step1">
 		  <thead>
 		    <tr>
 		      <th class="one wide">#</th>
@@ -93,7 +93,7 @@
 		  				<strong>(optional)Use Points :  </strong> 
 		  			</th>
 		  			<th class="right aligned form" style="padding-right: 25px;">
-		  				<div class="ui mini input" style="width: 75px;">
+		  				<div class="ui mini input step2" style="width: 75px;">
 		  				  <input type="text" placeholder="" name="points_payment" id="points_payment">
 		  				</div>
 		  			</th>
@@ -107,26 +107,26 @@
 			  				</button> --}}
 
 			  				<div class="ui buttons right floated">
-			  				  <button disabled class="ui blue button" id="order">
+			  				  <button disabled class="ui blue button step3" id="order">
 			  				  	<i class="cart arrow down icon"></i> Order
 			  				  </button>
 
 			  				  <div class="or"></div>
 
-			  				  <button disabled class="ui positive button" id="checkout">
+			  				  <button disabled class="ui positive button step4" id="checkout">
 			  				  	<i class="check icon"></i> Purchase
 			  				  </button>
 			  				</div>
 		  				@else
 
 		  					<div class="ui buttons right floated">
-		  					  <button class="ui blue button" id="order">
+		  					  <button class="ui blue button step3" id="order">
 		  					  	<i class="cart arrow down icon"></i> Order
 		  					  </button>
 
 		  					  <div class="or"></div>
 
-		  					  <button class="ui positive button" id="checkout">
+		  					  <button class="ui positive button step4" id="checkout">
 		  					  	<i class="check icon"></i> Purchase
 		  					  </button>
 		  					</div>

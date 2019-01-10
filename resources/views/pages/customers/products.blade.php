@@ -23,7 +23,7 @@
 		<div class="ui multiple dropdown">
 		  <input type="hidden" name="filters">
 		  <i class="filter icon"></i>
-		  <span class="text">Select Categories</span>
+		  <span class="text step1">Select Categories</span>
 		  <div class="menu">
 		    <div class="ui icon search input">
 		      <i class="search icon"></i>
@@ -65,7 +65,7 @@
 
 	  	<div class="right menu">
 		    <div class="item">
-		      <div class="ui icon input">
+		      <div class="ui icon input step2">
 		        <input type="text" id="search_our_products" placeholder="Search products...">
 		        <i class="search link icon" id="btn_search_our_products"></i>
 		      </div>
@@ -73,7 +73,7 @@
 	  	</div>
 	</div>
 
-	<div class="ui five doubling cards" id="items_product">
+	<div class="ui five doubling cards step3" id="items_product">
 	  <!-- <div class="card">
 		    <div class="image">
 		      <img src="https://source.unsplash.com/random/250x250">
@@ -105,7 +105,7 @@
 
 	<div class="ui grid">
 		<div class="column">
-			<div class="tiny ui buttons">
+			<div class="tiny ui buttons step4">
 			  <button class="ui button" id="prev_page_url_product">
 			  	<i class="angle left icon"></i>
 			  	Prev

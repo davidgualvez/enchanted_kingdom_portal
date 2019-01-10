@@ -10,8 +10,9 @@
 
 	<!-- CSS -->
 	<link rel="stylesheet" type="text/css" href="/dist/semantic.min.css"> 
+	<link rel="stylesheet" type="text/css" href="/css/plugins/introjs.min.css">
 	<link rel="stylesheet" type="text/css" href="/css/config.css">
-	<!-- CUSTOM CSS -->
+	<!-- CUSTOM CSS --> 
 	<style type="text/css">
 		body {
 		     background-color: #393e46;
@@ -42,7 +43,7 @@
 					<div class="ui segment">
 							<div style=" display:block; text-align:left;">
 								<div class="ui small breadcrumb">
-									<a href="/" class="section">
+									<a href="/" class="section step3">
 										<i class="home icon"></i>
 										Home
 									</a>
@@ -52,7 +53,7 @@
 							</div> 
 					</div>
 
-	  	    <form id="form-login" class="ui large form" action="/login" method="post">
+	  	    <form id="form-login" class="ui large form step1" action="/login" method="post">
 	  	    	@csrf
 	  	      <div class="ui stacked segment">  
 	  	      	@if (count($errors) > 0)
@@ -97,7 +98,7 @@
 	  	    </form>
 
 	  	    <div class="ui message">
-	  	      Don't have account yet? <a href="/signup">Sign Up</a>
+	  	      Don't have account yet? <a href="/signup" class="step2">Sign Up</a>
 	  	    </div>
 	  	  </div>
 	  	</div>
@@ -106,8 +107,10 @@
 	<!-- JS -->
 	<script src="/js/app.js"></script>
 	<script src="/dist/semantic.min.js"></script>
+	<script src="/js/plugins/intro.min.js"></script>
 	<script src="/js/config.js"></script>
 	<!-- CUSTOM JS --> 
+	<script src="/js/pages/login.js"></script>
 	<script>
 		$('.message .close')
 		  .on('click', function() {

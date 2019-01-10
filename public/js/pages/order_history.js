@@ -7,6 +7,10 @@ $(document).ready( function(){
     btnPrevOrderHistory();
     limitOnChangeOrderHistory();
 
+    setTimeout(() => {
+        initGuide();
+    }, 500);
+    
 });
 
 //pagination================================ 
@@ -241,4 +245,29 @@ function showOrderCode(id) {
         });
         $('#code-name').html('ref # - '+_id);
     });
+}
+
+
+//GUIDE FOR THIS PAGE
+function initGuide() {
+    if (getStorage('guide-order_history') != 1) {
+        startGuide();
+    }
+}
+
+function startGuide() {
+    var intro = introJs();
+    intro.setOptions({
+        steps: [{
+            element: '.step1',
+            intro: 'This is the area where you can view all your ordered items from the start, filtered from latest to the last record. If you place an order you can present a QRcode to the nearest POS by pressing the Show QRCode button from the list .',
+            position: 'top'
+        }]
+    });
+
+    intro.onexit(function () {
+        setStorage('guide-order_history', 1);
+        console.log('exit');
+    });
+    intro.start();
 }

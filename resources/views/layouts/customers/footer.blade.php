@@ -12,7 +12,7 @@
 	    		<small>Privacy Policy</small>
 	    		<div>
 	    			Copyright 2018. Enchanted Kingdom, Inc. All Rights Reserved.
-	    		</div> 
+				</div>  
 	    	</div> 
 	    </div>
 

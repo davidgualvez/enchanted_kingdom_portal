@@ -29,7 +29,7 @@
 			<div class="six wide column " >
 				
 				<div class="ui two column divided grid padded" style="padding-top: 10px;">
-					<div class="eight wide column">
+					<div class="eight wide column step1">
 
 						<div class="ui container center aligned">
 							<div class="ui tiny statistic">
@@ -44,7 +44,7 @@
 						</div>
 						
 					</div>
-					<div class="eight wide column">
+					<div class="eight wide column step2">
 
 						<div class="ui container center aligned">
 							<div class="ui tiny statistic">
@@ -63,7 +63,7 @@
 
 				<div class="ui column grid"> 
 					<div class="column">
-						<div class="ui segment">
+						<div class="ui segment step3">
 							<div class="ui header">Active Purchase</div>
 						   	<div class="ui divided items" id="active_purchase"> 
 
@@ -119,7 +119,7 @@
 				</div>
 
 			</div>
-			<div class="ten wide column ">
+			<div class="ten wide column step4">
 				<div class="ui top attached tabular menu"> 
 				  	<a class="item active" data-tab="first">My Profile</a> 
 				</div>

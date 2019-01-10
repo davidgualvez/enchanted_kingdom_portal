@@ -26,6 +26,7 @@
 <!-- TODAYS SPECIAL -->
 	{{-- @include('pages.customers.components.today_special') --}}
 	{{-- what to do --}}
+	<div  data-intro='This is the area where you can find all the items with big discount.' >
 	<h4 class="ui horizontal divider header">
 	  <i class="gift icon"></i>
 	 	Today's Specials
@@ -95,6 +96,7 @@
 			<h3>Nothing to display...</h3>
 		</div>
 	@endif
+	</div>
 <!-- END TODAYS SPECIAL --> 
 <br>
 {{-- what to do --}}
@@ -116,7 +118,7 @@
 	        First time going to Enchanted Kingdom? Check out our handy park map below to know where to go on the day of your visit!
 	      </div>
 	    </div>
-	    <a href="/site-map" class="ui bottom attached button">
+	    <a href="/site-map" class="ui bottom attached button" id="step3">
 	    	Show
 	    </a> 
   	</div>
@@ -135,7 +137,7 @@
 Enjoy EKsclusive perks and start your magical year today!
 	      </div>
 	    </div>
-	    <a href="/store" class="ui bottom attached button">
+	    <a href="/store" class="ui bottom attached button" id="step4">
 	    	Show
 	    </a> 
   	</div>
@@ -154,7 +156,7 @@ Enjoy EKsclusive perks and start your magical year today!
 From family friendly to exhilarating and extreme thrill rides!
 	      </div>
 	    </div>
-	    <a href="/things-to-do" class="ui bottom attached button">
+	    <a href="/things-to-do" class="ui bottom attached button" id="step5">
 	    	Show
 	    </a> 
   	</div>

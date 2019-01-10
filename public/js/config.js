@@ -18,8 +18,7 @@ $(document).ready(function(){
     //     type: 'fixed'
     //   });
     
-    btnLogin(); 
-
+    btnLogin();  
 }); 
 
 //global variable for all page  
@@ -128,17 +127,19 @@ function isLogin() {
 }
 
 function logout() {
-    localStorage.clear();
+   clearStorage();
     window.location.href = "/login";
 }
 
 // local storage
 function setStorage(key, value){
-    storage.setItem(key, value);
+    localStorage.setItem(key, value);
 }
-function getStorage(key){
 
+function getStorage(key){
+    return localStorage.getItem(key);
 }
+
 function clearStorage() {
     localStorage.clear();
 }

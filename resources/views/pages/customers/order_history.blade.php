@@ -36,7 +36,7 @@
             </h3>  
 
             {{-- pagination content --}}
-            <div id="orderHistory" style="padding: 25px 0xpx 0px 0px;">
+            <div class="step1" id="orderHistory" style="padding: 25px 0xpx 0px 0px;">
                     
                 {{-- <div class="ui vertical segment">
                     <div style="padding: 10px;">

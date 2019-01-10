@@ -10,8 +10,9 @@
 
 	<!-- CSS -->
 	<link rel="stylesheet" type="text/css" href="/dist/semantic.min.css"> 
+	<link rel="stylesheet" type="text/css" href="/css/plugins/introjs.min.css">
 	<link rel="stylesheet" type="text/css" href="/css/config.css">
-	<!-- CUSTOM CSS -->
+	<!-- CUSTOM CSS --> 
 	<style type="text/css">
 		body {
 		     background-color: #393e46;
@@ -42,7 +43,7 @@
 					<div class="ui segment">
 							<div style=" display:block; text-align:left;">
 								<div class="ui small breadcrumb">
-									<a href="/" class="section">
+									<a href="/" class="section step3">
 										<i class="home icon"></i>
 										Home
 									</a>
@@ -52,7 +53,7 @@
 							</div> 
 					</div>
 
-					<form class="ui large form" method="post" action="/signup"> 
+					<form class="ui large form step1" method="post" action="/signup"> 
 	  	    @csrf
 	  	      <div class="ui stacked segment"> 
 	  	      	@if (count($errors) > 0)
@@ -121,7 +122,7 @@
 	  	    </form>
 
 	  	    <div class="ui message">
-	  	      Already have an account? <a href="/login">Login</a>
+	  	      Already have an account? <a href="/login" class="step2">Login</a>
 	  	    </div>
 	  	  </div>
 	  	</div>
@@ -130,8 +131,10 @@
 	<!-- JS -->
 	<script src="/js/app.js"></script>
 	<script src="/dist/semantic.min.js"></script>
+	<script src="/js/plugins/intro.min.js"></script>
 	<script src="/js/config.js"></script>
 	<!-- CUSTOM JS -->
+	<script src="/js/pages/signup.js"></script>
 	<script>
 		$('.message .close')
 		  .on('click', function() {
