@@ -124,7 +124,7 @@ function isLogin() {
     if (token == '' || token == null) {
         return false; //says that the use is not loggedin
     }
-    return true; // says that the user is current loggedin
+    return true; // says that the user is current loggedin 
 }
 
 function logout() {
@@ -132,6 +132,13 @@ function logout() {
     window.location.href = "/login";
 }
 
+// local storage
+function setStorage(key, value){
+    storage.setItem(key, value);
+}
+function getStorage(key){
+
+}
 function clearStorage() {
     localStorage.clear();
 }

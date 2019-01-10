@@ -20,7 +20,7 @@
     <div class="ui stackable column grid"> 
         <div class="column">
             <h3 class="ui header box">
-                Purchase History
+                Purchased History
                 <div class="sub header">Summary of all Purchases.</div>
             </h3>  
             {{-- pagination content --}}

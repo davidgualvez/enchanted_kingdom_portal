@@ -17,7 +17,7 @@
         	{{-- <svg id="barcode"></svg> --}}
         	<div id="barcode" style="padding: 5px; background-color: white;"></div>
 
-       		<div id="purchase_order">
+       		<div id="code-name">
        			
        		</div>
       	</h2>

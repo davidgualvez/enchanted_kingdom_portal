@@ -152,8 +152,8 @@
 	    <div class="menu"> 
 		  	@auth
 		  	  	<!-- <a href="/logout" class="ui item">Logout</a> --> 
-				<a href="/purchase/history"><div class="item">	<h4>Purchases History</h4> </div></a>  
-				<a href="/order/history"><div class="item">	<h4>Orders History</h4> </div></a>
+				<a href="/purchase/history"><div class="item">	<h4>Purchased History</h4> </div></a>  
+				<a href="/order/history"><div class="item">	<h4>Ordered History</h4> </div></a>
 				<a href="/me"><div class="item">	<h4>My Account</h4> </div></a>  
 		  	  	<a href="/logout"><div class="item">	<h4>Logout</h4> </div></a>
 		  	@else

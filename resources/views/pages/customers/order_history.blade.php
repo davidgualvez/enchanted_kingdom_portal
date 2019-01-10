@@ -31,7 +31,7 @@
     <div class="ui stackable column grid"> 
         <div class="column">
             <h3 class="ui header box">
-                Order History
+                Ordered History
                 <div class="sub header">Summary of all Orders.</div>
             </h3>  
 
