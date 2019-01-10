@@ -25,7 +25,7 @@ use App\AppServices\BranchLastIssuedNumberServices;
  
 use DB;
 
-class PurchaseController extends Controller
+class PurchaseController extends Controller 
 {
     //
     public function checkout(Request $request){
@@ -342,5 +342,9 @@ class PurchaseController extends Controller
             'discount_amount'   => $discount_amount,
             'buying_price'      => $buying_price
         ];
+    }
+
+    public function show(){
+        return view('pages.customers.purchase_history'); 
     }
 }

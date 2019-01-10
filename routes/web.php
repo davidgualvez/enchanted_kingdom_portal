@@ -13,7 +13,7 @@
 
 //TEST GROUND
 Route::get('/default', function(){
-	return view('pages.playground.default');
+	return view('pages.playground.tour');
 })->middleware('auth');
 //END
  
@@ -119,11 +119,13 @@ Route::get('/products/groups', 							'PartController@groups');
 Route::get('/rewards', 									'RewardController@index');
 Route::get('/rewards/lists', 							'RewardController@lists');
 
-//active purchase
+//purchases
+Route::get('/purchase/history', 						'PurchaseController@show')->middleware('auth');
 Route::post('/purchase/details/active', 				'PurchaseDetailController@active');
 Route::post('/purchase/history', 						'PurchaseController@customerHistory');
 
 //orders
+Route::get('/order/history',                            'OrderController@show')->middleware('auth');
 Route::post('/order', 									'OrderController@order');
 Route::post('/order/history', 							'OrderController@customerHistory');
 

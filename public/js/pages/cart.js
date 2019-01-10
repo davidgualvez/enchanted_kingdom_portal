@@ -113,7 +113,7 @@ function order(){
 			               	}
 
 		            		showSuccess('Success','Your Order has been checkout!.', function(){
-			               		redirectTo('/me');
+			               		redirectTo('/order/history');
 			               	});
 		            	});
 		            	

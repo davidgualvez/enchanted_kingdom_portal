@@ -7,7 +7,7 @@ use Auth;
 use DB;
 use Carbon\Carbon;
 
-//models 
+//models  
 use App\Cart;
 use App\SitePart;
 use App\OrderSlipHeader;
@@ -150,5 +150,9 @@ class OrderController extends Controller
             'status'        => 200,
             'data'          => $osh, 
         ]);
-    }
+	}
+	
+	public function show(){
+		return view('pages.customers.order_history'); 
+	}
 }
