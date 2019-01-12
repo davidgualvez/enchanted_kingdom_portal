@@ -128,4 +128,3 @@ Route::post('/purchase/history', 						'PurchaseController@customerHistory');
 Route::get('/order/history',                            'OrderController@show')->middleware('auth');
 Route::post('/order', 									'OrderController@order');
 Route::post('/order/history', 							'OrderController@customerHistory');
-

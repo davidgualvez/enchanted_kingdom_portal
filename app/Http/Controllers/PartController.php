@@ -32,7 +32,7 @@ class PartController extends Controller
         $groups = Group::all();
 
         $gt = new GroupTransformer;
-        $gt->groups($groups);
+        $gt->groups($groups); 
 
         return response()->json([ 
             'success'   => true,
