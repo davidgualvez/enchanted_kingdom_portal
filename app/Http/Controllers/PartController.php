@@ -29,7 +29,20 @@ class PartController extends Controller
     }
 
     public function groups(Request $request){
-        $groups = Group::all();
+
+
+        $val = config('app.group_not_to_display'); 
+        $val = explode(',',$val); 
+
+        $arr = [
+            '1','2','3'
+        ];
+
+        //dd($val, $arr);
+
+        $groups = Group::whereNotIn('group_code', $val)
+                    ->orderBy('description')
+                    ->get();
 
         $gt = new GroupTransformer;
         $gt->groups($groups); 
