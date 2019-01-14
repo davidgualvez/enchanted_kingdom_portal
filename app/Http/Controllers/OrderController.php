@@ -15,6 +15,7 @@ use App\OrderSlipDetail;
 
 //services
 use App\AppServices\BranchLastIssuedNumberServices;
+use App\AppServices\Helper;
 
 //transformer
 use App\Transformers\OrderTransformer;
@@ -23,9 +24,6 @@ class OrderController extends Controller
 {
     //
     public function order(Request $request){
-
-    	
-
     	try{
     		//begin
     		DB::beginTransaction();
@@ -34,6 +32,7 @@ class OrderController extends Controller
     		$user  = Auth::user(); 
     		$carts = Cart::findByUserAndType($user->id, 'wallet');
 			$now   = Carbon::now();
+			$helper= new Helper;
 			
 			//check if the cart has not contain an item 
             if($carts->isEmpty()){
@@ -63,7 +62,8 @@ class OrderController extends Controller
 	      	$osh->customer_id 			= $user->customer->CUSTOMERID;
 	      	$osh->mobile_number 		= $user->mobile_number;
 	      	$osh->customer_name 		= $user->customer->NAME;
-            $osh->created_at            = $now;
+			$osh->created_at            = $now;
+			$osh->orig_invoice_date 	= $helper->getClarionDate($now);
  	      	$osh->save(); 
 	      	 
 
