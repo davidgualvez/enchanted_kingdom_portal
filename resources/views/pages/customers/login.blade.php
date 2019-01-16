@@ -78,20 +78,30 @@
 	  	      	  		<p class="text-left">{{ session('error') }}</p>
 	  	      		</div> 
 							@endif  
-
+							
 	  	        <div class="field" >
-	  	        	<label class="" style="text-align: left;">Mobile number</label>
-	  	          	<div class="ui left icon input">
+	  	        		<label class="" style="text-align: left;">Mobile number</label>
+	  	          	{{-- <div class="ui left icon input">
 	  	            	<i class="user icon"></i>
 	  	            	<input id="mobile_number" type="text" name="mobile_number" placeholder="ex. 09xx-xxxx-xxx" value="{{ old('mobile_number') }}">
-	  	          	</div>
+	  	          	</div> --}}
+									<div class="ui labeled input">
+										<div class="ui label">
+												+63
+										</div>
+										<input type="text" id="mobile_number" name="mobile_number" placeholder="ex. 9xxxxxxxxx" value="{{ old('mobile_number') }}">
+									</div>
 	  	        </div>
+
 	  	        <div class="field">
 	  	        	<label class="" style="text-align: left;">Password</label>
 	  	          	<div class="ui left icon input">
 	  	            	<i class="lock icon"></i>
 	  	            	<input type="password" name="password" placeholder="Password" value="{{ old('password') }}">
 	  	          	</div>
+	  	        </div>
+							<div class="field">
+	  	        	<label class="" style="text-align: left;"> <small><a href="/forgot-password">Forgot Password?</a></small> </label> 
 	  	        </div>
 	  	        <button type="submit" class="ui fluid large teal submit button">Login</button>   
 	  	      </div>  

@@ -96,10 +96,16 @@
 	  	        </div>
 	  	        <div class="field">
 	  	        	<label class="" style="text-align: left;">Mobile number</label>
-	  	          <div class="ui left icon input">
+	  	          {{-- <div class="ui left icon input">
 	  	            <i class="user icon"></i>
 	  	            <input type="text" name="mobile_number" placeholder="Mobile Number" value="{{ old('mobile_number') }}">
-	  	          </div>
+	  	          </div> --}}
+								<div class="ui labeled input">
+										<div class="ui label">
+												+63
+										</div>
+										<input type="text" id="mobile_number" name="mobile_number" placeholder="ex. 9xxxxxxxxx" value="{{ old('mobile_number') }}">
+								</div>
 	  	        </div>
 	
 				<div class="field">

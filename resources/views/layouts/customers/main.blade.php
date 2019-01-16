@@ -65,14 +65,14 @@
 	<!-- navigation -->
 	@include('layouts.customers.nav')
 
-	<div class="ui container" id="main"> 
-		<div class="ui equal width grid">  
+	<div class="ui container" id="main">
+		<div class="ui equal width grid">
 			<!-- CONTENT -->
 			<div class="column">
-				<!-- SITE MAP --> 
+				<!-- SITE MAP -->
 			 	@yield('content')
 			</div>
-			<!-- END OF CONTENT --> 
+			<!-- END OF CONTENT -->
 		</div>
 	</div>
 

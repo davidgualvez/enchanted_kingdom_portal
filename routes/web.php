@@ -65,6 +65,9 @@ Route::get('/logout',                           'Auth\LoginController@logout');
 Route::get('/me', 								'UserController@info')->middleware('auth');
 Route::post('/me', 								'UserController@updateInfo')->middleware('auth');
 
+//forgot password
+Route::get('/forgot-password',                  'ForgotPasswordController@index');
+Route::post('/forgot-password',                 'ForgotPasswordController@checkMobileIfValid');
 
 //CART wallet 
 //show cart

@@ -51,7 +51,7 @@ class LoginController extends Controller
         //validation
         $data = $request->only('mobile_number','password');
         $rules = [ 
-            'mobile_number'     => 'required', 
+            'mobile_number'     => 'required|min:10|max:10', 
             'password'          => 'required|min:6',
         ];
         $result = Validator::make($data,$rules);
@@ -63,9 +63,9 @@ class LoginController extends Controller
         $mobile = str_replace('-','',$request->mobile_number);
 
         //regex
-        if( !preg_match("/^(09|\+639)\d{9}$/",$mobile) ) {
-            return back()->withInput()->withErrors( array('Invalid Mobile Number! Please try again.') );
-        }
+        // if( !preg_match("/^(09|\+639)\d{9}$/",$mobile) ) {
+        //     return back()->withInput()->withErrors( array('Invalid Mobile Number! Please try again.') );
+        // }
 
         $user = User::findByMobile($mobile);
         if(!$user){

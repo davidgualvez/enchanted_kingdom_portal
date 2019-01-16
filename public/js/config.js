@@ -49,6 +49,9 @@ var routes = {
         updateInfo :    '/me',
         activePurchase: '/purchase/details/active',
         purchaseHistory:'/purchase/history'
+    },
+    forgotPassword : {
+        verifiyMobile : '/forgot-password' //post[mobile]
     }
 };
 

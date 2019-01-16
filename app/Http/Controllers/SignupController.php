@@ -24,7 +24,7 @@ class SignupController extends Controller
         $rules = [
             'name'              => 'required',
             // 'email'             => 'required',
-            'mobile_number'     => 'required', 
+            'mobile_number'     => 'required|min:10|max:10', 
             'password'          => 'required|min:6',
             'birthdate'         => 'required'
         ];
@@ -54,9 +54,9 @@ class SignupController extends Controller
         $mobile = str_replace('-','',$request->mobile_number);
 
         //regex
-        if( !preg_match("/^(09|\+639)\d{9}$/",$mobile) ) {
-            return back()->withInput()->withErrors( array('Invalid Mobile Number! Please try again.') );
-        }
+        // if( !preg_match("/^(09|\+639)\d{9}$/",$mobile) ) {
+        //     return back()->withInput()->withErrors( array('Invalid Mobile Number! Please try again.') );
+        // }
         
         $c_mobile = User::findByMobile($mobile);
         if($c_mobile){

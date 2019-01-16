@@ -35,13 +35,34 @@ class SmsServices {
 		
 	}
 
+	public function sendForgotPasswordCode($mobile_number,$code)
+	{
+
+		try {
+
+			$message = 'Good day! Your forgot password code is "'.$code.'". This Code will only last for 5min.';
+
+			// Log::debug('recepient: '.$mobile_number.', message: '.$message); 
+			$msg = new Message;
+			$msg->number = $this->numberFormater($mobile_number);
+			$msg->message = $message;
+			$msg->status = 0;
+			$msg->save();
+			return true;
+		} catch (\Exception $e) {
+			Log::debug('SMS :' . $e->getMessage());
+			return false;
+		}
+
+	}
+
 	private function numberFormater($number){
 		$to_replace = '+63'; 
-		$hooked_value = substr($number ,0, 3); 
-		if($to_replace != $hooked_value){
-			$to_be_append = substr($number ,1, strlen($number) - 1); 
-			return ''.$to_replace.$to_be_append; 
-		} 
-		return ''.$number;
+		// $hooked_value = substr($number ,0, 3); 
+		// if($to_replace != $hooked_value){
+		// 	$to_be_append = substr($number ,1, strlen($number) - 1);
+		// 	return ''.$to_replace.$to_be_append; 
+		// } 
+		return ''.$to_replace.$number;
 	}
 }
