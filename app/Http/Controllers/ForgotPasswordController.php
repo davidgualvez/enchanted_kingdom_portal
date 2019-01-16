@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use Carbon\Carbon;
 use App\AppServices\SmsServices;
-use App\AppSercices\MailServices;
+use App\AppServices\MailServices;
 use App\PasswordReset;
 
 
@@ -52,7 +52,7 @@ class ForgotPasswordController extends Controller
             $_email = new MailServices;
             $_email->sendForgotPasswordCode($user->email, $code);
         }
-        
+
         //return user with 1st code
         return response()->json([
             'success'   => true,
