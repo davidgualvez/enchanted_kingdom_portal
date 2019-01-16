@@ -51,7 +51,9 @@ var routes = {
         purchaseHistory:'/purchase/history'
     },
     forgotPassword : {
-        verifiyMobile : '/forgot-password' //post[mobile]
+        verifyMobile : '/forgot-password', //post[mobile]
+        verifyCode: '/forgot-password/verify-code',//post[code]
+        updateNewPassword : '/forgot-password/update-password'
     }
 };
 

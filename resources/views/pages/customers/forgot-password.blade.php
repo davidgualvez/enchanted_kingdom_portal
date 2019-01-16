@@ -122,7 +122,7 @@
                                     <div class="ui label">
                                         CODE
                                     </div>
-                                    <input type="text" placeholder="xxxxxx">
+                                    <input id="code" type="text" placeholder="xxxxxx">
                                 </div>
                             </div>
                             <div class="field" style="text-align: left;">
@@ -147,7 +147,7 @@
                                 <label class="" style="text-align: left;">Retype New Password</label>
                                 <div class="ui left icon input">
                                     <i class="key icon"></i>
-                                    <input id="re-password" type="password">
+                                    <input id="repassword" type="password">
                                 </div> 
                             </div>
                             <div class="field" style="text-align: left;">

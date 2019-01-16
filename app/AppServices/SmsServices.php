@@ -47,8 +47,9 @@ class SmsServices {
 			$msg->number = $this->numberFormater($mobile_number);
 			$msg->message = $message;
 			$msg->status = 0;
-			$msg->save();
+			$msg->save(); 
 			return true;
+
 		} catch (\Exception $e) {
 			Log::debug('SMS :' . $e->getMessage());
 			return false;

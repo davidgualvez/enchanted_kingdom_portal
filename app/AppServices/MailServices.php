@@ -29,4 +29,27 @@ class MailServices {
 		}
 	}
 
+	public function sendForgotPasswordCode($email, $code)
+	{
+		try {
+
+			//welcome message goes here
+			//$message = 'Welcome to Enchanted Kingdom! You are now a Loyalty Member. You may now load up your wallet to purchase anything from the store and earn a points for every purchase. Enjoy!';
+			
+			//
+			$email_subject = "Forgot Password";
+			Mail::send('mails.forgot-password', [
+	            //pass a variable into blade here
+				'code' => $code
+			], function ($mail) use ($email_subject, $email) {
+				$mail->from('test@test.com', 'Enchanted Kingdom');
+				$mail->to($email);
+				$mail->subject($email_subject);
+			});
+			return true;
+		} catch (\Exception $e) {
+			return false;
+		}
+	}
+
 }

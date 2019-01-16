@@ -68,6 +68,8 @@ Route::post('/me', 								'UserController@updateInfo')->middleware('auth');
 //forgot password
 Route::get('/forgot-password',                  'ForgotPasswordController@index');
 Route::post('/forgot-password',                 'ForgotPasswordController@checkMobileIfValid');
+Route::post('/forgot-password/verify-code',     'ForgotPasswordController@verifyCode');
+Route::post('/forgot-password/update-password', 'ForgotPasswordController@changePassword');
 
 //CART wallet 
 //show cart

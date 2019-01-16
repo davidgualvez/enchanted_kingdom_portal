@@ -3,7 +3,7 @@
   <head>
     <meta name="viewport" content="width=device-width" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Simple Transactional Email</title>
+    <title>Forgot Password</title>
     <style>
       /* -------------------------------------
           GLOBAL RESETS
@@ -311,7 +311,7 @@
                     <tr>
                       <td>
                         <p>Hi there,</p>
-                        <p>You are now a Loyalty Member. You may now load up your wallet to purchase anything from the store and earn a points for every purchase. Enjoy!</p>
+                        <p>Good day! Your forgot password code is "{{ $code }}". This Code will only last for 5min.</p>
                         {{-- <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                           <tbody>
                             <tr>

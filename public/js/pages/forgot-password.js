@@ -31,7 +31,7 @@ function stepOne(){
             mobile_number : mobile.val()
         };
 
-        post(routes.forgotPassword.verifiyMobile, data, function(response){
+        post(routes.forgotPassword.verifyMobile, data, function(response){
             console.log(response);
             if(response.success == false){
                 showWarning('', response.message, function () {
@@ -41,9 +41,12 @@ function stepOne(){
             }
 
             //if success
+            showSuccess('',response.message,function(){
+
+            });
+
             stepTwo();
-        });
-        //if valid() show  step2 
+        }); 
         
     });
 }
@@ -52,18 +55,103 @@ function stepTwo(){
     stepDisplayer(2);
 
     $('#btnStepTwoNext').on('click', function () {
-        //if valid() show  step2 
-        stepThree();
+        var code = $('#code');
+
+        if (code.val().trim() == '' || code.val().trim() == null) {
+            showWarning('', 'Code is required.', function () {
+
+            });
+            code.focus();
+            return;
+        }
+
+        master_code = code.val();
+        var data = {
+            code: code.val()
+        };
+
+        post(routes.forgotPassword.verifyCode, data, function (response) {
+            console.log(response);
+            if (response.success == false) {
+                showWarning('', response.message, function () {
+
+                });
+                return;
+            }
+
+            //if success
+            showSuccess('', response.message, function () {
+
+            });
+            stepThree();
+        }); 
     });
 }
 
+var master_code = null;
 function stepThree() {
     stepDisplayer(3); 
     $('#btnStepFinish').on('click', function () {
-        //if valid() show  step2 
-        showSuccess('','New Password has been changed...', function(){
 
+        var pass    = $('#password');
+        var repass  = $('#repassword');
+
+        if (pass.val().trim() == '' || pass.val().trim() == null) {
+            showWarning('', 'Password is required.', function () {
+
+            });
+            pass.focus();
+            return;
+        }
+
+        if (pass.val().length < 6) {
+            showWarning('', 'Password must be greater than or equal to 6 Characters', function () {
+
+            });
+            pass.focus();
+            return;
+        }
+
+        if (repass.val().trim() == '' || repass.val().trim() == null) {
+            showWarning('', 'Retype Password is required.', function () {
+
+            });
+            repass.focus();
+            return;
+        }
+
+        if (pass.val().trim() != repass.val().trim()) {
+            showWarning('', 'Password not match!.', function () {
+
+            });
+            pass.focus();
+            return;
+        }
+ 
+        var data = {
+            code : master_code,
+            password : pass.val(),
+            repassword : repass.val()
+        }
+        
+        post(routes.forgotPassword.updateNewPassword, data, function (response) {
+            console.log(response);
+            if (response.success == false) {
+                showWarning('', response.message, function () {
+
+                });
+                return;
+            }
+
+            showSuccess('', 'New Password has been changed...', function () {
+                pass.attr('disable','disable');
+                repass.attr('disable','disable');
+                redirectTo('/login');
+            });
         });
+
+
+       
     });
 }
 
