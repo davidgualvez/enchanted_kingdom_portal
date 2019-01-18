@@ -12,6 +12,7 @@ class SitePart extends Model
     use Eloquence, Mappable, Mutable;
     //
     protected $table 		= 'SiteParts';
+    protected $primaryKey   = 'PRODUCT_ID';
     public $timestamps 		= false;
 
     //model mapping 
@@ -32,10 +33,19 @@ class SitePart extends Model
       	'category_id' 			=> 'CATEGORY',
       	'group_id' 				=> 'GROUP',
         'img_url' 				=> 'IMAGE',
-        'pre_part_no'           => 'PREPARTNO', // this is use to identify the admission 0|1  to exclude from the list
-        'is_food'               => 'MSGROUP', 
-        'is_unli'               => 'SSBUFFER',
-        'postmix'               => 'POSTMIX'
+        'pre_part_no'           => 'PREPARTNO',     // this is use to identify the admission 0|1  to exclude from the list
+        'is_food'               => 'MSGROUP',       // food 
+        'is_unli'               => 'SSBUFFER', 
+        'postmix'               => 'POSTMIX',
+
+        
+        'kitchen_loc'           => 'PRODGRP',       // KITCHEN LOCATION
+        
+        // TAX PART
+        'is_vat'                => 'VAT',               // is vatable
+        'admission_fee'         => 'ADMISSIONFEE',      // admission fee amount
+        'amusement_tax'         => 'AMUSEMENTTAX',      // 
+        'special_discount'      => 'STDCARCASSWEIGHT'   // 
     ];
     
     protected $getterMutators = [

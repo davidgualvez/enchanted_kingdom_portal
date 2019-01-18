@@ -7,16 +7,13 @@ use App\Part;
 
 class Cart extends Model
 {
-    //
-    /*----------  relationship  ----------*/ 
-    // public function part(){
-    //     $part = new Part;
-    //     return $part->where($part->branch_id, config('cpp.branch_id'))
-    //             ->where($part->product_id, "{$this->product_id}")
-    //             ->first();
 
-    //     //return $this->belongsTo('App\Part','product_id');
-    // }
+    /**
+     * Relationshio
+     */
+    public function product(){
+        return $this->belongsTo('App\SitePart','product_id');
+    }
     
     /*----------  logic  ----------*/
     public static function findByUserAndProduct($user_id,$product_id){

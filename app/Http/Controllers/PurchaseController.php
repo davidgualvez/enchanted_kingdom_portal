@@ -9,6 +9,7 @@ use App\User;
 use App\Customer;
 use App\Cart;
 use App\Postmix;
+use App\SiteTerminal;
  
 use App\Part;
 use App\SitePart;
@@ -22,6 +23,7 @@ use App\PurchaseDetail;
 
 use App\AppServices\EarnPointTransactionServices;
 use App\AppServices\BranchLastIssuedNumberServices;
+use App\AppServices\TaxServices;
  
 use DB;
 
@@ -66,17 +68,40 @@ class PurchaseController extends Controller
         	$ph->transaction_type_id    = 1;
         	$ph->save();  
              
-        	//=============================================== 
+            //===============================================  
+            $st = new SiteTerminal;
+            $st = $st->terminalSetting();
+            
+            $tax = new TaxServices(
+                $user->customer->specialDiscount, 
+                $user->customer->is_zero_rated,
+                $st->amusement_tax
+            );
+
         	$total_gross = 0;
         	$total_discount = 0;
         	$total_net = 0;
-        	$cartList = [];
+            $cartList = [];
+            
         	foreach ($carts as $key => $value) {
         	    # code... 
                 $partt = new SitePart;
                 $part = $partt->where('branch_id', config('app.branch_id'))
                             ->where('sitepart_id', $value->product_id)
                             ->first();
+
+                //----------------------
+                $x = [
+                    'ref_id' => $new_sales_order_id,
+                    'price' => $part->srp,
+                    'qty'   => $value->qty,
+                    'is_vat' => $part->is_vat,
+                    'is_admission'  => $part->pre_part_no,
+                    'admission_fee' => $part->admission_fee,
+                    'amusement_tax' => $part->amusement_tax,
+                ];
+                $tax->getItem($x);
+                //----------------------
  
                 if($part->postmix == 1 && $part->is_food == 0){ 
 
@@ -149,6 +174,16 @@ class PurchaseController extends Controller
                 } 
         	}
         	//===============================================  
+
+            //--
+            DB::rollback();
+            dd($tax->result() );
+            return response()->json([
+                'success' => false,
+                'status' => 500,
+                'data' => $tax->result()
+            ]); 
+            //--
 
             $virtual_wallet     = $user->customer->wallet;
             $virtual_points     = $user->customer->points;  

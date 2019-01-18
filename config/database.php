@@ -82,6 +82,18 @@ return [
             'prefix_indexes' => true,
         ],
 
+        'sqlsrvEKSiteDB' => [
+            'driver' => 'sqlsrv',
+            'host' => env('DB_HOST_EKSITE', 'localhost'),
+            'port' => env('DB_PORT_EKSITE', '1433'),
+            'database' => env('DB_DATABASE_EKSITE', 'forge'),
+            'username' => env('DB_USERNAME_EKSITE', 'forge'),
+            'password' => env('DB_PASSWORD_EKSITE', ''),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+        ],
+
     ],
 
     /*

@@ -12,99 +12,120 @@ use App\Part;
 use App\ProductPromotion;
 use App\Promotion;
 use App\Transformers\CartTransformer; 
+use App\AppServices\CustomerServices;
+use App\AppServices\TaxServices;
 
 class CartController extends Controller
 {
     //
     public function showCart(){
         $user   = Auth::user();
-         
-        $carts  = Cart::findByUserAndType($user->id,'wallet'); 
-        //$cartsReward  = Cart::findByUserAndType($user->id,'points'); 
 
-        $mct    = new CartTransformer;
-        $result         = $mct->myCart($carts); 
-        //$reward_carts   = $mct->myCartReward($cartsReward);
-         
-    
-        //=============================================== 
-        // $total_gross = 0;
-        // $total_discount = 0;
-        // $total_net = 0;
-        // $cartList = [];
-        // foreach ($carts as $key => $value) {
-        //     # code... 
-        //     //logic
-        //     $product_id     = $value->part->id;
-        //     $name           = $value->part->name;
-        //     $description    = null;
-        //     $qty            = $value->qty;
-        //     $srp            = $value->part->srp;
-        //     $discount_type  = null;
-        //     $discount_value = null;
-        //     $discount_amount= null;
-        //     $selling_price  = $qty * $srp;
-        //     $buying_price   = null;
+        $customer = new CustomerServices($user->customer);
 
-        //     if(is_null($value->part->activePromo)){
-        //         $discount_amount = 0; 
-        //         //getting description by part
-        //         $description = $value->part->description;
-        //     }else{
-        //         //getting description by promotion
-        //         $description = $value->part->activePromo->description;
+        $carts  = Cart::findByUserAndType($user->id,'wallet');  
 
-        //         if($value->part->activePromo->promotion->is_percent == 0){
-        //             // actual amount to be deduct
-        //             $discount_type  = 'real';
-        //             $discount_value = $value->part->activePromo->promotion->amount;
+        //================================================================
+        $carts->transform(function($v) use ($customer) {  
+            $price = $v->product->srp * $v->qty;
 
-        //             $discount_amount= $discount_value;
-        //         }else if($value->part->activePromo->promotion->is_percent == 1){
-        //             // percent amount to be deduct
-        //             $discount_type  = 'percent';
-        //             $discount_value = $value->part->activePromo->promotion->amount;
+            $vatable_sales  = 0;
+            $vat_amount     = 0;
 
-        //             $discount_amount= ($discount_value / 100) * $selling_price;
-        //         }
-        //     }
-        //     //get the buying price
-        //     $buying_price   = ($selling_price) - $discount_amount;
+            $vat_exempt_sales   = 0;
+            $sc_pwd_discount    = 0;
 
-        //     //totals
-        //     array_push($cartList, [
-        //         'cart_id'           => $value->id,
-        //         'part_id'           => $product_id,
-        //         'name'              => $name,
-        //         'description'       => $description,
-        //         'qty'               => $qty,
-        //         'srp'               => $srp,
-        //         'selling_price'     => $selling_price,
-        //         'discount_type'     => $discount_type,
-        //         'discount_value'    => $discount_value,
-        //         'discount_amount'   => $discount_amount, 
-        //         'buying_price'      => $buying_price
-        //     ]);
+            // for zero rated
+            if($customer->getType()['type'] == 'ZERO-RATED'){
+                $price = $price / 1.12;
+            }
 
-        //     $total_gross += $selling_price;
-        //     $total_discount += $discount_amount;
-        //     $total_net += $buying_price;
-        // }
+            // for admission
+            $admission_fee = 0;
+            $admission_tax_amount = 0;
+            $priceWithoutAdmission = $price;
+            if($v->product->pre_part_no == 1){
+                $af = $v->product->admission_fee * $v->qty;
 
-        // $total_gross        = $result['total_gross'];
-        // $total_discount     = $result['total_discount'];
-        // $total_net          = $result['total_net'];
-        // $cartList           = $result['cartList']; 
+                $priceWithoutAdmission -= $af;
+                $admission_fee = ($af) / 1.10;
+                $admission_tax_amount = $admission_fee * .10;
+            }
+
+            // for tax computation with non SC/PWD 
+            if(
+                $v->product->is_vat == 1 && 
+                $customer->getType()['type'] != 'ZERO-RATED' &&
+                $customer->getType()['type'] != 'SENIOR' &&
+                $customer->getType()['type'] != 'PWD'
+            ){
+                $newPrice       = $priceWithoutAdmission;
+                $vatable_sales  = $newPrice / 1.12;
+                $vat_amount     = $vatable_sales * .12;
+            }
+
+            // for PWD/SC Discount
+            if(
+                $customer->getType()['type'] == 'SENIOR' ||
+                $customer->getType()['type'] == 'PWD'
+            ){
+                $newPrice = $priceWithoutAdmission;
+                $vat_exempt_sales = $newPrice / 1.12;
+                $vat_amount = ($vat_exempt_sales * .12);
+
+                //getting the discount
+                $sc_pwd_discount = ($price - ($admission_tax_amount + $vat_amount ) ) * .20; 
+                $vat_amount = 0;
+                $admission_tax_amount = 0;
+            }
+
+            return [ 
+                'cart_id'       => $v->id,
+                'qty'           => $v->qty,
+                'product_id'    => $v->product->sitepart_id,
+                'product_name'  => $v->product->product_name,
+                'price'         => $price, 
+                'is_vat'        => $v->product->is_vat,
+                'VATable_sales'         => $vatable_sales,
+                'VAT_Exempt_sales'      => $vat_exempt_sales,
+                'VAT_ZeroRated_sales'   => null,
+                'VAT_Amount'            => $vat_amount,
+                'is_admission'          => $v->product->pre_part_no,
+                'admission_fee'         => $admission_fee,
+                'amusement_tax_amount'  => $admission_tax_amount,
+                'sc_pwd_discount'       => $sc_pwd_discount,
+            ];
+        });
+        //======================================================================
+       return response()->json([
+            'ct'                    => $user->customer->customer_type,
+            'customer_type'         => $customer->getType()['type'],
+            'items'                 => $carts,
+            'VATable_sales'         => $carts->sum('VATable_sales'),
+            'VAT_Exempt_sales'      => $carts->sum('VAT_Exempt_sales'),
+            'VAT_ZeroRated_sales'   => null,
+            'VAT_Amount'            => $carts->sum('VAT_Amount'), 
+            'admission_fee'         => $carts->sum('admission_fee'),
+            'amusement_tax_amount'  => $carts->sum('amusement_tax_amount'),
+            'sc_pwd_discount'       => $carts->sum('sc_pwd_discount'),
+       ]);
+
+        // $mct    = new CartTransformer;  
+        // $result = $mct->myCart($carts);  
         
-        //=============================================== 
-    	// return view('pages.customers.cart', 
-     //        compact('cartList','total_gross','total_discount','total_net')
-     //    );
+      
+        
+        //dd( $customer->getType()['type'] );
 
         return view('pages.customers.cart', 
-            compact('result')
+            compact(
+                'result',
+                'customer'
+                )
         );
     } 
+
+
 
     public function addToCart(Request $request){  
 

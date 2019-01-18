@@ -12,9 +12,18 @@
 */
 
 //TEST GROUND
+use App\AppServices\TaxServices;
 Route::get('/default', function(){
-	return view('pages.playground.tour');
-})->middleware('auth');
+    $discount = [
+        'isTrue'    => true,
+        'name'      => 'sc',
+        'percent'   => .20
+    ];
+    $tax = new TaxServices($discount);
+
+    return $tax->result();
+	//return view('pages.playground.tour');
+});
 //END
  
 

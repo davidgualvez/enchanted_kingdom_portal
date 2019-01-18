@@ -14,8 +14,7 @@ class CartTransformer {
 		$total_gross = 0;
         $total_discount = 0;
         $total_net = 0;
-        $cartList = [];
-
+        $cartList = []; 
         foreach ($data as $key => $value) {
             # code... 
             $partt = new Part;
@@ -88,42 +87,5 @@ class CartTransformer {
 	        'cartList' 			=> $cartList
         ];
 	}
-
-    public function myCartReward($data){
-        $total_points = 0;
-        $cartList = [];
-        foreach ($data as $key => $value) {
-            # code... 
-            $rewardd    = new Reward;
-            $reward     = $rewardd->where('branch_id', config('cpp.branch_id'))
-                        ->where('id', $value->product_id)
-                        ->first();
-            
-            //logic 
-            $subTotalPoints     = $value->qty * $reward->required_points;
-
-            //get the buying price
-
-
-            //totals
-            array_push($cartList, [
-                'id'            => $value->id,
-                'name'          => $reward->name,
-                'qty'           => $value->qty,
-                'points'        => $reward->required_points,
-                'total_points'  => $subTotalPoints
-            ]);
-
-            $total_points += $subTotalPoints; 
-        }
-
-        return [
-            'total_points'      => $total_points, 
-            'cartList'          => $cartList
-        ];
-    }
-
-	function returns($array){
-		return response()->json($array);
-	}
+ 
 }

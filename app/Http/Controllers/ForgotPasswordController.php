@@ -57,7 +57,7 @@ class ForgotPasswordController extends Controller
         return response()->json([
             'success'   => true,
             'status'    => 200,
-            'message'   => 'A Code has been sent to your mobile and email. and it will only last for 5min.'
+            'message'   => 'A Code has been sent to your mobile and email.'
         ]);
     }
 
