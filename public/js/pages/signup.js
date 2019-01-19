@@ -1,5 +1,5 @@
 $(document).ready(function(){ 
-    initGuide();
+    // initGuide();
 });
 
 //GUIDE FOR THIS PAGE

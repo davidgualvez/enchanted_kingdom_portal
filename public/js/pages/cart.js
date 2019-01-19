@@ -11,9 +11,9 @@ $(document).ready(function(){
  	// checkOutReward(); 
 	 ontest();
 	 
-	 setTimeout(() => {
-		 initGuide();
-	 }, 500);
+	//  setTimeout(() => {
+	// 	 initGuide();
+	//  }, 500);
 });
  
 

@@ -6,9 +6,9 @@ $(document).ready(function(){
     btnPrevPurchaseHistory();
     limitOnChangePurchaseHistory();
     
-    setTimeout(() => {
-        initGuide();
-    }, 500);
+    // setTimeout(() => {
+    //     initGuide();
+    // }, 500);
     
 });
 

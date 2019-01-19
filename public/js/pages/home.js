@@ -13,7 +13,7 @@ $(document).ready(function(){
         $('.shape').shape('flip right');
     });
     
-    initGuide();
+    // initGuide();
 }); 
 
 

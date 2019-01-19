@@ -57,11 +57,11 @@
 	  	    @csrf
 	  	      <div class="ui stacked segment"> 
 	  	      	@if (count($errors) > 0)
-	  	      	<div class="ui message">
+	  	      	<div class="ui red message">
   		  	      	<i class="close icon"></i>
-  			  	    <div class="header text-left">
+  			  	    {{-- <div class="header text-left">
   			  	      	Something went wrong..
-  			  	    </div>
+  			  	    </div> --}}
   		  	      	<ul class="list">
   		  	      		@foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>

@@ -10,9 +10,9 @@ $(document).ready(function(){
 	activePurchaseDisplayer();
 	// testHistory();  
 
-	setTimeout(() => {
-		initGuide();
-	}, 500);
+	// setTimeout(() => {
+	// 	initGuide();
+	// }, 500);
 });
  
 function btnUpdateInfo(){

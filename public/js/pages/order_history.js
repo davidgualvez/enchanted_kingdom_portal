@@ -7,9 +7,9 @@ $(document).ready( function(){
     btnPrevOrderHistory();
     limitOnChangeOrderHistory();
 
-    setTimeout(() => {
-        initGuide();
-    }, 500);
+    // setTimeout(() => {
+    //     initGuide();
+    // }, 500);
     
 });
 

@@ -20,7 +20,7 @@ $(document).ready(function(){
     btnSingleAddToCart();
     getCategories();
 
-    initGuide();
+    // initGuide();
 });
 
 //pagination================================ 
