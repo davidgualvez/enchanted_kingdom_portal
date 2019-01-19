@@ -35,7 +35,7 @@ class UserController extends Controller
     	$rules = [
     	    'full_name'         => 'required',
     	    //'email'             => 'required',
-    	    'mobile_number'     => 'required', 
+    	    'mobile_number'     => 'required|min:10|max:10', 
     	    //'password'          => 'required|min:6',
     	    'email_notification'=> 'required'
     	];

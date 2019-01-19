@@ -38,7 +38,13 @@ function btnUpdateInfo(){
 
 		//apply validation if has
 		var mobile 				= $('#mobile_number');
-		if( !validateContactNumber( mobile.val().trim() ) ){
+		// if( !validateContactNumber( mobile.val().trim() ) ){
+		// 	showWarning('Warning','Mobile number is not valid!', function(){
+
+		// 	});
+		// 	return;
+		// }
+		if( mobile.val().length != 10){
 			showWarning('Warning','Mobile number is not valid!', function(){
 
 			});

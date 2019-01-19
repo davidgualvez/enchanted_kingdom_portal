@@ -82,33 +82,15 @@
 	    	    {{ ucfirst(\Auth::user()->name) }}
 	    	    <i class="dropdown icon"></i>
 	    	    <div class="menu">
-	    	    	{{-- <div class="item">
-		    	      	 <div class="ui buttons fluid">
-		    	      	   	<button class="ui button">
-		    	      	   		<i class="copyright icon"></i>
-		    	      	   		{{ \Auth::user()->customer->wallet }}
-		    	      		</button>
-		    	      	   <div class="or"></div>
-		    	      	   	<button class="ui button">
-		    	      	   		&nbsp;
-		    	      	   		<i class="gift icon"></i>
-		    	      	   		{{ \Auth::user()->customer->points }}
-		    	      	   	</button>
-		    	      	 </div>
-	    	      	</div> 
-	    	      	<div class="item">
-	    	      		<div class="ui left labeled button" tabindex="0">
-	    	      		  <a class="ui basic right pointing label cart_count">
-	    	      		    {{ \Auth::user()->cartPerBranch->count() }} 
-	    	      		  </a>
-	    	      		  <a href="/cart" class="ui button">
-	    	      		  	<i class="shopping cart icon"></i> Cart
-	    	      		  </a> 
-	    	      		</div>
-	    	      	</div> --}}
-	    	      <a href="/me" class="item">Account Details</a>
-	    	      <div class="divider"></div>
-	    	      <a href="/logout" class="item">Logout</a>
+	    	    	
+					<a href="/purchase/history">	<div class="item">	<h5>Purchased History</h5> </div></a>  
+					<a href="/order/history">		<div class="item">	<h5>Ordered History</h5> </div></a>
+					<a href="/me">					<div class="item">	<h5>My Account</h5> </div></a>  
+					<a href="/logout">				<div class="item">	<h5>Logout</h5> </div></a>
+
+	    	      	{{-- <a href="/me" class="item">Account Details</a>
+	    	      	<div class="divider"></div>
+	    	      	<a href="/logout" class="item">Logout</a> --}}
 	    	    </div>
 	    	</div> 
 	    @else  

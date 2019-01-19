@@ -31,6 +31,62 @@ class PurchaseController extends Controller
 {
     //
     public function checkout(Request $request){
+
+        // points payment initialization
+        $points_payment = null;
+        if (is_null($request->points_payment)) {
+            $points_payment = 0;
+        } else {
+            $points_payment = $request->points_payment;
+        }
+
+        try{
+
+            DB::beginTransaction();
+
+            $blin = new BranchLastIssuedNumberServices;
+            $blin->findOrCreate();
+
+            $user = Auth::user();
+            $carts = Cart::findByUserAndType($user->id, 'wallet');   
+
+            //check if the cart has not contain an item 
+            if ($carts->isEmpty()) {
+                DB::rollback();
+                return response()->json([
+                    'success' => false,
+                    'status' => 401,
+                    'message' => 'Please maintain atleast 1 item from your cart to continue.'
+                ]);
+            }
+
+            //create a purchase header
+            $new_sales_order_id = $blin->getNewIdForSalesOrderHeader();
+            $ph = new Purchase;
+            $ph->branch_id              = config('app.branch_id');
+            $ph->sales_order_id         = $new_sales_order_id;
+            $ph->customer_id            = $user->customer->customer_id;
+            $ph->transaction_type_id    = 1;
+            $ph->save();
+
+            $ts = new TaxServices;
+            $result = $ts->items($carts, $customer, $user);
+
+
+        }catch (\Exception $e) {
+            // if something went wrong
+            DB::rollback(); 
+            return response()->json([
+                'success' => false,
+                'status' => 500,
+                'message' => $e->getMessage()
+            ]); 
+        }  
+
+      
+    }
+
+    public function checkout1(Request $request){
          
         $points_payment = null;
         if(is_null($request->points_payment)){
@@ -90,18 +146,18 @@ class PurchaseController extends Controller
                             ->where('sitepart_id', $value->product_id)
                             ->first();
 
-                //----------------------
-                $x = [
-                    'ref_id' => $new_sales_order_id,
-                    'price' => $part->srp,
-                    'qty'   => $value->qty,
-                    'is_vat' => $part->is_vat,
-                    'is_admission'  => $part->pre_part_no,
-                    'admission_fee' => $part->admission_fee,
-                    'amusement_tax' => $part->amusement_tax,
-                ];
-                $tax->getItem($x);
-                //----------------------
+                // //----------------------
+                // $x = [
+                //     'ref_id' => $new_sales_order_id,
+                //     'price' => $part->srp,
+                //     'qty'   => $value->qty,
+                //     'is_vat' => $part->is_vat,
+                //     'is_admission'  => $part->pre_part_no,
+                //     'admission_fee' => $part->admission_fee,
+                //     'amusement_tax' => $part->amusement_tax,
+                // ];
+                // $tax->getItem($x);
+                // //----------------------
  
                 if($part->postmix == 1 && $part->is_food == 0){ 
 
@@ -176,13 +232,13 @@ class PurchaseController extends Controller
         	//===============================================  
 
             //--
-            DB::rollback();
-            dd($tax->result() );
-            return response()->json([
-                'success' => false,
-                'status' => 500,
-                'data' => $tax->result()
-            ]); 
+            // DB::rollback();
+            // dd($tax->result() );
+            // return response()->json([
+            //     'success' => false,
+            //     'status' => 500,
+            //     'data' => $tax->result()
+            // ]); 
             //--
 
             $virtual_wallet     = $user->customer->wallet;
@@ -273,8 +329,7 @@ class PurchaseController extends Controller
 
 		} catch (\Exception $e) {
 		    DB::rollback();
-            //dd($e);
-            dd($e);
+            //dd($e); 
             return response()->json([
                 'success'   => false,
                 'status'    => 500,

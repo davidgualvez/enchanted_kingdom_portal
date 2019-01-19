@@ -169,10 +169,16 @@
 	 			  	        </div>
 	 			  	        <div class="field" >
 	 			  	        	<label class="" style="text-align: left;">Mobile number</label>
-	 			  	          	<div class="ui left icon input">
+	 			  	          	{{-- <div class="ui left icon input">
 	 			  	            	<i class="phone icon"></i>
 	 			  	            	<input type="text" id="mobile_number" placeholder="ex. 09xx-xxxx-xxx" value="{{ $user->mobile_number }}">
-	 			  	          	</div>
+	 			  	          	</div> --}}
+												 <div class="ui labeled input">
+														<div class="ui label">
+																+63
+														</div>
+														<input type="text" id="mobile_number" name="mobile_number" placeholder="ex. 9xxxxxxxxx" value="{{ $user->mobile_number }}">
+													</div>
 	 			  	        </div>
 	 			  	        <div class="field">
 	 			  	        	<label class="" style="text-align: left;">New Password</label>
