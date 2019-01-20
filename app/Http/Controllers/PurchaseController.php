@@ -83,7 +83,8 @@ class PurchaseController extends Controller
              * Create Purchase Transaction
              */
             $now    = Carbon::now();
-            $pt     = new PurchaseTransaction;
+            $pt     = new PurchaseTransaction; 
+            $pt->sales_order_id             = $new_sales_order_id;
             $pt->created_at                 = $now;
             $pt->transaction_no             = $blin->getTransaction();
             $pt->invoice_no                 = $blin->getInvoice();
@@ -612,6 +613,11 @@ class PurchaseController extends Controller
 
         $pt         = new PurchaseTransformer;
         $pt->purchaseHistory($purchase);
+
+        // /dd($purchase);
+        // return response()->json([ 
+        //     'data' => $purchase,
+        // ],500); 
 
         return response()->json([ 
             'success'       => true,

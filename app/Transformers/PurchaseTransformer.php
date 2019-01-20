@@ -45,6 +45,7 @@ class PurchaseTransformer {
          'points_balance' 	=> $value->points_balance,
          'details' 			    => $dtls,
          'type'             => $value->transType->DESCRIPTION,
+         'purchase_transaction' => $value->purchaseTransaction,
          'created_at'       => $datee->toDayDateTimeString()
       ];
       return $nValue;

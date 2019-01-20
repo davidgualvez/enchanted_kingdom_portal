@@ -3,16 +3,17 @@
 ### Jan 20, 2019
 - Added HODB branch_last_issued_numbers Table column
     - Column name   |   DataType
-    - invoice_no        decimal(18,0)
-    - none_invoice_no   decimal(18,0)
-    - invoice_max_no    decimal(18,0)
-    - invoice_max_counter   int
-    - transaction_no    decimal(18,0)
+    - invoice_no    |   decimal(18,0)
+    - none_invoice_no   |   decimal(18,0)
+    - invoice_max_no    |   decimal(18,0)
+    - invoice_max_counter   |   int
+    - transaction_no    |   decimal(18,0)
 - Added HODB Customers Table column
     - Column name   |   DataType
-    - SCPWD_ID          varchar(50)
+    - SCPWD_ID  |   varchar(50)
 - Added HODB purchase_transactions Table
 - Added HODB purchase_transaction_details Table
+- Added OR Button in Purchase History with Preview and Download PDF Functionality for WEB Transaction only
 
 ### Jan 19, 2019
 - Removed tutorial in everypage.
