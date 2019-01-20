@@ -44,7 +44,7 @@ class PurchaseTransformer {
          'wallet_balance' 	=> $value->wallet_balance,
          'points_balance' 	=> $value->points_balance,
          'details' 			    => $dtls,
-         'type'             => $value->transType->DESCRIPTION,
+         'type'             => trim($value->transType->DESCRIPTION),
          'purchase_transaction' => $value->purchaseTransaction,
          'created_at'       => $datee->toDayDateTimeString()
       ];
