@@ -24,6 +24,7 @@ use App\PurchaseDetail;
 use App\AppServices\EarnPointTransactionServices;
 use App\AppServices\BranchLastIssuedNumberServices;
 use App\AppServices\TaxServices;
+use App\AppServices\CustomerServices;
  
 use DB;
 
@@ -48,6 +49,7 @@ class PurchaseController extends Controller
             $blin->findOrCreate();
 
             $user = Auth::user();
+            $customer = new CustomerServices($user->customer);
             $carts = Cart::findByUserAndType($user->id, 'wallet');   
 
             //check if the cart has not contain an item 
@@ -71,7 +73,7 @@ class PurchaseController extends Controller
 
             $ts = new TaxServices;
             $result = $ts->items($carts, $customer, $user);
-
+            dd($result);
 
         }catch (\Exception $e) {
             // if something went wrong
