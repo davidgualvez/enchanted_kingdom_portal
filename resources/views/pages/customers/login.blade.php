@@ -70,7 +70,7 @@
   		  	    </div>
 	  	      	@endif
 	  	      	@if (session('error'))
-	  	      		<div class="ui message">
+	  	      		<div class="ui red message">
 	  	      			<i class="close icon"></i>
 	  	      	  		<div class="header text-left">
 	  	      	    		Something went wrong..
