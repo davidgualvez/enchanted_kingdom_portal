@@ -1,6 +1,16 @@
 # Change Log
 
-### Jan 19, 2018
+### Jan 20, 2019
+- Added HODB branch_last_issued_numbers column
+    - Column name   |   DataType
+    - invoice_no        decimal(18,0)
+    - none_invoice_no   decimal(18,0)
+    - invoice_max_no    decimal(18,0)
+    - invoice_max_counter   int
+    - transaction_no    decimal(18,0)
+
+
+### Jan 19, 2019
 - Removed tutorial in everypage.
 - Change the mobile number entry field to 9xxxxxxxxx format for syncronization in other application.
 - Added Email notification after signup and forgot password.
