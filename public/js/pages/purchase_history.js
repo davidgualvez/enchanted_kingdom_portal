@@ -132,7 +132,7 @@ function dataDisplayerPurchaseHistory(data, from) {
             '</table>';
 
         var btn_or_disabler = '';
-        if (value.type == 'POS'){
+        if ((value.type).trim() == 'POS'){
             btn_or_disabler = 'disabled';
         } 
         var virtualReceipt = '';
