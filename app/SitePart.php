@@ -28,7 +28,8 @@ class SitePart extends Model
       	'branch_id' 			=> 'ARNOC',
       	'product_name'			=> 'SHORTCODE',
       	'product_description' 	=> 'DESCRIPTION',
-      	'part_no' 				=> 'PARTNO',
+        'part_no' 				=> 'PARTNO',
+        'cost'                  => 'COST',
       	'srp' 					=> 'RETAIL',
       	'category_id' 			=> 'CATEGORY',
       	'group_id' 				=> 'GROUP',
@@ -45,7 +46,7 @@ class SitePart extends Model
         'is_vat'                => 'VAT',               // is vatable
         'admission_fee'         => 'ADMISSIONFEE',      // admission fee amount
         'amusement_tax'         => 'AMUSEMENTTAX',      // 
-        'special_discount'      => 'STDCARCASSWEIGHT'   // 
+        'special_discount'      => 'STDCARCASSWEIGHT'   //  
     ];
     
     protected $getterMutators = [

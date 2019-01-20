@@ -2,9 +2,10 @@
 
 namespace App\AppServices;
 
-use Log; 
+use Log;
 
-class TaxServices{
+class TaxServices
+{
 
     public function items($carts, $customer, $user){
 
@@ -43,8 +44,7 @@ class TaxServices{
             }
 
             // for tax computation with non SC/PWD 
-            if ($v->product->is_vat == 1 
-            ) {
+            if ($v->product->is_vat == 1) {
                 if ($customer->getType()['type'] == 'NORMAL') {
                     $newPrice = $priceWithoutAdmission;
                     $vatable_sales = $newPrice / 1.12;
@@ -86,49 +86,56 @@ class TaxServices{
 
             }
 
-            // new price
-            $priceWithDiscount = $price - $sc_pwd_discount - $r_vat_amount - $r_admission_tax_amount;
+            // price without discount
+            $price = $price - ($r_vat_amount + $r_admission_tax_amount);
+
+            // price with discount
+            $priceWithDiscount = $price - $sc_pwd_discount;
 
             return [
-                'cart_id'               => $v->id,
-                'qty'                   => $v->qty,
-                'product_id'            => $v->product->sitepart_id,
-                'product_name'          => $v->product->product_name,
-                'price'                 => $price,
-                'is_postmix'            => $v->product->postmix,
-                'is_vat'                => $v->product->is_vat,
-                'is_food'               => $v->product->is_food,
-                'vatable_sales'         => $vatable_sales,
-                'vat_exempt_sales'      => $vat_exempt_sales,
-                'vat_zerorated_sales'   => $zero_rated_sales,
-                'zero_rated_vat_amount' => $zero_rated_vat_amount,
-                'vat_amount'            => $vat_amount,
-                'r_vat_amount'          => $r_vat_amount,
-                'is_admission'          => $v->product->pre_part_no,
-                'admission_fee'         => $admission_fee,
-                'amusement_tax_amount'  => $admission_tax_amount,
-                'r_amusement_tax_amount'=> $r_admission_tax_amount,
-                'sc_pwd_discount'       => $sc_pwd_discount,
-                'new_price'             => $priceWithDiscount
+                'cart_id' => $v->id,
+                'qty' => $v->qty,
+                'group_id' => $v->product->group_id,
+                'product_id' => $v->product->sitepart_id,
+                'product_name' => $v->product->product_name,
+                'cost'  => $v->product->cost,
+                'price' => $price,
+                'is_postmix' => $v->product->postmix,
+                'is_vat' => $v->product->is_vat,
+                'is_food' => $v->product->is_food,
+                'is_unli' => $v->product->is_unli,
+                'vatable_sales' => $vatable_sales,
+                'vat_exempt_sales' => $vat_exempt_sales,
+                'vat_zerorated_sales' => $zero_rated_sales,
+                'zerorated_vat_amount' => $zero_rated_vat_amount,
+                'vat_amount' => $vat_amount,
+                'r_vat_amount' => $r_vat_amount,
+                'is_admission' => $v->product->pre_part_no,
+                'admission_sales' => $admission_fee,
+                'amusement_tax_amount' => $admission_tax_amount,
+                'r_amusement_tax_amount' => $r_admission_tax_amount,
+                'gross_amount'  => $price,
+                'discount_amount' => $sc_pwd_discount,
+                'net_amount' => $priceWithDiscount
             ];
         });
         //======================================================================
         $result = [
-            'ct'                        => $user->customer->customer_type,
-            'customer_type'             => $customer->getType()['type'],
-            'items'                     => $carts,
-            'vatable_sales'             => $carts->sum('vatable_sales'),
-            'vat_exempt_sales'          => $carts->sum('vat_exempt_sales'),
-            'vat_zerorated_sales'       => $carts->sum('vat_zerorated_sales'),
-            'vat_amount'                => $carts->sum('vat_amount'),
-            'r_vat_amount'              => $carts->sum('r_vat_amount'),
-            'admission_fee'             => $carts->sum('admission_fee'),
-            'amusement_tax_amount'      => $carts->sum('amusement_tax_amount'),
-            'r_amusement_tax_amount'    => $carts->sum('r_admission_tax_amount'),
-            'sc_pwd_discount'           => $carts->sum('sc_pwd_discount'),
-            'total_amount_due'          => $carts->sum('new_price')
-        ]; 
+            'ct' => $user->customer->customer_type,
+            'customer_type' => $customer->getType()['type'],
+            'items' => $carts,
+            'vatable_sales' => $carts->sum('vatable_sales'),
+            'vat_exempt_sales' => $carts->sum('vat_exempt_sales'),
+            'vat_zerorated_sales' => $carts->sum('vat_zerorated_sales'),
+            'vat_amount' => $carts->sum('vat_amount'),
+            'r_vat_amount' => $carts->sum('r_vat_amount'),
+            'admission_sales' => $carts->sum('admission_sales'),
+            'amusement_tax_amount' => $carts->sum('amusement_tax_amount'),
+            'r_amusement_tax_amount' => $carts->sum('r_admission_tax_amount'),
+            'gross_amount' => $carts->sum('gross_amount'),
+            'discount_amount' => $carts->sum('discount_amount'),
+            'net_amount' => $carts->sum('net_amount')
+        ];
         return $result;
-    }
-    
+    } 
 }

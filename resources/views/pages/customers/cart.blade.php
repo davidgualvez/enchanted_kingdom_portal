@@ -48,7 +48,7 @@
   			      	</td>
   			      	<td>{{ number_format( $cart['price'] , 2, '.', ',')  }}</td>
   			      	<td>
-								{{ number_format( $cart['sc_pwd_discount'] , 2, '.', ',')  }}
+								{{ number_format( $cart['discount_amount'] , 2, '.', ',')  }}
   			      		{{-- @if($cart['discount_type'] == 'real')
   			      			{{ number_format( $cart['discount_amount'] , 2, '.', ',')  }}
   			      		@elseif($cart['discount_type'] == 'percent')
@@ -56,7 +56,7 @@
   			      		@endif --}}
   			      		
   			      	</td>
-  			      	<td class="right aligned" style="padding-right: 25px;">{{ number_format( $cart['new_price'] , 2, '.', ',') }}</td>
+  			      	<td class="right aligned" style="padding-right: 25px;">{{ number_format( $cart['net_amount'] , 2, '.', ',') }}</td>
   			    </tr>  
 		  	@empty
 		  		<div class="center aligned">
@@ -71,7 +71,7 @@
 		  				<strong>Sub Total :  </strong> 
 		  			</th>
 		  			<th class="right aligned" style="padding-right: 25px;">
-		  				{{ number_format( $result['total_amount_due'] , 2, '.', ',')  }}
+		  				{{ number_format( $result['net_amount'] , 2, '.', ',')  }}
 		  			</th>
 		  		</tr> 
 
@@ -119,13 +119,13 @@
 		  		</tr> 
 					@endif 
 
-					@if( $result['admission_fee'] > 0)
+					@if( $result['admission_sales'] > 0)
 					<tr class="right aligned">
 		  			<th colspan="5">
 		  				<strong>Admission Fee :  </strong> 
 		  			</th>
 		  			<th class="right aligned" style="padding-right: 25px;">
-		  				{{ number_format( $result['admission_fee'] , 2, '.', ',')  }}
+		  				{{ number_format( $result['admission_sales'] , 2, '.', ',')  }}
 		  			</th>
 		  		</tr> 
 					@endif 
@@ -141,13 +141,13 @@
 		  		</tr> 
 					@endif
 
-					@if( $result['sc_pwd_discount'] > 0)
+					@if( $result['discount_amount'] > 0)
 					<tr class="right aligned">
 		  			<th colspan="5">
 		  				<strong>Total SC/PWD Discount :  </strong> 
 		  			</th>
 		  			<th class="right aligned" style="padding-right: 25px;">
-		  				{{ number_format( $result['sc_pwd_discount'] , 2, '.', ',')  }}
+		  				{{ number_format( $result['discount_amount'] , 2, '.', ',')  }}
 		  			</th>
 		  		</tr> 
 					@endif 

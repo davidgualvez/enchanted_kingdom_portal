@@ -82,4 +82,47 @@ class BranchLastIssuedNumberServices {
 		return $this->blin->order_slip_detail_no;
 	}
 
+	public function getNewIdForInvoice()
+	{
+		$this->findOrCreate();
+		$this->blin->invoice_no += 1;
+		$this->blin->save();
+		return $this->blin->invoice_no;
+	}
+
+	public function getInvoice(){
+		return $this->blin->invoice_no;
+	}
+
+	public function getNewIdForNoneInvoice()
+	{
+		$this->findOrCreate();
+		$this->blin->invoice_no += 1;
+		$this->blin->save();
+		return $this->blin->invoice_no;
+	}
+
+	public function increaseInvoiceResetCounter()
+	{
+		$this->findOrCreate();
+		$this->blin->invoice_reset_counter += 1;
+		$this->blin->save();
+		return true;
+	}
+
+	public function getNewIdForTransaction()
+	{
+		$this->findOrCreate();
+		$this->blin->transaction_no += 1;
+		$this->blin->save();
+		return $this->blin->transaction_no;
+	}
+
+	public function getTransaction()
+	{
+		return $this->blin->transaction_no;
+	}
+
+	
+
 }

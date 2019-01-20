@@ -31,13 +31,17 @@ class Customer extends Model
         'birthdate'         => 'BIRTHDATE',
         'is_loyalty'        => 'IS_LOYALTY',
         'is_inhouse'        => 'IS_INHOUSE',
-        'special_discount_id'=> 'SPECIAL_DISCOUNT_ID',
-        'is_zero_rated'     => 'IS_ZERO_RATED'
+        'scpwd_id'          => 'SCPWD_ID', 
+    ];
+    
+    protected $getterMutators = [
+        'name'              => 'trim',
+        'address'           => 'trim',
+        'scpwd_id'          => 'trim', 
     ];
 
     /**
      * Relationship
-     *
      * 
      */
     public function user(){
