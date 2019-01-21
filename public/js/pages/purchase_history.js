@@ -420,20 +420,55 @@ function orLayout(v,sales_order_id) {
                 style: 'topImage'
             },
 
-            {
-                fontSize: '9',
-                text: ['ENCHANTED KINGDOM\nSan Lorenzo South, Sta. Rosa Laguna\nVAT Registered TIN: 000-000-000-0000\n',
+            /**
+             * Transaction Header
+             */
+            { 
+                text: [
+                    'ENCHANTED KINGDOM\n'+
+                    'San Lorenzo South, Sta. Rosa Laguna\n'+
+                    'VAT Registered TIN: 000-000-000-0000\n',
                     'MIN: XXXXXXXX \t',
                     'SN: XXXXXXXX\n\n',
                     'FOR EVALUATION PURPOSES ONLY\n\n',
                     '========================================\n',
-                    '01/19/2019 01:43PM\t',
-                    'OR #:000-000000157\n',
-                    'POS1   Tintin Reyes\t',
-                    'Tran#:0000000221\n\n',
-                    '*** CUSTOMER COPY ***\n',
+                    // '01/19/2019 01:43PM\t',
+                    // 'OR #:000-000000157\n',
+                    // 'WEB   Tintin Reyes\t',
+                    // 'Tran#:0000000221\n\n',
+                    // '*** CUSTOMER COPY ***\n',
                 ],
+                fontSize: '9',
                 alignment: 'center'
+            },
+            {
+                columns: [
+                    {
+                        text: '01/19/2019 01:43PM',
+                    },
+                    {
+                        text: 'OR #: 000-000000157',
+                        alignment: 'right'
+                    }
+                ],
+                fontSize: '9',
+                alignment: 'center',
+                margin:[25,0,25,0]
+            },
+            {
+                columns: [
+                    {
+                        text: 'WEB',
+                        bold: true
+                    },
+                    {
+                        text: 'Tran #: 0000000221',
+                        alignment: 'right'
+                    }
+                ],
+                fontSize: '9',
+                alignment: 'center',
+                margin: [25, 0, 25, 0]
             },
 
             /**
@@ -676,7 +711,10 @@ function orLayout(v,sales_order_id) {
                 ],
                 style: 'center2'
             }, 
-
+            
+            /**
+             * Other Info that BIR require
+             */
             {
                 columns: [
                     {
