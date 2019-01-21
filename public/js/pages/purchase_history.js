@@ -344,61 +344,44 @@ function orLayout(v,sales_order_id) {
         }
 
     });
- 
 
-    /**
-     * Img to ImgURI
-     */
-    // var img = getBase64Image($('#imgToExport'));
-    // console.log(img);
+    console.log(transaction);
 
     /**
      * getting the transaction to be print
      */
 
+     // initializing date and time of transaction
+    var transDate   = moment(transaction.created_at);
+    var transOr     = FormatNumberLength(transaction.invoice_no, 9);
+    var transNo     = FormatNumberLength(transaction.transaction_no, 9)
+
+     // SCPWD Detail
     var scPwdDetail = [
         {
             columns: [ 
                 {
                     text: 'Jose Rizal', 
-                    // width: 50,
                     bold: true
                 }
-            ],
-            // text: [
-            //     'Patrick Villamor\n',
-            //     'Discount #:\n',
-            //     'Las Piñas City\n',
-            // ],
+            ], 
             style: 'scpwdFirst'
         },
         {
             columns: [
                 {
                     text: '123456',
-                    // width: 50,
                     bold: true
                 }
-            ],
-            // text: [
-            //     'Patrick Villamor\n',
-            //     'Discount #:\n',
-            //     'Las Piñas City\n',
-            // ],
+            ], 
             style: 'scpwdMiddle'
         },
         {
             columns: [
                 {
                     text: 'Alabang street',
-                    // width: 50, 
                 }
-            ],
-            // text: [
-            //     'Patrick Villamor\n',
-            //     'Discount #:\n',
-            //     'Las Piñas City\n',
-            // ],
+            ], 
             style: 'scpwdLast'
         }
     ];
@@ -431,12 +414,7 @@ function orLayout(v,sales_order_id) {
                     'MIN: XXXXXXXX \t',
                     'SN: XXXXXXXX\n\n',
                     'FOR EVALUATION PURPOSES ONLY\n\n',
-                    '========================================\n',
-                    // '01/19/2019 01:43PM\t',
-                    // 'OR #:000-000000157\n',
-                    // 'WEB   Tintin Reyes\t',
-                    // 'Tran#:0000000221\n\n',
-                    // '*** CUSTOMER COPY ***\n',
+                    '========================================\n', 
                 ],
                 fontSize: '9',
                 alignment: 'center'
@@ -444,10 +422,10 @@ function orLayout(v,sales_order_id) {
             {
                 columns: [
                     {
-                        text: '01/19/2019 01:43PM',
+                        text: transDate.format('MM/DD/YYYY hh:mm A'),
                     },
                     {
-                        text: 'OR #: 000-000000157',
+                        text: 'OR #: 000-' + transOr,
                         alignment: 'right'
                     }
                 ],
@@ -462,7 +440,7 @@ function orLayout(v,sales_order_id) {
                         bold: true
                     },
                     {
-                        text: 'Tran #: 0000000221',
+                        text: 'Tran #: ' + transNo,
                         alignment: 'right'
                     }
                 ],

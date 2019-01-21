@@ -2,6 +2,7 @@
 @section('title','Purchase History')
 
 @section('js')
+<script src="/js/plugins/moment.js"></script>
 <script src="/js/plugins/pdfmake.min.js"></script>
 <script src="/js/plugins/vfs_fonts.js"></script>
 <script src="/js/plugins/qrcode.js"></script>
