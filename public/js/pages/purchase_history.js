@@ -359,6 +359,8 @@ function orLayout(v,sales_order_id) {
     var transTotal  = null;
     var transCash   = null;
     var transChange = null;
+    var scPwdDetail = null;
+    var transItemCounter = null;
 
     //populating item to be display
     $.each(transaction.details, function(key,val){
@@ -419,6 +421,25 @@ function orLayout(v,sales_order_id) {
             );
         }
 
+        // Item Counter
+        if(key == 0){
+            transItemCounter = {
+                text: [
+                    (key+1) + ' Item\n',
+                    'This serves as your Official Receipt'
+                ],
+                style: 'center2'
+            };
+        }else{
+            transItemCounter = {
+                text: [
+                    (key + 1) + ' Item(s)\n',
+                    'This serves as your Official Receipt'
+                ],
+                style: 'center2'
+            };
+        }
+
     });
 
     //TOTAL, CASH, CHANGE
@@ -463,34 +484,36 @@ function orLayout(v,sales_order_id) {
     };
 
      // SCPWD Detail
-    var scPwdDetail = [
-        {
-            columns: [ 
-                {
-                    text: 'Jose Rizal', 
-                    bold: true
-                }
-            ], 
-            style: 'scpwdFirst'
-        },
-        {
-            columns: [
-                {
-                    text: '123456',
-                    bold: true
-                }
-            ], 
-            style: 'scpwdMiddle'
-        },
-        {
-            columns: [
-                {
-                    text: 'Alabang street',
-                }
-            ], 
-            style: 'scpwdLast'
-        }
-    ];
+    if (transaction.customer_type == '1' || transaction.customer_type == '2' || transaction.customer_type == '3'){
+        scPwdDetail = [
+            {
+                columns: [ 
+                    {
+                        text: 'Name: ' +transaction.customer_name, 
+                        //bold: true
+                    }
+                ], 
+                style: 'scpwdFirst'
+            },
+            {
+                columns: [
+                    {
+                        text: 'ID Number: ' + transaction.customer_id_number,
+                        // bold: true
+                    }
+                ], 
+                style: 'scpwdMiddle'
+            },
+            {
+                columns: [
+                    {
+                        text: 'Address: ' + transaction.customer_address,
+                    }
+                ], 
+                style: 'scpwdLast'
+            }
+        ];
+    }
 
     var docDefinition = {
         content: [
@@ -791,13 +814,7 @@ function orLayout(v,sales_order_id) {
 
             scPwdDetail, 
 
-            {
-                text: [
-                    '3 Item(s)\n',
-                    'This serves as your Official Receipt'
-                ],
-                style: 'center2'
-            }, 
+            transItemCounter, 
             
             /**
              * Other Info that BIR require
