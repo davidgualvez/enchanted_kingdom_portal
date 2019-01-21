@@ -355,14 +355,36 @@ function orLayout(v,sales_order_id) {
     var transDate   = moment(transaction.created_at);
     var transOr     = FormatNumberLength(transaction.invoice_no, 9);
     var transNo     = FormatNumberLength(transaction.transaction_no, 9)
+    var transItems  = [];
 
     //populating item to be display
     $.each(transaction.details, function(key,val){
         console.log(val);
+        // if (transaction.customer_type == null || transaction.customer_type == 0){
+        
+        // }  
+        transItems.push(
+            {
+                columns: [
+                    {
+                        text: val.product_name + ' x ' + val.qty,
+                    },
+                    {
+                        text: parseFloat(val.net_amount).toFixed(2),
+                        style: 'amount',
+                        width: 50
+                    }
+                ],
+                style: 'product'
+            }
+        );
+
+        // if PWD || SC
         if (transaction.customer_type == null || transaction.customer_type == 0){
 
-        }
-        
+        }  
+
+
     });
 
      // SCPWD Detail
@@ -471,91 +493,93 @@ function orLayout(v,sales_order_id) {
             /**
              * Product with SCPWD Discount
              */
-            {
-                columns: [
-                    { 
-                        text: 'REGULAR DAY PASS - WEEKD',
-                    },
-                    { 
-                        text: '00.00',
-                        style: 'amount',
-                        width: 50
-                    }
-                ],
-                style: 'product'
-            },
+            transItems,
+            // {
+            //     columns: [
+            //         { 
+            //             text: 'REGULAR DAY PASS - WEEKD',
+            //         },
+            //         { 
+            //             text: '00.00',
+            //             style: 'amount',
+            //             width: 50
+            //         }
+            //     ],
+            //     style: 'product'
+            // },
+
             /**
              * Sub of Product with SCPWD Discount
              */
-            {
-                columns: [
-                    {
-                        text: 'Less VAT 12%',
-                    },
-                    {
-                        text: '-00.00',
-                        style: 'amount',
-                        width: 50
-                    }
-                ],
-                style: 'productSubSub'
-            },  
-            {
-                columns: [
-                    {
-                        text: 'Less Amu.Tax 10%',
-                    },
-                    { 
-                        text: '-00.00',
-                        style: 'amount',
-                        width: 50
-                    }
-                ],
-                style: 'productSubSub'
-            },
-            {
-                columns: [
-                    {
-                        text: 'Senior 20% x 00.00',
-                    },
-                    { 
-                        text: '-00.00',
-                        style: 'amount',
-                        width: 50
-                    }
-                ],
-                style: 'productSubSub'
-            },
-            {
-                columns: [
-                    {
-                        text: 'Senior 20% x 00.00',
-                    },
-                    { 
-                        text: '-00.00',
-                        style: 'amount',
-                        width: 50
-                    }
-                ],
-                style: 'productSubSub'
-            }, 
+            // {
+            //     columns: [
+            //         {
+            //             text: 'Less VAT 12%',
+            //         },
+            //         {
+            //             text: '-00.00',
+            //             style: 'amount',
+            //             width: 50
+            //         }
+            //     ],
+            //     style: 'productSubSub'
+            // },  
+            // {
+            //     columns: [
+            //         {
+            //             text: 'Less Amu.Tax 10%',
+            //         },
+            //         { 
+            //             text: '-00.00',
+            //             style: 'amount',
+            //             width: 50
+            //         }
+            //     ],
+            //     style: 'productSubSub'
+            // },
+            // {
+            //     columns: [
+            //         {
+            //             text: 'Senior 20% x 00.00',
+            //         },
+            //         { 
+            //             text: '-00.00',
+            //             style: 'amount',
+            //             width: 50
+            //         }
+            //     ],
+            //     style: 'productSubSub'
+            // },
+            // {
+            //     columns: [
+            //         {
+            //             text: 'Senior 20% x 00.00',
+            //         },
+            //         { 
+            //             text: '-00.00',
+            //             style: 'amount',
+            //             width: 50
+            //         }
+            //     ],
+            //     style: 'productSubSub'
+            // }, 
 
             /**
              * Product without SCPWD Discount
              */ 
-            {
-                columns: [
-                    { 
-                        text: 'TSM EK FWRKS WTHGLD F XS',
-                    },
-                    { 
-                        text: '00.00',
-                        style: 'amount',
-                        width: 50
-                    }
-                ],
-                style: 'product'
-            },
+            // {
+            //     columns: [
+            //         { 
+            //             text: 'TSM EK FWRKS WTHGLD F XS',
+            //         },
+            //         { 
+            //             text: '00.00',
+            //             style: 'amount',
+            //             width: 50
+            //         }
+            //     ],
+            //     style: 'product'
+            // },
 
             /**
              * Total, Cash, Change
