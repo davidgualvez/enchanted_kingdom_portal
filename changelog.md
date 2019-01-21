@@ -1,5 +1,8 @@
 # Change Log
 
+### Jan 21, 2019
+- Added computed data into transaction receipt for record purposes in Transaction History page.
+
 ### Jan 20, 2019
 - Added HODB branch_last_issued_numbers Table column
     - Column name   |   DataType
