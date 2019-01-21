@@ -356,6 +356,15 @@ function orLayout(v,sales_order_id) {
     var transOr     = FormatNumberLength(transaction.invoice_no, 9);
     var transNo     = FormatNumberLength(transaction.transaction_no, 9)
 
+    //populating item to be display
+    $.each(transaction.details, function(key,val){
+        console.log(val);
+        if (transaction.customer_type == null || transaction.customer_type == 0){
+
+        }
+        
+    });
+
      // SCPWD Detail
     var scPwdDetail = [
         {
