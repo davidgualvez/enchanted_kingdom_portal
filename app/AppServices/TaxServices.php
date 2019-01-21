@@ -115,7 +115,7 @@ class TaxServices
                 'amusement_tax_amount' => $admission_tax_amount,
                 'r_amusement_tax_amount' => $r_admission_tax_amount,
                 'gross_amount'  => $price,
-                'discount_amount' => $sc_pwd_discount,
+                'scpwd_discount' => $sc_pwd_discount,
                 'net_amount' => $priceWithDiscount
             ];
         });
@@ -133,7 +133,7 @@ class TaxServices
             'amusement_tax_amount' => $carts->sum('amusement_tax_amount'),
             'r_amusement_tax_amount' => $carts->sum('r_admission_tax_amount'),
             'gross_amount' => $carts->sum('gross_amount'),
-            'discount_amount' => $carts->sum('discount_amount'),
+            'scpwd_discount' => $carts->sum('scpwd_discount'),
             'net_amount' => $carts->sum('net_amount')
         ];
         return $result;

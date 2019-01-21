@@ -235,6 +235,20 @@ class PurchaseController extends Controller
                 
             }
             
+            $pt->gross_total            = $result->gross_amount;
+            $pt->scpwd_discount         = $result->scpwd_discount;
+            $pt->net_total              = $result->net_amount;
+            $pt->vatable_sales_total    = $result->vatable_sales;
+            $pt->vat_exempt_sales_total = $result->vat_exempt_sales;
+            $pt->vat_zerorated_sales_total  = $result->vat_zerorated_sales;
+            $pt->vat_amount_total       = $result->vat_amount;
+            $pt->r_vat_amount_total     = $result->r_vat_amount;
+            $pt->admission_sales_total  = $result->admission_sales;
+            //$pt->amusement_tax_exempt_sales_total   = $result->amusement_tax_exempt_sales;
+            //$pt->amusement_zerorated_sales_total    = $result->amusement_zerorated_sales;
+            $pt->amusement_tax_amount_total     = $result->amusement_tax_amount;
+            $pt->r_amusement_tax_amount_total   = $result->r_amusement_tax_amount; 
+            $pt->save();
             //=========================================================================
             
             /**
@@ -296,7 +310,7 @@ class PurchaseController extends Controller
             Purchase::where('sales_order_id', $new_sales_order_id)
                 ->update([
                     'total_amount'      => $result->gross_amount,
-                    'total_discount'    => $result->discount_amount,
+                    'total_discount'    => $result->scpwd_discount,
                     'net_amount'        => $result->net_amount,
                     'used_wallet'       => $wallet_payment,
                     'used_points'       => $points_payment,
@@ -721,8 +735,8 @@ class PurchaseController extends Controller
         $ptd->gross_amount                      = $item->gross_amount;
         //$ptd->promo_code                        = $item->promo_code;
         $ptd->discount_rate                     = 0;
-        $ptd->discount_value                    = $item->discount_amount;
-        $ptd->discount_amount                   = $item->discount_amount;
+        $ptd->discount_value                    = $item->scpwd_discount;
+        $ptd->discount_amount                   = $item->scpwd_discount;
         $ptd->net_amount                        = $item->net_amount;
         $ptd->created_at                        = $now;
         $ptd->save();

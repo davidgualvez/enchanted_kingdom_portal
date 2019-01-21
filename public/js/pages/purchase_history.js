@@ -356,6 +356,9 @@ function orLayout(v,sales_order_id) {
     var transOr     = FormatNumberLength(transaction.invoice_no, 9);
     var transNo     = FormatNumberLength(transaction.transaction_no, 9)
     var transItems  = [];
+    var transTotal  = null;
+    var transCash   = null;
+    var transChange = null;
 
     //populating item to be display
     $.each(transaction.details, function(key,val){
@@ -380,12 +383,84 @@ function orLayout(v,sales_order_id) {
         );
 
         // if PWD || SC
-        if (transaction.customer_type == null || transaction.customer_type == 0){
-
+        if ( parseFloat(val.r_vat_amount) > 0) {
+            console.log('true');
+            transItems.push(
+                {
+                    columns: [
+                        {
+                            text: 'Less VAT 12%',
+                        },
+                        {
+                            text: '-' + parseFloat(val.r_vat_amount).toFixed(2),
+                            style: 'amount',
+                            width: 50
+                        }
+                    ],
+                    style: 'productSubSub'
+                }
+            );
         }  
-
+        if (parseFloat(val.r_amusement_tax_amount) > 0){
+            transItems.push(
+                 {
+                    columns: [
+                        {
+                            text: 'Less Amu.Tax 10%',
+                        },
+                        { 
+                            text: '-' + parseFloat(val.r_amusement_tax_amount).toFixed(2),
+                            style: 'amount',
+                            width: 50
+                        }
+                    ],
+                    style: 'productSubSub'
+                }
+            );
+        }
 
     });
+
+    //TOTAL, CASH, CHANGE
+    transTotal = {
+        columns: [
+            {
+                text: 'TOTAL',
+            },
+            {
+                text: parseFloat(transaction.net_total).toFixed(2),
+                style: 'amount',
+                width: 50
+            }
+        ],
+        style: 'productSubTotal'
+    };
+    transCash = {
+        columns: [
+            {
+                text: 'WALLET/POINTS PAYMENT',
+            },
+            {
+                text: parseFloat(transaction.net_total).toFixed(2),
+                style: 'amount',
+                width: 50
+            }
+        ],
+        style: 'productSubCash'
+    };
+    transChange = {
+        columns: [
+            {
+                text: 'CHANGE',
+            },
+            {
+                text: parseFloat('0').toFixed(2),
+                style: 'amount',
+                width: 50
+            }
+        ],
+        style: 'productSubChange'
+    };
 
      // SCPWD Detail
     var scPwdDetail = [
@@ -511,6 +586,7 @@ function orLayout(v,sales_order_id) {
             /**
              * Sub of Product with SCPWD Discount
              */
+           
             // {
             //     columns: [
             //         {
@@ -584,45 +660,35 @@ function orLayout(v,sales_order_id) {
             /**
              * Total, Cash, Change
              */
-            {
-                columns: [
-                    {
-                        text: 'TOTAL', 
-                    },
-                    { 
-                        text: '00.00',
-                        style: 'amount',
-                        width: 50
-                    }
-                ],
-                style: 'productSubTotal'
-            },
-            {
-                columns: [
-                    {
-                        text: 'CASH',
-                    },
-                    {
-                        text: '00.00',
-                        style: 'amount',
-                        width: 50
-                    }
-                ],
-                style: 'productSubCash'
-            },
-            {
-                columns: [
-                    {
-                        text: 'CHANGE',
-                    },
-                    {
-                        text: '00.00',
-                        style: 'amount',
-                        width: 50
-                    }
-                ],
-                style: 'productSubChange'
-            },
+           transTotal,
+           transCash, 
+            // {
+            //     columns: [
+            //         {
+            //             text: 'CASH',
+            //         },
+            //         {
+            //             text: '00.00',
+            //             style: 'amount',
+            //             width: 50
+            //         }
+            //     ],
+            //     style: 'productSubCash'
+            // },
+            transChange,
+            // {
+            //     columns: [
+            //         {
+            //             text: 'CHANGE',
+            //         },
+            //         {
+            //             text: '00.00',
+            //             style: 'amount',
+            //             width: 50
+            //         }
+            //     ],
+            //     style: 'productSubChange'
+            // },
  
             /**
              * VAT's 
@@ -634,7 +700,7 @@ function orLayout(v,sales_order_id) {
 
                     },
                     { 
-                        text: '00.00',
+                        text: parseFloat(transaction.vatable_sales_total).toFixed(2),
                         style: 'amount',
                         width: 50
                     }
@@ -648,7 +714,7 @@ function orLayout(v,sales_order_id) {
 
                     },
                     { 
-                        text: '00.00',
+                        text: parseFloat(transaction.vat_exempt_sales_total).toFixed(2),
                         style: 'amount',
                         width: 50
                     }
@@ -662,7 +728,7 @@ function orLayout(v,sales_order_id) {
 
                     },
                     { 
-                        text: '00.00',
+                        text: parseFloat(transaction.vat_zerorated_sales_total).toFixed(2),
                         style: 'amount', 
                         width: 50
                     }
@@ -676,7 +742,7 @@ function orLayout(v,sales_order_id) {
 
                     },
                     { 
-                        text: '00.00',
+                        text: parseFloat(transaction.vat_amount_total).toFixed(2),
                         style: 'amount',
                         width: 50
                     }
@@ -689,7 +755,7 @@ function orLayout(v,sales_order_id) {
                         text: 'Admission Fee', 
                     },
                     { 
-                        text: '00.00',
+                        text: parseFloat(transaction.admission_sales_total).toFixed(2),
                         style: 'amount',
                         width: 50
                     }
@@ -702,7 +768,7 @@ function orLayout(v,sales_order_id) {
                         text: 'Amusement Tax 10%', 
                     },
                     { 
-                        text: '00.00',
+                        text: parseFloat(transaction.amusement_tax_amount_total).toFixed(2),
                         style: 'amount',
                         width: 50
                     }
@@ -712,10 +778,10 @@ function orLayout(v,sales_order_id) {
             {
                 columns: [
                     {
-                        text: 'Discount', 
+                        text: 'Total SC / PWD Discount', 
                     },
                     {
-                        text: '00.00',
+                        text: parseFloat(transaction.scpwd_discount).toFixed(2),
                         style: 'amount',
                         width: 50
                     }

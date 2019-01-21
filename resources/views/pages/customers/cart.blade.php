@@ -48,7 +48,7 @@
   			      	</td>
   			      	<td>{{ number_format( $cart['price'] , 2, '.', ',')  }}</td>
   			      	<td>
-								{{ number_format( $cart['discount_amount'] , 2, '.', ',')  }}
+								{{ number_format( $cart['scpwd_discount'] , 2, '.', ',')  }}
   			      		{{-- @if($cart['discount_type'] == 'real')
   			      			{{ number_format( $cart['discount_amount'] , 2, '.', ',')  }}
   			      		@elseif($cart['discount_type'] == 'percent')
@@ -141,13 +141,13 @@
 		  		</tr> 
 					@endif
 
-					@if( $result['discount_amount'] > 0)
+					@if( $result['scpwd_discount'] > 0)
 					<tr class="right aligned">
 		  			<th colspan="5">
 		  				<strong>Total SC/PWD Discount :  </strong> 
 		  			</th>
 		  			<th class="right aligned" style="padding-right: 25px;">
-		  				{{ number_format( $result['discount_amount'] , 2, '.', ',')  }}
+		  				{{ number_format( $result['scpwd_discount'] , 2, '.', ',')  }}
 		  			</th>
 		  		</tr> 
 					@endif 
