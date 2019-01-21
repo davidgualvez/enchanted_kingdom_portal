@@ -470,6 +470,16 @@ function orLayout(v,sales_order_id) {
                 alignment: 'center',
                 margin: [25, 0, 25, 0]
             },
+            {
+                columns: [ 
+                    {
+                        text: '*** CUSTOMER COPY ***', 
+                    }
+                ],
+                fontSize: '9',
+                alignment: 'center',
+                margin: [25, 5, 25, 5]
+            },
 
             /**
              * Product with SCPWD Discount
