@@ -40,7 +40,7 @@ class SitePart extends Model
         'postmix'               => 'POSTMIX',
 
         
-        'kitchen_loc'           => 'PRODGRP',       // KITCHEN LOCATION
+        'kitchen_loc'           => 'PRODGRP',       // KITCHEN LOCATION 
         
         // TAX PART
         'is_vat'                => 'VAT',               // is vatable

@@ -34,8 +34,12 @@ class TaxServices
             }
 
             // for admission 
+            $is_admission = 0;
             $priceWithoutAdmission = $price;
             if ($v->product->admission_fee > 0) {
+
+                $is_admission = 1;
+
                 $af = $v->product->admission_fee * $v->qty;
 
                 $priceWithoutAdmission -= $af;
@@ -111,7 +115,8 @@ class TaxServices
                 'vat_amount' => $vat_amount,
                 'r_vat_amount' => $r_vat_amount,
                 //'is_admission' => $v->product->pre_part_no,
-                'is_admission' => $v->product->admission_fee,
+                'is_admission' => $is_admission,
+                'admission_fee' => $v->product->admission_fee,
                 'admission_sales' => $admission_fee,
                 'amusement_tax_amount' => $admission_tax_amount,
                 'r_amusement_tax_amount' => $r_admission_tax_amount,
