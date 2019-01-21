@@ -24,6 +24,7 @@ class Postmix extends Model
             'srp',
             'group_id',
             'pre_part_no', // this is use to identify the admission 0|1  to exclude from the list
+            'admission_fee',
             'is_food', 
             'is_unli',
         ],

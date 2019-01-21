@@ -35,7 +35,7 @@ class TaxServices
 
             // for admission 
             $priceWithoutAdmission = $price;
-            if ($v->product->pre_part_no == 1) {
+            if ($v->product->admission_fee > 0) {
                 $af = $v->product->admission_fee * $v->qty;
 
                 $priceWithoutAdmission -= $af;
@@ -54,7 +54,7 @@ class TaxServices
                 if (($customer->getType()['type'] == 'SENIOR' ||
                     $customer->getType()['type'] == 'PWD') &&
                     $v->product->is_food == 0) {
-                    if ($v->product->pre_part_no == 0) {
+                    if ($v->product->admission_fee <= 0) {
                         $newPrice = $priceWithoutAdmission;
                         $vatable_sales = $newPrice / 1.12;
                         $vat_amount = $vatable_sales * .12;
@@ -71,7 +71,7 @@ class TaxServices
 
             // for PWD/SC Discount
             if (($customer->getType()['type'] == 'SENIOR' ||
-                $customer->getType()['type'] == 'PWD') && ($v->product->is_food == 1 || $v->product->pre_part_no == 1)) {
+                $customer->getType()['type'] == 'PWD') && ($v->product->is_food == 1 || $v->product->admission_fee > 0)) {
                 $newPrice = $priceWithoutAdmission;
                 $vat_exempt_sales = $newPrice / 1.12;
                 $vat_amount = ($vat_exempt_sales * .12);
@@ -110,7 +110,8 @@ class TaxServices
                 'zerorated_vat_amount' => $zero_rated_vat_amount,
                 'vat_amount' => $vat_amount,
                 'r_vat_amount' => $r_vat_amount,
-                'is_admission' => $v->product->pre_part_no,
+                //'is_admission' => $v->product->pre_part_no,
+                'is_admission' => $v->product->admission_fee,
                 'admission_sales' => $admission_fee,
                 'amusement_tax_amount' => $admission_tax_amount,
                 'r_amusement_tax_amount' => $r_admission_tax_amount,
