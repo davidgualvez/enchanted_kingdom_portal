@@ -165,4 +165,6 @@
         </div> 
     </div>
 </div>
+
+<img id='imgToExport' src='/assets/receipt_image.jpg' style='display:none'/> 
 @endsection
