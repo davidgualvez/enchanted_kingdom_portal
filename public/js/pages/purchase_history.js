@@ -478,7 +478,7 @@ function orLayout(v,sales_order_id) {
                 ],
                 fontSize: '9',
                 alignment: 'center',
-                margin: [25, 5, 25, 5]
+                margin: [25, 10, 25, 5]
             },
 
             /**
