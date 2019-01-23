@@ -27,6 +27,7 @@ use App\AppServices\EarnPointTransactionServices;
 use App\AppServices\BranchLastIssuedNumberServices;
 use App\AppServices\TaxServices;
 use App\AppServices\CustomerServices;
+use App\AppServices\TurnSiteServices;
  
 use DB; 
 
@@ -281,6 +282,12 @@ class PurchaseController extends Controller
             $pt->amusement_tax_amount_total     = $result->amusement_tax_amount;
             $pt->r_amusement_tax_amount_total   = $result->r_amusement_tax_amount; 
             $pt->save();
+
+            /**
+             * Turn Site
+             */
+            
+
             //=========================================================================
             
             /**

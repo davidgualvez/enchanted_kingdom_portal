@@ -8,7 +8,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
-class ProcessWelcomeEmail implements ShouldQueue
+class ProcessTurnSite implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -20,6 +20,7 @@ class ProcessWelcomeEmail implements ShouldQueue
     public function __construct()
     {
         //
+
     }
 
     /**
@@ -30,8 +31,6 @@ class ProcessWelcomeEmail implements ShouldQueue
     public function handle()
     {
         //
-        // Process
-        // place the method that you used in the controller to automate the job.
         
     }
 }

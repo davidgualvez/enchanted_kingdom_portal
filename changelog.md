@@ -1,5 +1,8 @@
 # Change Log
 
+### Jan 23, 2019
+- Remove Preview Receipt Button and Changed E-wallet message to Load-Wallet
+
 ### Jan 21, 2019
 - Added computed data into transaction receipt for record purposes in Transaction History page.
 - Change the Category casing from Camel case to Upper case 

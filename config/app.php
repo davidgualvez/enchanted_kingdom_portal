@@ -10,6 +10,10 @@ return [
     'group_wallet_id'       =>  env('APP_GROUP_WALLET_ID',''),
     'group_not_to_display'  =>  env('GROUP_NOT_TO_DISPLAY'),
     'portal_logout'         => 	env('PORTAL_LOGOUT_URL','#'),
+    'employee_number'       =>  env('EMPLOYEE_NUMBER'),
+    'pos_number'            =>  env('POS_NUMBER'),
+    'shift'                 =>  env('SHIFT'),
+    'type_number'           =>  env('TYPE_NUMBER'),
     //=========================================================
 
     /*

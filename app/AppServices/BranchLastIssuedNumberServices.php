@@ -2,6 +2,7 @@
 
 namespace App\AppServices;
 use App\BranchLastIssuedNumber;
+use Carbon\Carbon;
 
 class BranchLastIssuedNumberServices {
 
@@ -10,6 +11,8 @@ class BranchLastIssuedNumberServices {
 	private $blin; //model
 
 	public function __construct(){
+		
+
 		$this->blin = new BranchLastIssuedNumber; 
 	}
 
