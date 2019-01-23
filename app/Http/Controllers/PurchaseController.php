@@ -146,7 +146,7 @@ class PurchaseController extends Controller
                                 return response()->json([
                                     'success' => false,
                                     'status' => 401,
-                                    'message' => 'You cannot purchase e-Wallet using a e-Wallet'
+                                    'message' => 'You cannot purchase Load-Wallet using a Load-Wallet'
                                 ]);
                             }
 
@@ -171,6 +171,38 @@ class PurchaseController extends Controller
                  */
                 if ($item->is_postmix == 1 && $item->is_food == 1){
 
+                    /**
+                     * if the product is a group of wallet
+                     * do not allow to proceed and display a warning message
+                     */
+                    if ($item->group_id == config('app.group_wallet_id')) {
+                        DB::rollback();
+                        return response()->json([
+                            'success' => false,
+                            'status' => 401,
+                            'message' => 'You cannot purchase Load-Wallet using a Load-Wallet'
+                        ]);
+                    }
+
+                    /**
+                     * save to sales order details
+                     */
+                    $arr_sitepart = [
+                        'sitepart_id'   => $item->product_id,
+                        'product_name'  => $item->product_name,
+                        'srp'           => $item->price,
+                        'is_unli'       => $item->is_unli,
+                        'is_food'       => $item->is_food
+                    ];
+                    $obj_sitepart = (object)$arr_sitepart;
+                    if (!$this->saveToSalesOrderDetail($user, $obj_sitepart, $item->qty, $new_sales_order_id)) {
+                        DB::rollback();
+                        return response()->json([
+                            'success' => false,
+                            'status' => 401,
+                            'message' => 'Error saving in Sales Order Detail.'
+                        ]);
+                    };
                 }
 
                 /**
@@ -194,7 +226,7 @@ class PurchaseController extends Controller
                         return response()->json([
                             'success' => false,
                             'status' => 401,
-                            'message' => 'You cannot purchase e-Wallet using a e-Wallet'
+                            'message' => 'You cannot purchase Load-Wallet using a Load-Wallet'
                         ]);
                     }
 

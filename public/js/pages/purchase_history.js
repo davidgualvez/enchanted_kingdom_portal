@@ -142,7 +142,7 @@ function dataDisplayerPurchaseHistory(data, from) {
                     '<div class="column">'+
                         // '<h4 class="ui header">Basic Plan</h4>'+
                         // '<p><b>2</b> projects, $10 a month</p>'+
-                        '<div class="ui blue button btn-or-preview" data-id="'+value.sales_order_id+'">Preview</div>'+
+                        // '<div class="ui blue button btn-or-preview" data-id="'+value.sales_order_id+'">Preview</div>'+
                     '</div>'+
                     '<div class="column">'+
                         // '<h4 class="ui header">Business Plan</h4>'+
@@ -372,7 +372,7 @@ function orLayout(v,sales_order_id) {
             {
                 columns: [
                     {
-                        text: val.product_name + ' x ' + val.qty,
+                        text: val.qty + ' x ' + val.product_name ,
                     },
                     {
                         text: parseFloat(val.net_amount).toFixed(2),
