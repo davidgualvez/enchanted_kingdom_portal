@@ -18,7 +18,9 @@ class TurnSite extends Model
     protected $maps = [
         'station_code'      => 'STATIONCODE',
         'turn_over_id'      => 'TURNOVERID',    //sequencial per station code
-        'clarion_date_now'  => 'DATE',          // clarion date
+        'clarion_date_now'  => 'DATE',          // clarion Date
+        'clarion_entry_date'=> 'ENTRYDATE',     // Clarion Date
+        'clarion_entry_time'=> 'TYME',          // Clarion Time
         'created_at'        => 'SQLDATE',       //
         'shift'             => 'SHIFT',
         'employee_number'   => 'EMPNO',
@@ -26,7 +28,7 @@ class TurnSite extends Model
         'type_number'       => 'TYPENO',
         'total_sales'       => 'TOTALSALE',     // net amount of sales
         'po'                => 'PO',            // used points
-        'prepay'            => 'PREPAY'         // used wallet
+        'prepay'            => 'PREPAY',         // used wallet
     ];
 
     protected $getterMutators = [ 

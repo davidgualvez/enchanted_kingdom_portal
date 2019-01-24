@@ -13,4 +13,12 @@ class Helper
         return $diff;
     }
 
+    public function getClarionTime(Carbon $date){
+        $startOfTheDay = Carbon::create($date->year, $date->month, $date->day, 0, 0, 0);
+
+        $result = $startOfTheDay->diffInSeconds($date);
+
+        return $result;
+    }
+
 }

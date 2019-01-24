@@ -9,19 +9,19 @@ use App\User;
 use App\Customer;
 use App\Cart;
 use App\Postmix;
-use App\SiteTerminal;
- 
+use App\SiteTerminal; 
 use App\Part;
 use App\SitePart;
 use App\ProductPromotion;
-use App\Promotion;
-use App\Transformers\CartTransformer;
-use App\Transformers\PurchaseTransformer;
-
+use App\Promotion; 
 use App\Purchase; 
 use App\PurchaseDetail;
 use App\PurchaseTransaction;
 use App\PurchaseTransactionDetail;
+use App\TurnSite;
+
+use App\Transformers\CartTransformer;
+use App\Transformers\PurchaseTransformer;
 
 use App\AppServices\EarnPointTransactionServices;
 use App\AppServices\BranchLastIssuedNumberServices;
@@ -282,12 +282,7 @@ class PurchaseController extends Controller
             $pt->amusement_tax_amount_total     = $result->amusement_tax_amount;
             $pt->r_amusement_tax_amount_total   = $result->r_amusement_tax_amount; 
             $pt->save();
-
-            /**
-             * Turn Site
-             */
-            
-
+ 
             //=========================================================================
             
             /**
@@ -357,6 +352,20 @@ class PurchaseController extends Controller
                     'wallet_balance'    => $virtual_wallet,
                     'points_balance'    => $virtual_points
                 ]);
+
+            /**
+             * Turn Site
+             */
+            $tss = new TurnSiteServices;
+            $tss = $tss->findOrCreate(); 
+            $tsss = TurnSite::where('STATIONCODE', $tss->station_code)
+                    ->where('TURNOVERID', $tss->turn_over_id)
+                    ->update([
+                    'TOTALSALE'   => $tss->total_sales + $result->net_amount,
+                    'PO'          => $tss->po + $points_payment,
+                    'PREPAY'      => $tss->prepay + $wallet_payment
+                    ]);
+        
 
             //update customer points for new earned point
             $customerrr = Customer::where('CUSTOMERID', $user->customer->customer_id)
