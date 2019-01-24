@@ -173,34 +173,31 @@
 			  				</button> --}}
 
 
-			  				<div class="ui buttons right floated">
+			  				{{-- <div class="ui buttons right floated">
 			  				  <button disabled class="ui blue button step3" id="order">
 			  				  	<i class="cart arrow down icon"></i> Order
 			  				  </button>
 
-			  				  <div class="or"></div>
+			  				  <div class="or"></div> --}}
 
 			  				  <button disabled class="ui positive button step4" id="checkout">
 			  				  	<i class="check icon"></i> Purchase
 			  				  </button>
-			  				</div>
+			  				{{-- </div> --}}
 		  				@else
 
-		  					<div class="ui buttons right floated">
+		  					{{-- <div class="ui buttons right floated">
 		  					  <button class="ui blue button step3" id="order">
 		  					  	<i class="cart arrow down icon"></i> Order
 		  					  </button>
 
-		  					  <div class="or"></div>
+		  					  <div class="or"></div> --}}
 
-		  					  <button class="ui positive button step4" id="checkout">
+		  					  <button class="ui positive button step4  right floated" id="checkout">
 		  					  	<i class="check icon"></i> Purchase
 		  					  </button>
-		  					</div>
-
-			  				{{-- <button class="ui right floated small success icon primary button" id="checkout">
-			  					<i class="check icon"></i> Checkout
-			  				</button> --}}
+		  					{{-- </div> --}}
+ 
 		  				@endif
 		  				
 		  				<!-- <div class="ui right floated small success icon primary button" id="checkout">

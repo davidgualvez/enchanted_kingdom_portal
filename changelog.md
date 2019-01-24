@@ -4,6 +4,7 @@
 - Added TurnSite log for reporting
 - TurnSite Column Changes
     - TYPENO(decimal, 1) to TYPENO(int)
+- Removed Order Functionalities
 
 ### Jan 23, 2019
 - Remove Preview Receipt Button and Changed E-wallet message to Load-Wallet

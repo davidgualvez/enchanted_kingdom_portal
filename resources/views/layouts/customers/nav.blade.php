@@ -84,7 +84,7 @@
 	    	    <div class="menu">
 	    	    	
 					<a href="/purchase/history">	<div class="item">	<h5>Purchased History</h5> </div></a>  
-					<a href="/order/history">		<div class="item">	<h5>Ordered History</h5> </div></a>
+					{{-- <a href="/order/history">		<div class="item">	<h5>Ordered History</h5> </div></a> --}}
 					<a href="/me">					<div class="item">	<h5>My Account</h5> </div></a>  
 					<a href="/logout">				<div class="item">	<h5>Logout</h5> </div></a>
 
@@ -134,7 +134,7 @@
 		  	@auth
 		  	  	<!-- <a href="/logout" class="ui item">Logout</a> --> 
 				<a href="/purchase/history">	<div class="item">	<h4>Purchased History</h4> </div></a>  
-				<a href="/order/history">		<div class="item">	<h4>Ordered History</h4> </div></a>
+				{{-- <a href="/order/history">		<div class="item">	<h4>Ordered History</h4> </div></a> --}}
 				<a href="/me">					<div class="item">	<h4>My Account</h4> </div></a>  
 		  	  	<a href="/logout">				<div class="item">	<h4>Logout</h4> </div></a>
 		  	@else
