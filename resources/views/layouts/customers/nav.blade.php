@@ -7,7 +7,7 @@
   <!-- <div class="header item">Admin</div> -->
   <div class="right menu">  
     @auth  
-    	 <div class="ui buttons fluid" style="height: 30px; margin: 10px;">
+    	<div class="ui buttons fluid" style="height: 30px; margin: 10px;">
     	   	<button class="ui button">
     	   		<i class="copyright icon"></i>
     	   		{{ \Auth::user()->customer->wallet }}
@@ -23,20 +23,20 @@
   			   	<div class="floating ui red label cart_count">{{ \Auth::user()->cartPerBranch->count() }} </div> 
       		</a> 
     	   	  			    
-    	 </div> 
+    	</div> 
     @else 
-    	    	<div class="ui buttons fluid" style="height: 30px; margin-top: 15px; margin-bottom: 25px;" >
-      			   	<button class="ui button login"  id=step1 >
-      			   		<i class="copyright icon"></i>
-      			   		login
-      				</button>
-      			   <div class="or"></div>
-      			   	<button class="ui button register" id="step2">
-      			   		&nbsp;
-      			   		<i class="gift icon"></i>
-      			   		Register
-      			   	</button> 
-      			</div>
+		<div class="ui buttons fluid" style="height: 30px; margin-top: 15px; margin-bottom: 25px;" >
+			<button class="ui button login"  id=step1 >
+				<i class="copyright icon"></i>
+				login
+			</button>
+			<div class="or"></div>
+			<button class="ui button register" id="step2">
+				&nbsp;
+				<i class="gift icon"></i>
+				Register
+			</button> 
+		</div>
       	{{-- <a href="/login" class="ui item"> Login / Register </a> --}}
     @endauth
   </div>
