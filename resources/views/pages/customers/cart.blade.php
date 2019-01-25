@@ -259,8 +259,8 @@
 					<div class="row">
 						<div class="six wide column addons_category_container" style="border-right:1px solid gray;">
 							{{-- --- --}}
-							<button class="ui button fluid">SideDish 1</button>
-							<button class="ui button fluid">SideDish 2</button>  
+							{{-- <button class="ui button fluid">SideDish 1</button>
+							 --}}
 							{{-- --- --}} 
 						</div>
 						<div class="ten wide column ">

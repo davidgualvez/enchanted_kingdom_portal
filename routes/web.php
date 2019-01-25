@@ -131,6 +131,7 @@ Route::get('/products/groups', 							'PartController@groups');
 
 //postmix
 Route::post('/postmix/parent/modifiable',               'PostmixController@show');
+Route::post('/postmix/parent/sidedish',                 'PostmixController@sideDishes');
 
 //rewards
 Route::get('/rewards', 									'RewardController@index');

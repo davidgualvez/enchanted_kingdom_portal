@@ -228,15 +228,16 @@ function addonsDisplayer(data){
 
 	acc.empty();
 	asc.empty();
-	
+
 	$.each(data, function(i,v){
 		console.log(v);
 		acc.append(
-			'<button class="ui button fluid" data-comp-cat-id="' + v.comp_cat_id+'" data-parent="'+v.parent_id+'" data-comp-id="'+v.component_id+'">'+
+			'<button class="ui button fluid btn-sidedish" data-comp-cat-id="' + v.comp_cat_id+'" data-parent-id="'+v.parent_id+'" data-comp-id="'+v.component_id+'">'+
 				v.description+
 			'</button>'
-		);
+		); 
 	});
+	btnSideDish();
 
 	$('#cart_page').hide();
 	$('#addons_page').show();
@@ -246,5 +247,35 @@ function addonsBack(){
 	$('#btnBackToCartPage').on('click', function(){
 		$('#cart_page').show();
 		$('#addons_page').hide();
+	});
+}
+
+function btnSideDish(){
+	$('.btn-sidedish').on('click', function(){
+		var parent_id = $(this).data('parent-id');
+		var comp_id = $(this).data('comp-id');
+		var comp_cat_id = $(this).data('comp-cat-id'); 
+
+		console.log(
+			comp_cat_id, 
+			parent_id, 
+			comp_id
+		);
+		// request 
+		var data = {
+			'parent_id'         : parent_id,
+			'component_id'		: comp_id,
+			'comp_cat_id'	: comp_cat_id
+		};
+		post(routes.postmix.showSideDishes,data, function(response){
+			if(response.success == false){
+				showWarning('', response.message, function () {
+
+				});
+				return;
+			}
+
+			console.log(response.data);
+		});
 	});
 }

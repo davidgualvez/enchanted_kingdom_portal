@@ -56,7 +56,8 @@ var routes = {
         updateNewPassword : '/forgot-password/update-password'
     },
     postmix : {
-        showSideDish: '/postmix/parent/modifiable'
+        showSideDish: '/postmix/parent/modifiable',
+        showSideDishes: '/postmix/parent/sidedish'
     }
 };
 

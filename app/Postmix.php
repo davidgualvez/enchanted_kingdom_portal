@@ -53,9 +53,11 @@ class Postmix extends Model
         // 'unit_cost'        => 'UNITCOST',
         // 'extend_cost'      => 'EXTENDCOST',
         // 'type'             => 'TYPE',
-        'description'      => 'trim',
         // 'partno'           => 'trim',
         // 'yield'            => 'YIELD'
+        'description'       => 'trim',
+        'comp_cat_id'       => 'trim'
+        
     ];
 
     //relationship
