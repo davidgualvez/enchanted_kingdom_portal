@@ -6,9 +6,8 @@
 @endsection
 
 @section('content')
-	<div class="ui container padded" style="padding: 25px;"> 
-		<h3 class="ui header">My Wallet Cart</h3>  
-		
+	<div class="ui container padded" style="padding: 15px;" id="cart_page"> 
+		<h3 class="ui header">My Cart</h3>   
 		<!-- table -->
 		<table class="ui single line table step1">
 		  <thead>
@@ -26,7 +25,17 @@
 		  	@forelse($result['items'] as $key=>$cart) 
   			    <tr>
   			    	<td class="ui small header"> {{ ++$key }}</td>
-  			      	<td> {{ $cart['product_name'] }} </td> 
+  			      	<td>
+						{{ $cart['product_name'] }} 
+						&nbsp;
+						{{-- ADDONS BUTTON --}}
+						@if($cart['is_postmix'] == 1 && $cart['is_food']== 1)
+						<button  data-id="{{ $cart['product_id'] }}" class="ui small icon basic button addons">
+							<i class="icon plus"></i>
+							{{-- Addons --}}
+						</button>
+						@endif
+					</td> 
   			      	<td>
   			      		<i class="question circle outline icon" data-title="*Note" data-content="The item will be automatically remove if the quantity is less than or equal to zero."></i>
   			      		
@@ -239,4 +248,118 @@
       			});
       	</script> 
     @endif 
+
+	{{-- ADDONS MODAL --}}
+	<div class="ui container" id="addons_page" style="display:none;">
+		<h3 class="ui header">Side Dishes</h3>
+		<button class="ui button green mini" id="btnBackToCartPage"> <i class="icon angle double left"></i> Back</button> 
+		<div class="ui segment" >
+			{{-- <button class="ui button">Follow</button> --}}
+				<div class="ui column grid" > 
+					<div class="row">
+						<div class="six wide column addons_category_container" style="border-right:1px solid gray;">
+							{{-- --- --}}
+							<button class="ui button fluid">SideDish 1</button>
+							<button class="ui button fluid">SideDish 2</button>  
+							{{-- --- --}} 
+						</div>
+						<div class="ten wide column ">
+							{{-- <button class="ui button">b2</button> --}}
+							<div class="ui cards" id="addons_selected_container">
+								<div class="card">
+									<div class="image"> 
+										<img class="product_image" src="/storage/" data-id="73" data-name="Coke (Large)" data-image="/storage/" data-description="Coke (Large)" data-price="20.00">
+									</div>
+									<div class="content">
+										<div class="header">
+											Test (Large)
+										</div>
+										{{-- <div class="meta">
+											<a>PROCESSED MATERIALS</a>
+										</div>
+										<div class="description">
+											Coke (Large)
+										</div> --}}
+									</div>
+									<div class="extra content">
+										<span class="right floated"> 
+											<div id="btn-product-73" class="ui tiny violet vertical animated  button" tabindex="0">
+												<div class="hidden content">
+													Add
+												</div>
+												<div class="visible content">
+													<i class="shop icon">
+													</i>
+												</div>
+											</div>
+										</span>
+										<span>
+											<a class="ui tiny violet tag label">P 20.00
+											</a>
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+		</div> 
+	</div> 
+	<div class="ui page dimmer">
+		<div class="content" style="width:90%; height:80%;" >
+			<button class="ui button green mini"> <i class="icon angle double left"></i> Back</button> 
+		<div class="ui segment" >
+			{{-- <button class="ui button">Follow</button> --}}
+				<div class="ui column grid" > 
+					<div class="row">
+						<div class="six wide column ">
+							{{-- --- --}}
+							<button class="ui button fluid">SideDish 1</button>
+							<button class="ui button fluid">SideDish 2</button> 
+							<button class="ui button fluid red">Close</button> 
+							{{-- --- --}} 
+						</div>
+						<div class="ten wide column ">
+							{{-- <button class="ui button">b2</button> --}}
+							<div class="ui cards">
+								<div class="card">
+									<div class="image"> 
+										<img class="product_image" src="/storage/" data-id="73" data-name="Coke (Large)" data-image="/storage/" data-description="Coke (Large)" data-price="20.00">
+									</div>
+									<div class="content">
+										<div class="header">
+											Coke (Large)
+										</div>
+										{{-- <div class="meta">
+											<a>PROCESSED MATERIALS</a>
+										</div>
+										<div class="description">
+											Coke (Large)
+										</div> --}}
+									</div>
+									<div class="extra content">
+										<span class="right floated"> 
+											<div id="btn-product-73" class="ui tiny violet vertical animated  button" tabindex="0">
+												<div class="hidden content">
+													Add
+												</div>
+												<div class="visible content">
+													<i class="shop icon">
+													</i>
+												</div>
+											</div>
+										</span>
+										<span>
+											<a class="ui tiny violet tag label">P 20.00
+											</a>
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+		</div> 
+		</div>
+	</div>
 @endsection

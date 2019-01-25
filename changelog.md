@@ -1,5 +1,9 @@
 # Change Log
 
+### Jan 25, 2019
+- HODB carts Column changes
+    - Added is_component_of_pid(int) column
+    
 ### Jan 24, 2019
 - Added TurnSite log for reporting
 - TurnSite Column Changes

@@ -65,7 +65,7 @@
 	<!-- navigation -->
 	@include('layouts.customers.nav')
 
-	<div class="ui container" id="main">
+	<div class="ui container " id="main">
 		<div class="ui equal width grid">
 			<!-- CONTENT -->
 			<div class="column">

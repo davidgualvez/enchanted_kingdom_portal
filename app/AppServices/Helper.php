@@ -17,6 +17,7 @@ class Helper
         $startOfTheDay = Carbon::create($date->year, $date->month, $date->day, 0, 0, 0);
 
         $result = $startOfTheDay->diffInSeconds($date);
+        //$result = $startOfTheDay->diffInRealMilliseconds($date);
 
         return $result;
     }

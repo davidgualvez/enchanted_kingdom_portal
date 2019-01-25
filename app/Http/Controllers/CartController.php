@@ -34,10 +34,8 @@ class CartController extends Controller
                 'customer'
                 )
         );
-    } 
-
-
-
+	} 
+	
     public function addToCart(Request $request){  
 
     	$data	=	$request->only('product_id','qty');

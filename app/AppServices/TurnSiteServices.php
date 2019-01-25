@@ -109,7 +109,8 @@ class TurnSiteServices{
         $newTs->shift               = $this->shift;
         $newTs->employee_number     = $this->employee_number;
         $newTs->pos_number          = $this->pos_number;
-        $newTs->type_number         = (double)99.0; 
+        $newTs->type                = 'WEB POS';
+        $newTs->type_number         = $this->type_number; 
         
         $newTs->total_sales  = 0;
         $newTs->po           = 0;

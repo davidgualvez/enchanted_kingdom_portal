@@ -147,7 +147,7 @@ class PurchaseController extends Controller
                                 return response()->json([
                                     'success' => false,
                                     'status' => 401,
-                                    'message' => 'You cannot purchase Load-Wallet using a Load-Wallet'
+                                    'message' => 'You cannot purchase Load using a Load-Wallet'
                                 ]);
                             }
 
@@ -181,7 +181,7 @@ class PurchaseController extends Controller
                         return response()->json([
                             'success' => false,
                             'status' => 401,
-                            'message' => 'You cannot purchase Load-Wallet using a Load-Wallet'
+                            'message' => 'You cannot purchase Load using a Load-Wallet'
                         ]);
                     }
 
@@ -227,7 +227,7 @@ class PurchaseController extends Controller
                         return response()->json([
                             'success' => false,
                             'status' => 401,
-                            'message' => 'You cannot purchase Load-Wallet using a Load-Wallet'
+                            'message' => 'You cannot purchase Load using a Load-Wallet'
                         ]);
                     }
 
@@ -497,7 +497,7 @@ class PurchaseController extends Controller
                                 return response()->json([
                                     'success'   => false,
                                     'status'    => 401,
-                                    'message'   => 'You cannot purchase e-Wallet using a e-Wallet'
+                                    'message'   => 'You cannot purchase Load using a e-Wallet'
                                 ]);
                             }  
 

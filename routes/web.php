@@ -129,6 +129,9 @@ Route::get('/promos',                            		'ProductPromotionController@a
 Route::get('/products',                          		'PartController@lists');
 Route::get('/products/groups', 							'PartController@groups');
 
+//postmix
+Route::get('/postmix/{pid}',                            'PostmixController@show');
+
 //rewards
 Route::get('/rewards', 									'RewardController@index');
 Route::get('/rewards/lists', 							'RewardController@lists');

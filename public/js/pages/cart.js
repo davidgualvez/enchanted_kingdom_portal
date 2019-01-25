@@ -14,6 +14,9 @@ $(document).ready(function(){
 	//  setTimeout(() => {
 	// 	 initGuide();
 	//  }, 500);
+
+	showAddons();
+	addonsBack();
 });
  
 
@@ -187,4 +190,31 @@ function startGuide() {
         console.log('exit');
     });
     intro.start();
+}
+
+// ADDONS
+function showAddons(){
+	$('.addons').on('click', function(){
+		var id = $(this).data('id');
+		console.log(id);
+
+		//SHOW MODAL
+		addonsDisplayer();
+
+	});
+}
+
+function addonsDisplayer(){
+	// $('.ui.page.dimmer')
+	// 	.dimmer('toggle')
+	// 	;
+	$('#cart_page').hide();
+	$('#addons_page').show();
+}
+
+function addonsBack(){
+	$('#btnBackToCartPage').on('click', function(){
+		$('#cart_page').show();
+		$('#addons_page').hide();
+	});
 }

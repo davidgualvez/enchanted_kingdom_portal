@@ -25,6 +25,7 @@ class TurnSite extends Model
         'shift'             => 'SHIFT',
         'employee_number'   => 'EMPNO',
         'pos_number'        => 'POSNUMBER',
+        'type'              => 'TYPE',          // ask mam cris for this value!
         'type_number'       => 'TYPENO',
         'total_sales'       => 'TOTALSALE',     // net amount of sales
         'po'                => 'PO',            // used points
