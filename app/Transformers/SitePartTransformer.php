@@ -22,7 +22,8 @@ class SitePartTransformer {
                //'promo'      => $value->activePromo 
             ]; 
         });
+
         return $data;
 	}
-	
+	 
 }

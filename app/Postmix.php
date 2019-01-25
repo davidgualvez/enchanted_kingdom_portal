@@ -56,7 +56,7 @@ class Postmix extends Model
         // 'partno'           => 'trim',
         // 'yield'            => 'YIELD'
         'description'       => 'trim',
-        'comp_cat_id'       => 'trim'
+        //'comp_cat_id'       => 'trim'
         
     ];
 

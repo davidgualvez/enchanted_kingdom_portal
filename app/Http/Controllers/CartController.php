@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Auth, Validator; 
+use Auth, Validator, DB; 
 use Carbon\Carbon;
 use App\User;
 use App\Cart;
+use App\SitePart;
 
 use App\Part;
 use App\ProductPromotion;
@@ -14,6 +15,7 @@ use App\Promotion;
 use App\Transformers\CartTransformer; 
 use App\AppServices\CustomerServices;
 use App\AppServices\TaxServices;
+
 
 class CartController extends Controller
 {
@@ -61,27 +63,91 @@ class CartController extends Controller
     			'message'		=> 		'Unauthorized Access'
     		]);
     	}  
-    	$user  = Auth::user(); 
+    	$user  = Auth::user();
 
-    	$cart = Cart::findByUserAndProduct($user->id,$request->product_id);
-    	if($cart){
-    		$cart->qty = $cart->qty + $request->qty; 
-    		$cart->save(); 
-    	}else{
-    		$cart = new Cart;
-    		$cart->branch_id 	= config('cpp.branch_id');
-	    	$cart->user_id 		= $user->id;
-	    	$cart->product_id 	= $request->product_id;
-	    	$cart->qty 			= $request->qty;
-            $cart->type         = 'wallet';
-	    	$cart->save();
-    	} 
+		try {
 
-    	return response()->json([
-			'success'		=> 		true, 
-			'status' 		=> 		200,
-			'message'		=> 		'Added to cart.'
-    	]);
+			DB::beginTransaction();
+
+			$cart = Cart::findByUserAndProduct($user->id,$request->product_id);
+			if($cart){
+				$cart->qty = $cart->qty + $request->qty; 
+				$cart->save(); 
+				
+			}else{
+
+				$cart = new Cart;
+				$cart->branch_id 	= config('cpp.branch_id');
+				$cart->user_id 		= $user->id;
+				$cart->product_id 	= $request->product_id;
+				$cart->qty 			= $request->qty;
+				$cart->type         = 'wallet';
+				$cart->is_component_of_pid = $request->product_id;
+				$cart->save();
+
+				if(is_null($cart)){
+					DB::rollback();
+					return response()->json([
+						'success' => true,
+						'status' => 401,
+						'message' => 'Error adding item in the cart.'
+					]);
+				}
+				
+				$sp = SitePart::findByIdAndBranch($request->product_id);
+				
+				// check if food and postmix 
+				// if true get postmix 
+				if($sp->postmix == 1 && $sp->is_food == 1){
+					//check if there is a modifiable enable
+					//if true add it also to cart, tagged with its parent part id
+					foreach($sp->components as $comp){
+						if($comp->modifiable == 1){ 
+							$cartSub = new Cart;
+							$cartSub->branch_id = config('cpp.branch_id');
+							$cartSub->user_id = $user->id;
+							$cartSub->product_id = $comp->product_id;
+							$cartSub->qty = $request->qty * $comp->quantity;
+							$cartSub->type = 'wallet';
+							$cartSub->is_component_of_pid = $request->product_id;
+							$cartSub->save();
+
+							if (is_null($cartSub)) {
+								DB::rollback();
+								return response()->json([
+									'success' => true,
+									'status' => 401,
+									'message' => 'Error adding item in the cart.'
+								]);
+							}
+						}
+					}
+				} 
+			}
+
+			/**
+			 * Committing all changes in the database
+			 */
+			DB::commit();
+
+			/**
+			 * @return Success
+			 */
+			return response()->json([
+				'success'		=> 		true, 
+				'status' 		=> 		200,
+				'message'		=> 		'Added to cart.'
+			]);
+
+		} catch (\Exception $e) {
+            // if something went wrong
+			DB::rollback();
+			return response()->json([
+				'success' => false,
+				'status' => 500,
+				'message' => $e->getMessage()
+			]);
+		}  
     }
 
     public function removeItemFromCart(Request $request){
@@ -250,12 +316,17 @@ class CartController extends Controller
             ]);
         }  
 
-        $count = Auth::user()->cartPerBranch->count();
-        
+        //$count = Auth::user()->cartPerBranch->count();
+		$carts = Auth::user()->cart; 
+		
+		$carts = $carts->unique('is_component_of_pid')->count();
+		
+		
+
         return response()->json([
                 'success'       =>      true, 
                 'status'        =>      200,
-                'count'         =>      $count
+                'count'         => 		$carts
             ]);
     }
 

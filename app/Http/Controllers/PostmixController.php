@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Postmix;
+use App\SitePart;
+use App\Transformers\SitePartTransformer;
+
 //use App\Transformers\PostmixTransformer;
 
 class PostmixController extends Controller
@@ -51,11 +54,11 @@ class PostmixController extends Controller
         $component_id       = $request->component_id;
         $comp_category_id   = $request->comp_cat_id;
         
-        $pms = Postmix::where('parent_id', $parent_id)
-                ->where('product_id', $component_id)
-                ->where('comp_cat_id', $comp_category_id)
-                ->where('modifiable', '!=', 1)
+        $pms = SitePart::where('category_id', $comp_category_id)
+                ->where('sitepart_id', '!=', $component_id)
                 ->get();
+
+        
 
         return response()->json([
             'success'   => true,

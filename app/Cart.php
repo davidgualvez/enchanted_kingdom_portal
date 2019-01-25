@@ -9,7 +9,7 @@ class Cart extends Model
 {
 
     /**
-     * Relationshio
+     * Relationshio 
      */
     public function product(){
         return $this->belongsTo('App\SitePart','product_id');

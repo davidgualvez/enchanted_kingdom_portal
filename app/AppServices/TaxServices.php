@@ -14,9 +14,9 @@ class TaxServices
             $price = $v->product->srp * $v->qty;
             $priceWithDiscount = 0;
 
-            $vatable_sales = 0;
-            $vat_amount = 0;
-            $r_vat_amount = 0; // removed vat
+            $vatable_sales  = 0;
+            $vat_amount     = 0;
+            $r_vat_amount   = 0; // removed vat
 
             $vat_exempt_sales = 0;
             $sc_pwd_discount = 0;

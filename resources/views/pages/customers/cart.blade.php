@@ -22,7 +22,12 @@
 		  </thead>
 		  <tbody>  
 
+			<?php $ctr = 0; ?>
 		  	@forelse($result['items'] as $key=>$cart) 
+
+				{{-- @if($cart['product_id'] == $cart['component_id'])
+				@endif --}}
+
   			    <tr>
   			    	<td class="ui small header"> {{ ++$key }}</td>
   			      	<td>
@@ -31,8 +36,7 @@
 						{{-- ADDONS BUTTON --}}
 						@if($cart['is_postmix'] == 1 && $cart['is_food']== 1)
 						<button  data-id="{{ $cart['product_id'] }}" class="ui small icon basic button addons">
-							<i class="icon plus"></i>
-							{{-- Addons --}}
+							<i class="icon plus"></i> 
 						</button>
 						@endif
 					</td> 

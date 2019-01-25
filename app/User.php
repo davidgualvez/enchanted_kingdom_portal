@@ -44,11 +44,13 @@ class User extends Authenticatable
     }
 
     public function cart(){
-        return $this->hasMany('App\Cart','user_id');
+        return $this->hasMany('App\Cart','user_id')
+            ->where('branch_id', config('cpp.branch_id') );
     }
 
     public function cartPerBranch(){
-        return $this->cart()->where('branch_id', config('cpp.branch_id') );
+        return $this->cart()
+            ->where('branch_id', config('cpp.branch_id') );
     }
 
     /**

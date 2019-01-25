@@ -23,7 +23,7 @@ class SitePart extends Model
       // explicit relation mapping:
       //'picture' => 'profile.picture_path',
 
-      // simple alias
+      // simple alias 
       	'sitepart_id' 			=> 'PRODUCT_ID',
       	'branch_id' 			=> 'ARNOC',
       	'product_name'			=> 'SHORTCODE',
@@ -39,7 +39,6 @@ class SitePart extends Model
         'is_unli'               => 'SSBUFFER', 
         'postmix'               => 'POSTMIX',
 
-        
         'kitchen_loc'           => 'PRODGRP',       // KITCHEN LOCATION 
         
         // TAX PART
@@ -65,5 +64,9 @@ class SitePart extends Model
     //relationship
     public function group(){
         return $this->belongsTo('App\Group', 'GROUP');
+    }
+
+    public function components(){
+        return $this->hasMany('App\Postmix', 'PRODUCT_ID', 'PRODUCT_ID');
     }
 }

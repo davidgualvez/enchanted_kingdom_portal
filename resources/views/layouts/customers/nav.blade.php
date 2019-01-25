@@ -73,7 +73,7 @@
 				
 				<a  href="/cart" class="ui button item ">
 					<i class="shopping cart icon"></i>
-	  			   	<div class="floating ui red label cart_count">{{ \Auth::user()->cartPerBranch->count() }} </div> 
+	  			   	<div class="floating ui red label cart_count">{{ \Auth::user()->cart->unique('is_component_of_pid')->count() }} </div> 
 	      		</a> 
   			</div>
 	  			 
