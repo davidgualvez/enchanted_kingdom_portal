@@ -54,6 +54,9 @@ var routes = {
         verifyMobile : '/forgot-password', //post[mobile]
         verifyCode: '/forgot-password/verify-code',//post[code]
         updateNewPassword : '/forgot-password/update-password'
+    },
+    postmix : {
+        showSideDish: '/postmix/parent/modifiable'
     }
 };
 

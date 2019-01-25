@@ -38,20 +38,24 @@ class Postmix extends Model
         'type'             => 'TYPE',
         'description'      => 'DESCRIPTION',
         'partno'           => 'PARTNO',
-        'yield'            => 'YIELD'
+        'yield'            => 'YIELD',
+
+        'modifiable'        => 'MODIFIABLE',
+        'is_free'           => 'ISFREE',
+        'comp_cat_id'       => 'COMPCATID'
     ];
 
     protected $getterMutators = [
         //'custom_column_name => 'string_manipulation'
-        'parent_id'        => 'PRODUCT_ID',
-        'product_id'       => 'PARTSID',
-        'quantity'         => 'QUANTITY',
-        'unit_cost'        => 'UNITCOST',
-        'extend_cost'      => 'EXTENDCOST',
-        'type'             => 'TYPE',
+        // 'parent_id'        => 'PRODUCT_ID',
+        // 'product_id'       => 'PARTSID',
+        // 'quantity'         => 'QUANTITY',
+        // 'unit_cost'        => 'UNITCOST',
+        // 'extend_cost'      => 'EXTENDCOST',
+        // 'type'             => 'TYPE',
         'description'      => 'trim',
-        'partno'           => 'trim',
-        'yield'            => 'YIELD'
+        // 'partno'           => 'trim',
+        // 'yield'            => 'YIELD'
     ];
 
     //relationship

@@ -198,16 +198,46 @@ function showAddons(){
 		var id = $(this).data('id');
 		console.log(id);
 
-		//SHOW MODAL
-		addonsDisplayer();
+		//request 
+		var data = {
+			'parent_id'	: id
+		};
+		post(routes.postmix.showSideDish, data, function(response){
+			
+			if(response.success == false){
+				showWarning('',response.message, function(){
 
+				});
+				return;
+			}
+
+			//return;
+			//SHOW MODAL
+			addonsDisplayer(response.data);
+		});
+ 
 	});
 }
 
-function addonsDisplayer(){
+function addonsDisplayer(data){
 	// $('.ui.page.dimmer')
 	// 	.dimmer('toggle')
 	// 	;
+	var acc = $('.addons_category_container');
+	var asc = $('#addons_selected_container');
+
+	acc.empty();
+	asc.empty();
+	
+	$.each(data, function(i,v){
+		console.log(v);
+		acc.append(
+			'<button class="ui button fluid" data-comp-cat-id="' + v.comp_cat_id+'" data-parent="'+v.parent_id+'" data-comp-id="'+v.component_id+'">'+
+				v.description+
+			'</button>'
+		);
+	});
+
 	$('#cart_page').hide();
 	$('#addons_page').show();
 }

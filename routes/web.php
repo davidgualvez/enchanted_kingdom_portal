@@ -130,7 +130,7 @@ Route::get('/products',                          		'PartController@lists');
 Route::get('/products/groups', 							'PartController@groups');
 
 //postmix
-Route::get('/postmix/{pid}',                            'PostmixController@show');
+Route::post('/postmix/parent/modifiable',               'PostmixController@show');
 
 //rewards
 Route::get('/rewards', 									'RewardController@index');
