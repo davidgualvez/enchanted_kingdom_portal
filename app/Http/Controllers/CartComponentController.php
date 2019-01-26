@@ -63,7 +63,7 @@ class CartComponentController extends Controller
         //     ];
         // });
 
-        dd($opwsc);
+         
         // dd( $cc_id, $id,
         //     $cc->product->sitepart_id,
         //     (object)$spt->singleProduct($cc->product),
