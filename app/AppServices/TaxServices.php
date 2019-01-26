@@ -11,7 +11,12 @@ class TaxServices
 
         //================================================================
         $carts->transform(function ($v) use ($customer) {
-            $price = $v->product->srp * $v->qty;
+
+            $additionalCost = $v->components->sum(function ($product) {
+                return $product->qty * $product->price;
+            });
+
+            $price = ($v->product->srp * $v->qty)+ $additionalCost;
             $priceWithDiscount = 0;
 
             $vatable_sales  = 0;
@@ -104,7 +109,7 @@ class TaxServices
                 'product_id' => $v->product->sitepart_id,
                 'product_name' => $v->product->product_name,
                 'cost'  => $v->product->cost,
-                'price' => $price,
+                'price' => $v->product->srp,
                 'is_postmix' => $v->product->postmix,
                 'is_vat' => $v->product->is_vat,
                 'is_food' => $v->product->is_food,
