@@ -14,8 +14,19 @@ class Cart extends Model
     public function product(){
         return $this->belongsTo('App\SitePart','product_id');
     }
+
+    public function components()
+    {
+        return $this->hasMany('App\CartComponent', 'cart_id');
+    }
+
+    public function user(){
+        return $this->belongsTo('App\User', 'user_id');
+    }
     
-    /*----------  logic  ----------*/
+    /**
+     * Logic
+     */
     public static function findByUserAndProduct($user_id,$product_id){
     	return  static::where('branch_id', config('cpp.branch_id') )
                     ->where('user_id',$user_id) 
@@ -49,4 +60,7 @@ class Cart extends Model
                     ->where('type', $type)
                     ->delete();
     }
+
+    
+
 }

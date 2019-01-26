@@ -6,17 +6,17 @@
 @endsection
 
 @section('content')
-	<div class="ui container padded" style="padding: 15px;" id="cart_page"> 
-		<h3 class="ui header">My Cart</h3>   
+<div class="ui container padded" style="padding: 15px;" id="cart_page"> 
+	<h3 class="ui header">My Cart</h3>   
 		<!-- table -->
 		<table class="ui single line table step1">
 		  <thead>
 		    <tr>
 		      <th class="one wide">#</th>
 		      <th class="six wide">Product</th>
-		      <th class="two wide">Qty</th>
-		      <th class="two wide">Unit Price</th>
-		      <th class="">Discount</th>
+		      <th class="two wide center aligned">Qty</th>
+		      <th class="two wide center aligned">Unit Price</th>
+		      <th class="right aligned">Discount</th>
 		      <th class="two wide right aligned" style="padding-right: 25px;">Amount</th>
 		    </tr>
 		  </thead>
@@ -24,6 +24,7 @@
 
 			<?php $ctr = 0; ?>
 		  	@forelse($result['items'] as $key=>$cart) 
+
 
 				{{-- @if($cart['product_id'] == $cart['component_id'])
 				@endif --}}
@@ -34,13 +35,13 @@
 						{{ $cart['product_name'] }} 
 						&nbsp;
 						{{-- ADDONS BUTTON --}}
-						@if($cart['is_postmix'] == 1 && $cart['is_food']== 1)
-						<button  data-id="{{ $cart['product_id'] }}" class="ui small icon basic button addons">
-							<i class="icon plus"></i> 
-						</button>
-						@endif
+						{{-- @if($cart['is_postmix'] == 1 && $cart['is_food']== 1)
+							<button  data-id="{{ $cart['product_id'] }}" class="ui small icon basic button addons">
+								<i class="icon plus"></i> 
+							</button>
+						@endif --}}
 					</td> 
-  			      	<td>
+  			      	<td class="center aligned">
   			      		<i class="question circle outline icon" data-title="*Note" data-content="The item will be automatically remove if the quantity is less than or equal to zero."></i>
   			      		
   			      		<form action="/cart/{{ $cart['cart_id'] }}/decrease" method="post" style="display: inline;">
@@ -59,8 +60,8 @@
 			      			</button> 
   						</form> 
   			      	</td>
-  			      	<td>{{ number_format( $cart['price'] , 2, '.', ',')  }}</td>
-  			      	<td>
+  			      	<td class="center aligned">{{ number_format( $cart['price'] , 2, '.', ',')  }}</td>
+  			      	<td class="right aligned">
 								{{ number_format( $cart['scpwd_discount'] , 2, '.', ',')  }}
   			      		{{-- @if($cart['discount_type'] == 'real')
   			      			{{ number_format( $cart['discount_amount'] , 2, '.', ',')  }}
@@ -71,6 +72,31 @@
   			      	</td>
   			      	<td class="right aligned" style="padding-right: 25px;">{{ number_format( $cart['net_amount'] , 2, '.', ',') }}</td>
   			    </tr>  
+ 
+				@foreach ($cart['cart']->components as $component ) 
+					<tr class="positive">
+						<td></td>
+						<td>
+							<i class="caret right icon"></i>
+							{{ $component->product->product_description }}
+							<a href="/cart/{{$cart['cart_id']}}/component/{{$component->id}}" class="ui mini icon basic button" style="float:right">
+								<i class="edit icon"></i>
+								PRESS TO CHANGE
+							</a>
+						</td>
+						<td class="center aligned">
+							{{ $component->qty }}
+						</td>
+						<td colspan="3" class="right aligned">
+							Additional cost 
+							<strong>
+								0.00
+							</strong>
+						</td>
+						{{-- <td></td>
+						<td></td> --}}
+					</tr>
+				@endforeach
 		  	@empty
 		  		<div class="center aligned">
 		  			<h3 class="ui header center aligned">Nothing to display..</h3>

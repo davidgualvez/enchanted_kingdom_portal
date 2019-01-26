@@ -97,6 +97,7 @@ class TaxServices
             $priceWithDiscount = $price - $sc_pwd_discount;
 
             return [
+                'cart'  => $v,
                 'cart_id' => $v->id,
                 'qty' => $v->qty,
                 'group_id' => $v->product->group_id,

@@ -7,6 +7,7 @@ use Auth, Validator, DB;
 use Carbon\Carbon;
 use App\User;
 use App\Cart;
+use App\CartComponent;
 use App\SitePart;
 
 use App\Part;
@@ -73,6 +74,9 @@ class CartController extends Controller
 			if($cart){
 				$cart->qty = $cart->qty + $request->qty; 
 				$cart->save(); 
+
+				// update components with new quantity
+				$this->updateComponentsQty($cart);
 				
 			}else{
 
@@ -81,8 +85,7 @@ class CartController extends Controller
 				$cart->user_id 		= $user->id;
 				$cart->product_id 	= $request->product_id;
 				$cart->qty 			= $request->qty;
-				$cart->type         = 'wallet';
-				$cart->is_component_of_pid = $request->product_id;
+				$cart->type         = 'wallet'; 
 				$cart->save();
 
 				if(is_null($cart)){
@@ -102,24 +105,26 @@ class CartController extends Controller
 					//check if there is a modifiable enable
 					//if true add it also to cart, tagged with its parent part id
 					foreach($sp->components as $comp){
-						if($comp->modifiable == 1){ 
-							$cartSub = new Cart;
-							$cartSub->branch_id = config('cpp.branch_id');
-							$cartSub->user_id = $user->id;
-							$cartSub->product_id = $comp->product_id;
-							$cartSub->qty = $request->qty * $comp->quantity;
-							$cartSub->type = 'wallet';
-							$cartSub->is_component_of_pid = $request->product_id;
-							$cartSub->save();
+						if($comp->modifiable == 1){  
 
-							if (is_null($cartSub)) {
+							$cc = new CartComponent;
+							$cc->cart_id 			= $cart->id;
+							$cc->base_product_id	= $comp->product_id;
+							$cc->product_id			= $comp->product_id;
+							$cc->base_qty 			= $request->qty * $comp->quantity;
+							$cc->qty 				= $request->qty * $comp->quantity;
+							$cc->price 				= 0;
+							$cc->save(); 
+
+							if (is_null($cc)) {
 								DB::rollback();
 								return response()->json([
-									'success' => true,
-									'status' => 401,
-									'message' => 'Error adding item in the cart.'
+									'success' 	=> true,
+									'status' 	=> 401,
+									'message' 	=> 'Error adding item in the cart.'
 								]);
-							}
+							} 
+
 						}
 					}
 				} 
@@ -281,7 +286,10 @@ class CartController extends Controller
         }
 
         $cart->increment('qty');
-        $cart->save();
+		$cart->save();
+		
+		// update components with new quantity
+		$this->updateComponentsQty($cart);
 
         return back()->with('message', 'Item has been updated.');
     }
@@ -295,12 +303,17 @@ class CartController extends Controller
         }
 
         if($cart->qty <= 1){
-            $cart->delete();
+			$cart->delete();
+			$this->removeComponents($cart);
             return back()->with('error', 'Item has been removed from your cart.');
         }
 
         $cart->decrement('qty');
-        $cart->save();
+		$cart->save();
+		
+		// update components with new quantity
+		$this->updateComponentsQty($cart);
+
 
         return back()->with('message', 'Item has been updated.');
     }
@@ -318,15 +331,14 @@ class CartController extends Controller
 
         //$count = Auth::user()->cartPerBranch->count();
 		$carts = Auth::user()->cart; 
-		
-		$carts = $carts->unique('is_component_of_pid')->count();
-		
-		
+
+		// $carts = $carts->unique('is_component_of_pid')->count();
+ 
 
         return response()->json([
                 'success'       =>      true, 
                 'status'        =>      200,
-                'count'         => 		$carts
+                'count'         => 		$carts->count()
             ]);
     }
 
@@ -554,5 +566,22 @@ class CartController extends Controller
 		    // something went wrong 
 		}
 	} 
+
+	private function updateComponentsQty($cart){
+
+		foreach ($cart->components as $component) {
+			$component->qty = $component->base_qty * $cart->qty;
+			$component->save();
+		} 
+
+		return true;
+	}
+
+	private function removeComponents($cart){
+		foreach ($cart->components as $component) { 
+			$component->delete();
+		} 
+		return true;
+	}
 
 }

@@ -1,5 +1,9 @@
 # Change Log
 
+### Jan 26, 2019 
+- Remove the added is_component_of_pid(int) column in HODB carts table.
+- Added new Table named carts_component
+
 ### Jan 25, 2019
 - HODB carts Column changes
     - Added is_component_of_pid(int) column

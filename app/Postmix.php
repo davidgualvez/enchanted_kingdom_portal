@@ -64,4 +64,9 @@ class Postmix extends Model
     public function sitePart(){
         return $this->belongsTo('App\SitePart', 'PARTSID');
     }
+
+    /**
+     * Query Scope
+     */ 
+   
 }

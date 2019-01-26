@@ -61,12 +61,21 @@ class SitePart extends Model
                     ->first();
     }
 
-    //relationship
+    //relationship 
     public function group(){
         return $this->belongsTo('App\Group', 'GROUP');
     }
 
     public function components(){
         return $this->hasMany('App\Postmix', 'PRODUCT_ID', 'PRODUCT_ID');
+    }
+ 
+
+    /**
+     * Query Scope
+     */
+    public function scopeGetByCategory($query,$cat_id){
+        return $query->where('category_id',$cat_id)
+            ->where('branch_id', config('app.branch_id'));
     }
 }

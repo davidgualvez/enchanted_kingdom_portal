@@ -24,6 +24,44 @@ class SitePartTransformer {
         });
 
         return $data;
-	}
+   }
+
+   public function products($data)
+   {
+		//dd($data);
+      $data->transform(function ($value) {
+
+         $url = Storage::url($value->IMAGE);
+         return (object)[
+            'id'           => $value->sitepart_id,
+            'branch_id'    => $value->branch_id,
+            'name'         => $value->product_name,
+            'description'  => $value->product_description,
+            'srp'          => $value->srp,
+            'category_id'  => $value->category_id,
+            'group_id'     => $value->group_id,
+            'group_name'   => $value->group->description,
+            'image'        => $url,
+               //'promo'      => $value->activePromo 
+         ];
+      });
+
+      return $data;
+   }
+   
+   public function singleProduct($product){
+      $url = Storage::url($product->IMAGE);
+      return [
+         'id'           => $product->sitepart_id,
+         'branch_id'    => $product->branch_id,
+         'name'         => $product->product_name,
+         'description'  => $product->product_description,
+         'srp'          => $product->srp,
+         'category_id'  => $product->category_id,
+         'group_id'     => $product->group_id,
+         'group_name'   => $product->group->description,
+         'image'        => $url
+      ];
+   }
 	 
 }
