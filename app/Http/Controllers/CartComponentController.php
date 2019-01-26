@@ -27,30 +27,7 @@ class CartComponentController extends Controller
 
         $spt = new SitePartTransformer;  
         $cc_detail = (object)$spt->singleProduct($cc->product);
-
-        /**
-         * get products with same category except this component id
-         * @opwsc Other Products with same category
-         */
-        $opwsc = SitePart::getbyCategory($cc->product->category_id)
-            ->where('product_id', '!=', $cc->product->sitepart_id)
-            ->get();
-        $opwsc = $spt->products($opwsc); 
-        $opwsc->transform(function($v) use ($cc_detail){ 
-            $srp = 0;
-            dd($cc_detail);
-            return (object)[
-                'id'            => $v->id,
-                'branch_id'     => $v->branch_id,
-                'name'          => $v->name,
-                'description'   => $v->description,
-                'category_id'   => $v->category_id,
-                'image'         => $v->image,
-                'srp'           => 
-            ];
-        });
-
-
+ 
         // if same base product id in product id set the price to zero
         if($cc->base_product_id == $cc->product_id){
             $cc_detail->srp = 0;
@@ -63,6 +40,33 @@ class CartComponentController extends Controller
                 $cc_detail->srp = ($cc->product->srp - $cc->baseProduct->srp);
             } 
         }
+
+
+        /**
+         * get products with same category except this component id
+         * @opwsc Other Products with same category
+         */
+        $opwsc = SitePart::getbyCategory($cc->baseProduct->category_id)
+            ->where('product_id', '!=', $cc->product->sitepart_id)
+            ->get();
+        $opwsc = $spt->products($opwsc);
+
+        $bp = $cc->baseProduct;
+        $opwsc->transform(function ($v) use ($bp) {
+            $srp = 0;
+            if ($v->srp > $bp->srp) {
+                $srp = $v->srp - $bp->srp;
+            }
+            return (object)[
+                'id' => $v->id,
+                'branch_id' => $v->branch_id,
+                'name' => $v->name,
+                'description' => $v->description,
+                'category_id' => $v->category_id,
+                'image' => $v->image,
+                'srp' => $srp
+            ];
+        });
  
        
         return view(
