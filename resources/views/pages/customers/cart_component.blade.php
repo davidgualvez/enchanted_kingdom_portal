@@ -36,7 +36,7 @@
                                     <div class="extra">
                                         Additional Cost 
                                         <a class="ui green label">
-                                            {{ number_format( $cc_detail->srp , 2, '.', ',')  }}
+                                            {{ number_format( $cC->price , 2, '.', ',')  }}
                                             {{-- {{ $cc_detail->srp }} --}}
                                         </a>
                                     </div>
