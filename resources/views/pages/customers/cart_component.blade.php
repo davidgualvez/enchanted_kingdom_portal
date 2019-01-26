@@ -46,7 +46,7 @@
                     </div>
                     <div class="ten wide column ">  
                          {{-- three stackable  --}}
-                        <div class="ui four doubling cards" id="addons_selected_container">
+                        <div class="ui cards" id="addons_selected_container">
                             @foreach($opwsc as $item)
                             <div class="card">
                                 <div class="image"> 
