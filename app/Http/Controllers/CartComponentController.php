@@ -15,7 +15,7 @@ class CartComponentController extends Controller
     public function show($id,$cc_id){
         
         $cc = CartComponent::findByIdAndCartId($cc_id, $id); 
-          
+ 
         if(is_null($cc)){
             abort(404);
         }
@@ -27,7 +27,7 @@ class CartComponentController extends Controller
 
         $spt = new SitePartTransformer;  
         $cc_detail = (object)$spt->singleProduct($cc->product);
- 
+       
         // if same base product id in product id set the price to zero
         if($cc->base_product_id == $cc->product_id){
             $cc_detail->srp = 0;
@@ -39,8 +39,7 @@ class CartComponentController extends Controller
             if($cc->product->srp > $cc->baseProduct->srp  ){ 
                 $cc_detail->srp = ($cc->product->srp - $cc->baseProduct->srp);
             } 
-        }
-
+        } 
 
         /**
          * get products with same category except this component id
@@ -48,31 +47,47 @@ class CartComponentController extends Controller
          */
         $opwsc = SitePart::getbyCategory($cc->baseProduct->category_id)
             ->where('product_id', '!=', $cc->product->sitepart_id)
-            ->get();
-        $opwsc = $spt->products($opwsc);
-
+            ->get(); 
         $bp = $cc->baseProduct;
-        $opwsc->transform(function ($v) use ($bp) {
-            $srp = 0;
-            if ($v->srp > $bp->srp) {
-                $srp = $v->srp - $bp->srp;
-            }
-            return (object)[
-                'id' => $v->id,
-                'branch_id' => $v->branch_id,
-                'name' => $v->name,
-                'description' => $v->description,
-                'category_id' => $v->category_id,
-                'image' => $v->image,
-                'srp' => $srp
-            ];
-        });
- 
-       
+        $opwsc = $spt->cartComponentCategoryProducts($opwsc,$bp); 
+
         return view(
             'pages.customers.cart_component',
-            compact('cc_detail', 'opwsc')
+            compact('cc_detail', 'opwsc','cc')
         );
 
+    }
+
+    public function patch(Request $request, $id,$cc_id){
+        $cc = CartComponent::findByIdAndCartId($cc_id, $id);
+
+        if (is_null($cc)) {
+            abort(404);
+        }
+
+        $user = Auth::user();
+        if ($cc->cart->user->id != $user->id) {
+            abort(404);
+        }
+
+        // setting additional cost
+        $sp = SitePart::findByIdAndBranch($request->pid);
+        $additional_cost = 0;
+        if ($sp->srp > $cc->baseProduct->srp) {
+            $additional_cost = ($sp->srp - $cc->baseProduct->srp);
+        }
+
+        $cc->product_id = $request->pid;
+        $cc->price = $additional_cost;
+        $cc->save();
+
+        $cc->cart->additional_cost = $cc->qty * $cc->price;
+        $cc->cart->save();
+
+        return response()->json([
+            'success'=>true,
+            'status'=>200,
+            'message'=>'success'
+        ]); 
     }
 }

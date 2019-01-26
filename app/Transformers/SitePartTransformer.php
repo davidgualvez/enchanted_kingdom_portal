@@ -63,5 +63,28 @@ class SitePartTransformer {
          'image'        => $url
       ];
    }
+
+   public function cartComponentCategoryProducts($products,$bp){
+      $products->transform(function ($v) use ($bp) {
+         $srp = 0;
+         if ($v->srp > $bp->srp) {
+            $srp = $v->srp - $bp->srp;
+         }
+         
+         $url = Storage::url($v->img_url);
+
+         return (object)[
+            'id' => $v->sitepart_id,
+            'branch_id' => $v->branch_id,
+            'name' => $v->product_name,
+            'description' => $v->product_description,
+            'category_id' => $v->category_id,
+            'image' => $url,
+            'srp' => $srp
+         ];
+      });
+
+      return $products;
+   }
 	 
 }

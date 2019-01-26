@@ -2,7 +2,7 @@
 @section('title','My Cart Component')
 
 @section('js')
- 
+ <script src="/js/pages/cart-component.js"></script>
 @endsection
 
 @section('content')
@@ -44,7 +44,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="ten wide column "> 
+                    <div class="ten wide column ">  
                          {{-- three stackable  --}}
                         <div class="ui four doubling cards" id="addons_selected_container">
                             @foreach($opwsc as $item)
@@ -58,16 +58,17 @@
                                     </div> 
                                 </div>
                                 <div class="extra content">
-                                    <span class="right floated"> 
-                                        <div id="btn-product-73" class="ui tiny violet vertical animated  button" tabindex="0">
-                                            <div class="hidden content">
-                                                Select
-                                            </div>
-                                            <div class="visible content">
-                                                <i class="exchange icon">
-                                                </i>
-                                            </div>
-                                        </div>
+                                    <span class="right floated">  
+                                            <input type="text" name="product_id" value="{{ $item->id }}" hidden>
+                                            <div data-pid="{{$item->id}}" class="ui tiny violet vertical animated  button btn-change" tabindex="0">
+                                                <div class="hidden content">
+                                                    Select
+                                                </div>
+                                                <div class="visible content">
+                                                    <i class="exchange icon">
+                                                    </i>
+                                                </div>
+                                            </div>  
                                     </span>
                                     <span>
                                         <a class="ui tiny violet tag label">P {{ $item->srp }}

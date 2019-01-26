@@ -90,7 +90,10 @@
 						<td colspan="3" class="right aligned">
 							Additional cost 
 							<strong>
-								0.00
+							{{ 
+								number_format( $component->qty * $component->price , 2, '.', ',')  
+							}}
+								{{-- {{  }} 0.00 --}}
 							</strong>
 						</td>
 						{{-- <td></td>
