@@ -137,19 +137,19 @@ function dataDisplayerPurchaseHistory(data, from) {
         } 
         var virtualReceipt = '';
         virtualReceipt += '<div class="ui green mini button vr '+btn_or_disabler+'"> <i class="print icon"></i>Receipt</div>'+
-            '<div class="ui flowing popup top left transition hidden">'+
-                '<div class="ui two column divided center aligned grid">'+
-                    '<div class="column">'+
-                        // '<h4 class="ui header">Basic Plan</h4>'+
-                        // '<p><b>2</b> projects, $10 a month</p>'+
-                        // '<div class="ui blue button btn-or-preview" data-id="'+value.sales_order_id+'">Preview</div>'+
-                    '</div>'+
-                    '<div class="column">'+
+            // '<div class="ui flowing popup top left transition hidden">'+
+            //     '<div class="ui two column divided center aligned grid">'+
+            //         '<div class="column">'+
+            //             // '<h4 class="ui header">Basic Plan</h4>'+
+            //             // '<p><b>2</b> projects, $10 a month</p>'+
+            //             // '<div class="ui blue button btn-or-preview" data-id="'+value.sales_order_id+'">Preview</div>'+
+            //         '</div>'+
+            //         '<div class="column">'+
                         // '<h4 class="ui header">Business Plan</h4>'+
                         // '<p><b>5</b> projects, $20 a month</p>'+
                         '<div class="ui red button btn-or-download" data-id="' + value.sales_order_id +'">Download</div>'+
-                    '</div>'+ 
-                '</div>'+
+                //     '</div>'+ 
+                // '</div>'+
             '</div>';
 
         items.append(
