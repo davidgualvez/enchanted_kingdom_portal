@@ -32,13 +32,21 @@
                                     </div>
                                     <div class="description">
                                         <p></p>
-                                    </div> --}}
-                                    <div class="extra">
+                                    </div> --}} 
+                                    <div class="extra"> 
                                         Additional Cost 
-                                        <a class="ui green label">
+                                        <div class="ui label">
+                                            @if($cc->price <= 0)
+                                            <strong>FREE</strong>
+                                            @else 
                                             {{ number_format( $cc->price , 2, '.', ',')  }}
-                                            {{-- {{ $cc_detail->srp }} --}}
-                                        </a>
+                                            @endif
+                                            <div class="detail">Per Qty</div>
+                                        </div>
+                                        {{-- <a class="ui green label">
+                                            {{ number_format( $cc->price , 2, '.', ',')  }}
+                                          
+                                        </a> --}}
                                     </div>
                                 </div>
                             </div>
@@ -71,7 +79,17 @@
                                             </div>  
                                     </span>
                                     <span>
-                                        <a class="ui tiny violet tag label">P {{ $item->srp }}
+                                         {{-- <div class="ui label">
+                                            {{ number_format( $cc->price , 2, '.', ',')  }}
+                                            <div class="detail">Per Qty</div>
+                                        </div> --}}
+                                        <a class="ui tiny violet tag label">
+                                            @if($item->srp <= 0)
+                                            <strong>FREE</strong>
+                                            @else 
+                                            P {{ number_format( $item->srp , 2, '.', ',')  }}
+                                            @endif
+                                            <div class="detail">Per Qty</div>
                                         </a>
                                     </span>
                                 </div>
