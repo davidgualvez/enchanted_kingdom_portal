@@ -110,7 +110,8 @@
   	
   	<div class="ui fluid card" style="">
   		<div class="image">
-  		   <img src="/assets/images/route.png" style="padding: 50px;">
+  		   {{-- <img src="/assets/images/route.png" style="padding: 50px;"> --}}
+				 <img src="/assets/images/ek-map.jpg" style="padding: 10px;">
   		</div>
 	    <div class="content">
 	      <div class="header">Site Map!</div>
@@ -118,9 +119,9 @@
 	        First time going to Enchanted Kingdom? Check out our handy park map below to know where to go on the day of your visit!
 	      </div>
 	    </div>
-	    <a href="/site-map" class="ui bottom attached button" id="step3">
+	    {{-- <a href="/site-map" class="ui bottom attached button" id="step3">
 	    	Show
-	    </a> 
+	    </a>  --}}
   	</div>
   </div>
 
