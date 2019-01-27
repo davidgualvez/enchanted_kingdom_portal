@@ -43,7 +43,7 @@
 					</td> 
   			      	<td class="center aligned">
   			      		<i class="question circle outline icon" data-title="*Note" data-content="The item will be automatically remove if the quantity is less than or equal to zero."></i>
-  			      		
+ 
   			      		<form action="/cart/{{ $cart['cart_id'] }}/decrease" method="post" style="display: inline;">
   			      			@csrf
 	  			      		<button type="submit" class="ui icon mini red button btn-decrease">

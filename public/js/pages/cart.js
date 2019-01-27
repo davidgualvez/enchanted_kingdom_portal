@@ -285,12 +285,14 @@ function btnSideDish(){
 
 function btnQtyDecrease(){
 	$('.btn-decrease').on('click', function(){
-		$(this).attr('disable','disable');
+		var me = $(this); 
+		me.addClass('disabled') 
 	});
 }
 
 function btnQtyIncrease() {
 	$('.btn-increase').on('click', function () {
-		$(this).attr('disable', 'disable');
+		var me = $(this);
+		me.addClass('disabled')
 	});
 }
