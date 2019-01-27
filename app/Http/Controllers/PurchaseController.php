@@ -29,7 +29,9 @@ use App\AppServices\TaxServices;
 use App\AppServices\CustomerServices;
 use App\AppServices\TurnSiteServices;
  
-use DB; 
+use DB;
+use App\KitchenOrder;
+use App\AppServices\Helper; 
 
 class PurchaseController extends Controller 
 {
@@ -47,6 +49,8 @@ class PurchaseController extends Controller
         try{
 
             DB::beginTransaction();
+
+            $helper = new Helper;
 
             $blin = new BranchLastIssuedNumberServices;
             $blin->findOrCreate();
@@ -196,7 +200,8 @@ class PurchaseController extends Controller
                         'is_food'       => $item->is_food
                     ];
                     $obj_sitepart = (object)$arr_sitepart;
-                    if (!$this->saveToSalesOrderDetail($user, $obj_sitepart, $item->qty, $new_sales_order_id)) {
+                    $sod = $this->saveToSalesOrderDetail($user, $obj_sitepart, $item->qty, $new_sales_order_id);
+                    if (!$sod) {
                         DB::rollback();
                         return response()->json([
                             'success' => false,
@@ -204,6 +209,50 @@ class PurchaseController extends Controller
                             'message' => 'Error saving in Sales Order Detail.'
                         ]);
                     };
+
+                    //saving to kitchen 
+                    $item->cart->product->components->each(function ($v, $k) use ($blin,$pt,$new_sales_order_id,$item,$helper,$now){
+                        if($v->modifiable != 1){ 
+                             // saving none modifiable item into kitchen 
+                            $ko = new KitchenOrder;
+                            $ko->branch_id          = config('app.branch_id');
+                            $ko->ko_id              = $blin->getNewIdForKitchenOrder();
+                            $ko->transact_type      = 2;
+                            $ko->header_id          = $pt->sales_order_id;
+                            $ko->detail_id          = $new_sales_order_id;
+                            $ko->part_id            = $item->product_id;
+                            $ko->comp_id            = (int)$v->product_id;
+                            $ko->location_id        = $v->componentProduct->kitchen_loc;
+                            $ko->qty                = (int)$v->quantity;
+                            $ko->balance            = (int)$v->quantity;
+                            $ko->status             = 'P';
+                            $ko->created_at         = $now;
+                            $ko->created_date       = $helper->getClarionDate($now);
+                            $ko->created_time       = $helper->getClarionTime($now);
+                            $ko->save();  
+                        } 
+                    }); 
+                    
+                    //saving cart component to the kitchen
+                    $item->cart->components->each(function ($v, $k) use ($blin, $pt, $new_sales_order_id, $item, $helper, $now) {
+                        $ko = new KitchenOrder;
+                        $ko->branch_id          = config('app.branch_id');
+                        $ko->ko_id              = $blin->getNewIdForKitchenOrder();
+                        $ko->transact_type      = 2;
+                        $ko->header_id          = $pt->sales_order_id;
+                        $ko->detail_id          = $new_sales_order_id;
+                        $ko->part_id            = $item->product_id;
+                        $ko->comp_id            = (int)$v->product_id;
+                        $ko->location_id        = $v->product->kitchen_loc;
+                        $ko->qty                = (int)$v->qty;
+                        $ko->balance            = (int)$v->qty;
+                        $ko->status             = 'P';
+                        $ko->created_at         = $now;
+                        $ko->created_date       = $helper->getClarionDate($now);
+                        $ko->created_time       = $helper->getClarionTime($now);
+                        $ko->save();
+                    });
+
                 }
 
                 /**
@@ -395,9 +444,10 @@ class PurchaseController extends Controller
             // if something went wrong
             DB::rollback(); 
             return response()->json([
-                'success' => false,
-                'status' => 500,
-                'message' => $e->getMessage()
+                'success'   => false,
+                'status'    => 500,
+                'message'   => 'Something went wrong. \nPlease try again.'
+                // 'message' => $e->getMessage()
             ]); 
         }  
 

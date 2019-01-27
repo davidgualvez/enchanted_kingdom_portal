@@ -27,10 +27,11 @@
 	{{-- @include('pages.customers.components.today_special') --}}
 	{{-- what to do --}}
 	<div  data-intro='This is the area where you can find all the items with big discount.' >
-	<h4 class="ui horizontal divider header">
+	<br>
+	<h2 class="ui horizontal divider header">
 	  <i class="gift icon"></i>
 	 	Today's Specials
-	</h4> 
+	</h2> 
 	@if( !$dash->isEmpty() )
 
 		<div  style="display: flex;align-items: center!important;flex-direction: column;/* justify-items: center; */">

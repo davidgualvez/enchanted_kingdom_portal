@@ -126,6 +126,16 @@ class BranchLastIssuedNumberServices {
 		return $this->blin->transaction_no;
 	}
 
-	
+	public function getNewIdForKitchenOrder(){
+		$this->findOrCreate();
+		$this->blin->kitchen_order_no += 1;
+		$this->blin->save();
+		return $this->blin->kitchen_order_no;
+	}
+
+	public function getKitchenOrder()
+	{ 
+		return $this->blin->kitchen_order_no;
+	}
 
 }

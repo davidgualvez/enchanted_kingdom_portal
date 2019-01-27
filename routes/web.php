@@ -13,15 +13,24 @@
 
 //TEST GROUND
 use App\AppServices\TaxServices;
-Route::get('/default', function(){
-    $discount = [
-        'isTrue'    => true,
-        'name'      => 'sc',
-        'percent'   => .20
-    ];
-    $tax = new TaxServices($discount);
+use App\AppServices\Helper;
+use Carbon\Carbon;
 
-    return $tax->result();
+Route::get('/default', function(){
+    $now = Carbon::now();
+    $h = new Helper;
+
+    dd(
+        $h->getClarionTime($now)
+    );
+    // $discount = [
+    //     'isTrue'    => true,
+    //     'name'      => 'sc',
+    //     'percent'   => .20
+    // ];
+    // $tax = new TaxServices($discount);
+
+    // return $tax->result();
 	//return view('pages.playground.tour');
 });
 //END

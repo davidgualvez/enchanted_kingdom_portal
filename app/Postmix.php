@@ -65,6 +65,10 @@ class Postmix extends Model
         return $this->belongsTo('App\SitePart', 'PARTSID');
     }
 
+    public function componentProduct(){
+        return $this->belongsTo('App\SitePart', 'PARTSID');
+    }
+
     /**
      * Query Scope
      */ 

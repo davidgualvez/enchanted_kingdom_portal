@@ -19,7 +19,7 @@ class Helper
         $result = $startOfTheDay->diffInSeconds($date);
         //$result = $startOfTheDay->diffInRealMilliseconds($date);
 
-        return $result;
+        return $result * 100;
     }
 
 }

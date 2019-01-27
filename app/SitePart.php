@@ -37,7 +37,7 @@ class SitePart extends Model
         'pre_part_no'           => 'PREPARTNO',     // this is use to identify the admission 0|1  to exclude from the list
         'is_food'               => 'MSGROUP',       // food 
         'is_unli'               => 'SSBUFFER', 
-        'postmix'               => 'POSTMIX',
+        'postmix'               => 'POSTMIX', 
 
         'kitchen_loc'           => 'PRODGRP',       // KITCHEN LOCATION 
         
