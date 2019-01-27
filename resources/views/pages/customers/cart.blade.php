@@ -46,7 +46,7 @@
   			      		
   			      		<form action="/cart/{{ $cart['cart_id'] }}/decrease" method="post" style="display: inline;">
   			      			@csrf
-	  			      		<button type="submit" class="ui icon mini red button">
+	  			      		<button type="submit" class="ui icon mini red button btn-decrease">
 	  		      			    <i class="minus icon"></i>
 	  		      			</button>
 	  		      		</form>
@@ -55,7 +55,7 @@
   						</div>
   						<form action="/cart/{{ $cart['cart_id'] }}/increase" method="post" style="display: inline;">
   							@csrf
-							<button type="submit" class="ui icon mini green button">
+							<button type="submit" class="ui icon mini green button btn-increase">
 			      			    <i class="plus icon"></i>
 			      			</button> 
   						</form> 

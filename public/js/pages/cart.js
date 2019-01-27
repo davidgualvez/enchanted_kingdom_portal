@@ -9,7 +9,7 @@ $(document).ready(function(){
  	checkOut();
  	order();
  	// checkOutReward(); 
-	 ontest();
+	ontest();
 	 
 	//  setTimeout(() => {
 	// 	 initGuide();
@@ -17,6 +17,9 @@ $(document).ready(function(){
 
 	showAddons();
 	addonsBack();
+
+	btnQtyDecrease();
+	btnQtyIncrease();
 });
  
 
@@ -277,5 +280,17 @@ function btnSideDish(){
 
 			console.log(response.data);
 		});
+	});
+}
+
+function btnQtyDecrease(){
+	$('.btn-decrease').on('click', function(){
+		$(this).attr('disable','disable');
+	});
+}
+
+function btnQtyIncrease() {
+	$('.btn-increase').on('click', function () {
+		$(this).attr('disable', 'disable');
 	});
 }
