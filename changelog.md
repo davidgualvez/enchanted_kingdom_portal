@@ -1,5 +1,8 @@
 # Change Log
 
+### Jan 27, 2019
+- Added Kitchen functionality
+
 ### Jan 26, 2019 
 - Remove the added is_component_of_pid(int) column in HODB carts table.
 - Added new Table named carts_component

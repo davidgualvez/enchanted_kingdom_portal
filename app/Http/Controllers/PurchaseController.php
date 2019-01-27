@@ -210,8 +210,10 @@ class PurchaseController extends Controller
                         ]);
                     };
 
+                    // dd($sod);
+
                     //saving to kitchen 
-                    $item->cart->product->components->each(function ($v, $k) use ($blin,$pt,$new_sales_order_id,$item,$helper,$now){
+                    $item->cart->product->components->each(function ($v, $k) use ($blin,$pt, $sod,$item,$helper,$now){
                         if($v->modifiable != 1){ 
                              // saving none modifiable item into kitchen 
                             $ko = new KitchenOrder;
@@ -219,7 +221,7 @@ class PurchaseController extends Controller
                             $ko->ko_id              = $blin->getNewIdForKitchenOrder();
                             $ko->transact_type      = 2;
                             $ko->header_id          = $pt->sales_order_id;
-                            $ko->detail_id          = $new_sales_order_id;
+                            $ko->detail_id          = $sod;
                             $ko->part_id            = $item->product_id;
                             $ko->comp_id            = (int)$v->product_id;
                             $ko->location_id        = $v->componentProduct->kitchen_loc;
@@ -234,13 +236,13 @@ class PurchaseController extends Controller
                     }); 
                     
                     //saving cart component to the kitchen
-                    $item->cart->components->each(function ($v, $k) use ($blin, $pt, $new_sales_order_id, $item, $helper, $now) {
+                    $item->cart->components->each(function ($v, $k) use ($blin, $pt, $sod, $item, $helper, $now) {
                         $ko = new KitchenOrder;
                         $ko->branch_id          = config('app.branch_id');
                         $ko->ko_id              = $blin->getNewIdForKitchenOrder();
                         $ko->transact_type      = 2;
                         $ko->header_id          = $pt->sales_order_id;
-                        $ko->detail_id          = $new_sales_order_id;
+                        $ko->detail_id          = $sod;
                         $ko->part_id            = $item->product_id;
                         $ko->comp_id            = (int)$v->product_id;
                         $ko->location_id        = $v->product->kitchen_loc;
@@ -259,7 +261,56 @@ class PurchaseController extends Controller
                  * FOR NONE POSTMIX BUT FOOD
                  */
                 if ($item->is_postmix == 0 && $item->is_food == 1) {
+                    /**
+                     * if the product is a group of wallet
+                     * do not allow to proceed and display a warning message
+                     */
+                    if ($item->group_id == config('app.group_wallet_id')) {
+                        DB::rollback();
+                        return response()->json([
+                            'success' => false,
+                            'status' => 401,
+                            'message' => 'You cannot purchase Load using a Load-Wallet'
+                        ]);
+                    }
 
+                    /**
+                     * save to sales order details
+                     */
+                    $arr_sitepart = [
+                        'sitepart_id' => $item->product_id,
+                        'product_name' => $item->product_name,
+                        'srp' => $item->price,
+                        'is_unli' => $item->is_unli,
+                        'is_food' => $item->is_food
+                    ];
+                    $obj_sitepart = (object)$arr_sitepart;
+                    $sod = $this->saveToSalesOrderDetail($user, $obj_sitepart, $item->qty, $new_sales_order_id);
+                    if (!$sod) {
+                        DB::rollback();
+                        return response()->json([
+                            'success' => false,
+                            'status' => 401,
+                            'message' => 'Error saving in Sales Order Detail.'
+                        ]);
+                    };
+
+                    $ko = new KitchenOrder;
+                    $ko->branch_id          = config('app.branch_id');
+                    $ko->ko_id              = $blin->getNewIdForKitchenOrder();
+                    $ko->transact_type      = 2;
+                    $ko->header_id          = $pt->sales_order_id;
+                    $ko->detail_id          = $sod;
+                    $ko->part_id            = $item->product_id;
+                    $ko->comp_id            = $item->product_id;
+                    $ko->location_id        = $item->cart->product->kitchen_loc;
+                    $ko->qty                = (int)$v->qty;
+                    $ko->balance            = (int)$v->qty;
+                    $ko->status             = 'P';
+                    $ko->created_at         = $now;
+                    $ko->created_date       = $helper->getClarionDate($now);
+                    $ko->created_time       = $helper->getClarionTime($now);
+                    $ko->save();
                 }
 
                 /**
@@ -799,7 +850,7 @@ class PurchaseController extends Controller
         //saving
         $pd->save();
         
-        return $pd;
+        return $new_sales_order_detail_id;
     }
 
     private function saveToPurchaseTransactionDetail($item, $pt, $sequence){
