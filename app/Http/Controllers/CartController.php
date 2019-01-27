@@ -296,7 +296,11 @@ class CartController extends Controller
 
     public function decrease($id){
         $user = Auth::user(); 
-        $cart = Cart::find($id);
+		$cart = Cart::find($id);
+		
+		if( is_null($cart) ){
+			return back()->with('error', 'Product not found on your cart.');
+		}
         
         if($cart->user_id != $user->id){
             return back()->with('error', 'Item not belong to the user.');
