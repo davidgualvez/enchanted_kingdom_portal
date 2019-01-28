@@ -40,7 +40,7 @@ class SitePart extends Model
         'postmix'               => 'POSTMIX',       // 
 
         'kitchen_loc'           => 'PRODGRP',       // KITCHEN LOCATION 
-        
+        'parts_type'            => 'PARTSTYPE',     // identifier if this product will be save to the kitchen
         // TAX PART
         'is_vat'                => 'VAT',               // is vatable
         'admission_fee'         => 'ADMISSIONFEE',      // admission fee amount
