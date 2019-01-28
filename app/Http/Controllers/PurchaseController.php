@@ -497,8 +497,8 @@ class PurchaseController extends Controller
             return response()->json([
                 'success'   => false,
                 'status'    => 500,
-                'message'   => 'Something went wrong. \nPlease try again.'
-                // 'message' => $e->getMessage()
+                //'message'   => 'Something went wrong. \nPlease try again.'
+                 'message' => $e->getMessage()
             ]); 
         }  
 
