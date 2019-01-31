@@ -222,7 +222,7 @@
 
 			  				  <div class="or"></div> --}}
 
-			  				  <button disabled class="ui positive button step4" id="checkout">
+			  				  <button disabled class="ui positive button step4 right floated" id="checkout">
 			  				  	<i class="check icon"></i> Purchase
 			  				  </button>
 			  				{{-- </div> --}}
