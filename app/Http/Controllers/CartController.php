@@ -29,12 +29,40 @@ class CartController extends Controller
         $carts  = Cart::findByUserAndType($user->id,'wallet');  
  
         $ts = new TaxServices;
-        $result = $ts->items($carts, $customer, $user);
+		$result = $ts->items($carts, $customer, $user);
+
+		$carts_modifiable_components = null;
+		$carts_none_modifiable_components = null;
+		if(	count($result['items']) > 0 ){
+			$carts_modifiable_components = $result['items'][0]['cart']->components->filter( function($v) {
+				if ($v->base_product_id == $v->product_id) {
+					return $v;
+				}
+			});
+
+			$carts_none_modifiable_components = $result['items'][0]['cart']->components->filter( function($v) {
+				if ($v->base_product_id != $v->product_id) {
+					return $v;
+				}
+			});
+		}
+		  
+		// return [
+		// 	"_id" 				=> $v->id,
+		// 	"cart_id" 			=> $v->cart_id,
+		// 	"base_product_id" 	=> $v->base_product_id,
+		// 	"product_id" 		=> $v->product_id,
+		// 	"base_qty" 			=> $v->base_qty,
+		// 	"qty" 				=> $v->qty,
+		// 	"price" 			=> $v->price
+		// ];
 
         return view('pages.customers.cart', 
             compact(
                 'result',
-                'customer'
+				'customer',
+				'carts_modifiable_components',
+				'carts_none_modifiable_components'
                 )
         );
 	} 

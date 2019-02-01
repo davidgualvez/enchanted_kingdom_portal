@@ -23,23 +23,11 @@
 		  <tbody>  
 
 			<?php $ctr = 0; ?>
-		  	@forelse($result['items'] as $key=>$cart) 
-
-
-				{{-- @if($cart['product_id'] == $cart['component_id'])
-				@endif --}}
-
+		  	@forelse($result['items'] as $key=>$cart)  
   			    <tr>
   			    	<td class="ui small header"> {{ ++$key }}</td>
   			      	<td>
-						{{ $cart['product_name'] }} 
-						&nbsp;
-						{{-- ADDONS BUTTON --}}
-						{{-- @if($cart['is_postmix'] == 1 && $cart['is_food']== 1)
-							<button  data-id="{{ $cart['product_id'] }}" class="ui small icon basic button addons">
-								<i class="icon plus"></i> 
-							</button>
-						@endif --}}
+						{{ $cart['product_name'] }}  
 					</td> 
   			      	<td class="center aligned">
   			      		<i class="question circle outline icon" data-title="*Note" data-content="The item will be automatically remove if the quantity is less than or equal to zero."></i>
@@ -62,18 +50,60 @@
   			      	</td>
   			      	<td class="center aligned">{{ number_format( $cart['price'] , 2, '.', ',')  }}</td>
   			      	<td class="right aligned">
-								{{ number_format( $cart['scpwd_discount'] , 2, '.', ',')  }}
-  			      		{{-- @if($cart['discount_type'] == 'real')
-  			      			{{ number_format( $cart['discount_amount'] , 2, '.', ',')  }}
-  			      		@elseif($cart['discount_type'] == 'percent')
-  			      			{{ $cart['discount_value'].'%'.' == '.number_format($cart['discount_amount'] , 2, '.', ',') }}
-  			      		@endif --}}
-  			      		
+						{{ number_format( $cart['scpwd_discount'] , 2, '.', ',')  }}  
   			      	</td>
   			      	<td class="right aligned" style="padding-right: 25px;">{{ number_format( $cart['net_amount'] , 2, '.', ',') }}</td>
   			    </tr>  
- 
-				@foreach ($cart['cart']->components as $component ) 
+
+				@foreach($carts_modifiable_components as $key=>$cmc)
+					<tr class="positive">
+						<td></td>
+						<td>
+							<i class="caret right icon"></i>
+							{{ $cmc->product->product_description }}
+							<a href="/cart/{{$cart['cart_id']}}/component/{{$cmc->id}}" class="ui mini icon basic button" style="float:right">
+								<i class="edit icon"></i>
+								PRESS TO CHANGE
+							</a>
+						</td>
+						<td class="center aligned">
+							{{ $cmc->qty }}
+						</td>
+						<td colspan="3" class="right aligned">
+							Additional cost 
+							<strong>
+							{{ 
+								number_format( $cmc->qty * $cmc->price , 2, '.', ',')  
+							}} 
+							</strong>
+						</td>
+					</tr>
+					@foreach($carts_none_modifiable_components as $cnmc)
+						@if($cnmc->base_product_id == $cmc->base_product_id)
+							<tr class="positive">
+								<td></td>
+								<td>
+									&nbsp;
+									&nbsp;
+									<i class="caret right icon"></i>
+									{{ $cnmc->product->product_description }} 
+								</td>
+								<td class="center aligned">
+									{{ $cnmc->qty }}
+								</td>
+								<td colspan="3" class="right aligned">
+									Additional cost 
+									<strong>
+									{{ 
+										number_format( $cnmc->qty * $cnmc->price , 2, '.', ',')  
+									}} 
+									</strong>
+								</td>
+							</tr>
+						@endif
+					@endforeach
+				@endforeach
+				{{-- @foreach ($cart['cart']->components as $component ) 
 					<tr class="positive">
 						<td></td>
 						<td>
@@ -92,14 +122,11 @@
 							<strong>
 							{{ 
 								number_format( $component->qty * $component->price , 2, '.', ',')  
-							}}
-								{{-- {{  }} 0.00 --}}
+							}} 
 							</strong>
-						</td>
-						{{-- <td></td>
-						<td></td> --}}
+						</td> 
 					</tr>
-				@endforeach
+				@endforeach --}}
 		  	@empty
 		  		<div class="center aligned">
 		  			<h3 class="ui header center aligned">Nothing to display..</h3>

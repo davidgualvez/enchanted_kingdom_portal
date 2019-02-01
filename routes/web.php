@@ -107,7 +107,7 @@ Route::post('/cart/update_cart', 				'CartController@updateCart');//pending
 
 Route::post('/cart/{id}/increase', 				'CartController@increase');
 Route::post('/cart/{id}/decrease',				'CartController@decrease');
-
+ 
 Route::get('/cart/{id}/component/{cc_id}',      'CartComponentController@show');
 Route::patch('/cart/{id}/component/{cc_id}',    'CartComponentController@patch');
 
