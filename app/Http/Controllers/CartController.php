@@ -317,7 +317,7 @@ class CartController extends Controller
 		$cart->save();
 		
 		// update components with new quantity
-		$this->updateComponentsQty($cart);
+		$this->updateComponentsQty($cart, 'increase');
 
         return back()->with('message', 'Item has been updated.');
     }
@@ -344,7 +344,7 @@ class CartController extends Controller
 		$cart->save();
 		
 		// update components with new quantity
-		$this->updateComponentsQty($cart);
+		$this->updateComponentsQty($cart, 'decrease');
 
 
         return back()->with('message', 'Item has been updated.');
@@ -599,14 +599,54 @@ class CartController extends Controller
 		}
 	} 
 
-	private function updateComponentsQty($cart){
+	private function updateComponentsQty($cart,$type){
 
-		foreach ($cart->components as $component) {
-			$component->qty = $component->base_qty * $cart->qty;
-			$component->save();
-		} 
+		if($type == 'increase'){
+			foreach ($cart->components as $component) {
+				if ($component->base_product_id == $component->product_id) {
+					$component->qty += $component->base_qty;
+					$component->save();
+				}
+			}
+			return true;
+		}
 
-		return true;
+		if ($type == 'decrease') {
+
+			$filtered = $cart->components->filter(function ($v) {
+				if ($v->base_product_id == $v->product_id) {
+					return $v;
+				}
+			});
+
+			// execute the deduction  
+			foreach ($filtered as $key => $value) {
+				# code...
+				$egoc = $value->cart->components->filter( function($v) use ($value){ // each group of components
+					if($value->base_product_id == $v->base_product_id){
+						return $v;
+					}
+				});
+
+				$qty = $value->base_qty;
+				$egoc = $egoc->reverse();
+				foreach ($egoc as $_egoc) {
+					# code... 
+					if($qty != 0){
+						if ($_egoc->qty > $qty) {
+							$_egoc->qty -= $qty;
+							$_egoc->save();
+							$qty = 0;
+						}else{
+							$qty -= $_egoc->qty;
+							$_egoc->delete();
+						}
+					} 
+				}
+			}	
+		}
+
+		
 	}
 
 	private function removeComponents($cart){
