@@ -110,7 +110,7 @@ Route::post('/cart/{id}/decrease',				'CartController@decrease');
  
 Route::get('/cart/{id}/component/{cc_id}',      'CartComponentController@show');
 Route::patch('/cart/{id}/component/{cc_id}',    'CartComponentController@patch');
-
+Route::delete('/cart/{id}/component/{cc_id}',   'CartComponentController@destroy');
 
 
 //CART points

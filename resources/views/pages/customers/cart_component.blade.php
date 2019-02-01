@@ -20,7 +20,7 @@
                         <div class="ui items">
                             <div class="item">
                                 <div class="image"> 
-                                    <a class="ui green left corner label">
+                                    <a class="ui blue left corner label">
                                         <i class="icon"> <strong> {{ $base_component->qty }} </strong> </i>
                                     </a>
                                     <img src="{{ $base_component->image}}">
@@ -58,13 +58,13 @@
                                 @foreach ($cc_others as $c)
                                     <div class="item">
                                         <div class="image"> 
-                                            <a class="ui green left corner label">
+                                            <a class="ui blue left corner label">
                                                 <i class="icon"> <strong> {{ $c->qty }} </strong> </i>
                                             </a>
-                                            <a class="ui red right corner label">
+
+                                            <a data-cc_id="{{$c->id}}" class="ui red right corner label btn-deduct_component">
                                                 <i class="minus icon"></i>
-                                            </a>
-                                            
+                                            </a> 
                                             <img src="{{ $c->image}}"> 
                                         </div>
                                         <div class="content">

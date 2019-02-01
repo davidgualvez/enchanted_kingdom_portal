@@ -35,6 +35,7 @@ class CartComponentController extends Controller
         $cc_others->transform( function($v){
             $base_component_url = Storage::url($v->product->img_url);
             return (object)[
+                'id'            => $v->id,
                 'description'   => $v->product->product_description,
                 'price'         => $v->price,
                 'qty'           => $v->qty,
@@ -48,12 +49,13 @@ class CartComponentController extends Controller
 
         $base_component_url = Storage::url($cc->product->img_url);
         $base_component = (object)[
+            'id'            => $cc->id,
             'description'   => $cc->product->product_description,
             'price'         => $cc->price,
             'qty'           => $cc->qty,
             'image'         => $base_component_url
-        ];
-       
+        ]; 
+
         // // if same base product id in product id set the price to zero
         // if($cc->base_product_id == $cc->product_id){
         //     $cc_detail->srp = 0;
@@ -75,6 +77,7 @@ class CartComponentController extends Controller
         $opwsc = SitePart::getbyCategory($cc->baseProduct->category_id)
             ->where('product_id', '!=', $cc->product->sitepart_id)
             ->get(); 
+
         $bp = $cc->baseProduct;
         $opwsc = $spt->cartComponentCategoryProducts($opwsc,$bp); 
 
@@ -122,7 +125,7 @@ class CartComponentController extends Controller
                         ->where('base_product_id', $cc->base_product_id)
                         ->where('product_id', $request->pid)
                         ->first(); 
-                        
+
         if( is_null($new_cc) ){
             $new_cc = new CartComponent;
             $new_cc->cart_id            = $id;
@@ -153,5 +156,36 @@ class CartComponentController extends Controller
             'status'=>200,
             'message'=>'success'
         ]); 
+    }
+
+    public function destroy(Request $request, $id, $cc_id){
+        //dd($request->cc_id , $id, $cc_id);
+        $cc = CartComponent::findByIdAndCartId($cc_id, $id);
+
+        $ccc = CartComponent::find($request->cc_id);
+        if( is_null($ccc) ){ 
+            return response()->json([
+                'success' => false,
+                'status' => 401,
+                'message' => 'no record'
+            ]);  
+        }
+
+        //check qty 
+        $cc->qty += 1;
+        $cc->save();
+
+        $ccc->qty -= 1;
+        $ccc->save();
+
+        if($ccc->qty == 0){
+            $ccc->delete();
+        }
+
+        return response()->json([
+            'success'   => true,
+            'status'    => 200,
+            'message'   => 'success'
+        ]);  
     }
 }
