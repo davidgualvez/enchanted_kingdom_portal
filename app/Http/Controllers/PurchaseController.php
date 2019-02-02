@@ -411,16 +411,16 @@ class PurchaseController extends Controller
                 } 
                 
             }
-            
-            $pt->gross_total            = $result->gross_amount;
-            $pt->scpwd_discount         = $result->scpwd_discount;
-            $pt->net_total              = $result->net_amount;
-            $pt->vatable_sales_total    = $result->vatable_sales;
-            $pt->vat_exempt_sales_total = $result->vat_exempt_sales;
+            dd($result);
+            $pt->gross_total                = $result->gross_amount;
+            $pt->scpwd_discount             = $result->scpwd_discount;
+            $pt->net_total                  = $result->net_amount;
+            $pt->vatable_sales_total        = $result->vatable_sales;
+            $pt->vat_exempt_sales_total     = $result->vat_exempt_sales;
             $pt->vat_zerorated_sales_total  = $result->vat_zerorated_sales;
-            $pt->vat_amount_total       = $result->vat_amount;
-            $pt->r_vat_amount_total     = $result->r_vat_amount;
-            $pt->admission_sales_total  = $result->admission_sales;
+            $pt->vat_amount_total           = $result->vat_amount;
+            $pt->r_vat_amount_total         = $result->r_vat_amount;
+            $pt->admission_sales_total      = $result->admission_sales;
             //$pt->amusement_tax_exempt_sales_total   = $result->amusement_tax_exempt_sales;
             //$pt->amusement_zerorated_sales_total    = $result->amusement_zerorated_sales;
             $pt->amusement_tax_amount_total     = $result->amusement_tax_amount;
