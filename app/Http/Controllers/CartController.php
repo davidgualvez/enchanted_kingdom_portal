@@ -56,7 +56,10 @@ class CartController extends Controller
 		// 	"qty" 				=> $v->qty,
 		// 	"price" 			=> $v->price
 		// ];
-
+		// dd(
+		// 	$carts_modifiable_components,
+		// 	$carts_none_modifiable_components
+		// );
         return view('pages.customers.cart', 
             compact(
                 'result',

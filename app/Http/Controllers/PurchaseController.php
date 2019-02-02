@@ -486,6 +486,9 @@ class PurchaseController extends Controller
             $virtual_points += $eps->earned_points;
 
             //update purchase header for total;
+            dd(
+                $result
+            );
             Purchase::where('sales_order_id', $new_sales_order_id)
                 ->update([
                     'total_amount'      => $result->gross_amount,
@@ -651,8 +654,7 @@ class PurchaseController extends Controller
     }
 
     private function saveToPurchaseTransactionDetail($item, $pt, $sequence){
-
-       
+  
         $now = Carbon::now();
         $ptd = new PurchaseTransactionDetail;
         $ptd->purchase_transaction_id           = $pt->id;

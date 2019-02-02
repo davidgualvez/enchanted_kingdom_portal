@@ -56,52 +56,54 @@
   			    </tr>  
 
 				@foreach($carts_modifiable_components as $key=>$cmc)
-					<tr class="positive">
-						<td></td>
-						<td>
-							<i class="caret right icon"></i>
-							{{ $cmc->product->product_description }}
-							<a href="/cart/{{$cart['cart_id']}}/component/{{$cmc->id}}" class="ui mini icon basic button" style="float:right">
-								<i class="edit icon"></i>
-								PRESS TO CHANGE
-							</a>
-						</td>
-						<td class="center aligned">
-							{{ $cmc->qty }}
-						</td>
-						<td colspan="3" class="right aligned">
-							Additional cost 
-							<strong>
-							{{ 
-								number_format( $cmc->qty * $cmc->price , 2, '.', ',')  
-							}} 
-							</strong>
-						</td>
-					</tr>
-					@foreach($carts_none_modifiable_components as $cnmc)
-						@if($cnmc->base_product_id == $cmc->base_product_id)
-							<tr class="positive">
-								<td></td>
-								<td>
-									&nbsp;
-									&nbsp;
-									<i class="caret right icon"></i>
-									{{ $cnmc->product->product_description }} 
-								</td>
-								<td class="center aligned">
-									{{ $cnmc->qty }}
-								</td>
-								<td colspan="3" class="right aligned">
-									Additional cost 
-									<strong>
-									{{ 
-										number_format( $cnmc->qty * $cnmc->price , 2, '.', ',')  
-									}} 
-									</strong>
-								</td>
-							</tr>
-						@endif
-					@endforeach
+					@if( $cmc->cart->id == $cart['cart_id'])
+						<tr class="positive">
+							<td></td>
+							<td>
+								<i class="caret right icon"></i>
+								{{ $cmc->product->product_description }}
+								<a href="/cart/{{$cart['cart_id']}}/component/{{$cmc->id}}" class="ui mini icon basic button" style="float:right">
+									<i class="edit icon"></i>
+									PRESS TO CHANGE
+								</a>
+							</td>
+							<td class="center aligned">
+								{{ $cmc->qty }}
+							</td>
+							<td colspan="3" class="right aligned">
+								Additional cost 
+								<strong>
+								{{ 
+									number_format( $cmc->qty * $cmc->price , 2, '.', ',')  
+								}} 
+								</strong>
+							</td>
+						</tr>
+						@foreach($carts_none_modifiable_components as $cnmc)
+							@if($cnmc->base_product_id == $cmc->base_product_id)
+								<tr class="positive">
+									<td></td>
+									<td>
+										&nbsp;
+										&nbsp;
+										<i class="caret right icon"></i>
+										{{ $cnmc->product->product_description }} 
+									</td>
+									<td class="center aligned">
+										{{ $cnmc->qty }}
+									</td>
+									<td colspan="3" class="right aligned">
+										Additional cost 
+										<strong>
+										{{ 
+											number_format( $cnmc->qty * $cnmc->price , 2, '.', ',')  
+										}} 
+										</strong>
+									</td>
+								</tr>
+							@endif
+						@endforeach
+					@endif
 				@endforeach
 				{{-- @foreach ($cart['cart']->components as $component ) 
 					<tr class="positive">
