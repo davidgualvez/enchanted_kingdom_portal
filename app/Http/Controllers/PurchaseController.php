@@ -411,7 +411,7 @@ class PurchaseController extends Controller
                 } 
                 
             }
-            dd($result->vat_exempt_sales_total);
+            dd($result->vat_exempt_sales);
             $pt->gross_total                = $result->gross_amount;
             $pt->scpwd_discount             = $result->scpwd_discount;
             $pt->net_total                  = $result->net_amount;
