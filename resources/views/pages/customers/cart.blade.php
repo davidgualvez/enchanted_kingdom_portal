@@ -145,80 +145,80 @@
 		  		</tr> 
 
 					@if( $result['vatable_sales'] > 0)
-		  		<tr class="right aligned">
-		  			<th colspan="5">
-		  				<strong>Vatable Sales :  </strong> 
-		  			</th>
-		  			<th class="right aligned" style="padding-right: 25px;">
-		  				{{ number_format( $result['vatable_sales'] , 2, '.', ',')  }}
-		  			</th>
-		  		</tr>
+						<tr class="right aligned">
+							<th colspan="5">
+								<strong>Vatable Sales :  </strong> 
+							</th>
+							<th class="right aligned" style="padding-right: 25px;">
+								{{ number_format( $result['vatable_sales'] , 2, '.', ',')  }}
+							</th>
+						</tr>
 					@endif 
 
 					@if( $result['vat_exempt_sales'] > 0)
-		  		<tr class="right aligned">
-		  			<th colspan="5">
-		  				<strong>VAT-Exemp Sales :  </strong> 
-		  			</th>
-		  			<th class="right aligned" style="padding-right: 25px;">
-		  				{{ number_format( $result['vat_exempt_sales'] , 2, '.', ',')  }}
-		  			</th>
-		  		</tr> 
+						<tr class="right aligned">
+							<th colspan="5">
+								<strong>VAT-Exemp Sales :  </strong> 
+							</th>
+							<th class="right aligned" style="padding-right: 25px;">
+								{{ number_format( $result['vat_exempt_sales'] , 2, '.', ',')  }}
+							</th>
+						</tr> 
 					@endif
 
 					@if( $result['vat_zerorated_sales'] > 0)
-					<tr class="right aligned">
-		  			<th colspan="5">
-		  				<strong>VAT Zero-Rated Sales :  </strong> 
-		  			</th>
-		  			<th class="right aligned" style="padding-right: 25px;">
-		  				{{ number_format( $result['vat_zerorated_sales'] , 2, '.', ',')  }}
-		  			</th>
-		  		</tr> 
+						<tr class="right aligned">
+							<th colspan="5">
+								<strong>VAT Zero-Rated Sales :  </strong> 
+							</th>
+							<th class="right aligned" style="padding-right: 25px;">
+								{{ number_format( $result['vat_zerorated_sales'] , 2, '.', ',')  }}
+							</th>
+						</tr> 
 					@endif 
 
 					@if( $result['vat_amount'] > 0)
-					<tr class="right aligned">
-		  			<th colspan="5">
-		  				<strong>VAT Amount :  </strong> 
-		  			</th>
-		  			<th class="right aligned" style="padding-right: 25px;">
-		  				{{ number_format( $result['vat_amount'] , 2, '.', ',')  }}
-		  			</th>
-		  		</tr> 
+						<tr class="right aligned">
+							<th colspan="5">
+								<strong>VAT Amount :  </strong> 
+							</th>
+							<th class="right aligned" style="padding-right: 25px;">
+								{{ number_format( $result['vat_amount'] , 2, '.', ',')  }}
+							</th>
+						</tr> 
 					@endif 
 
 					@if( $result['admission_sales'] > 0)
-					<tr class="right aligned">
-		  			<th colspan="5">
-		  				<strong>Admission Fee :  </strong> 
-		  			</th>
-		  			<th class="right aligned" style="padding-right: 25px;">
-		  				{{ number_format( $result['admission_sales'] , 2, '.', ',')  }}
-		  			</th>
-		  		</tr> 
+						<tr class="right aligned">
+							<th colspan="5">
+								<strong>Admission Fee :  </strong> 
+							</th>
+							<th class="right aligned" style="padding-right: 25px;">
+								{{ number_format( $result['admission_sales'] , 2, '.', ',')  }}
+							</th>
+						</tr> 
 					@endif 
 
 					@if( $result['amusement_tax_amount'] > 0)
-					<tr class="right aligned">
-		  			<th colspan="5">
-		  				<strong>Amusement Tax 10% :  </strong> 
-		  			</th>
-		  			<th class="right aligned" style="padding-right: 25px;">
-		  				{{ number_format( $result['amusement_tax_amount'] , 2, '.', ',')  }}
-		  			</th>
-		  		</tr> 
+						<tr class="right aligned">
+							<th colspan="5">
+								<strong>Amusement Tax 10% :  </strong> 
+							</th>
+							<th class="right aligned" style="padding-right: 25px;">
+								{{ number_format( $result['amusement_tax_amount'] , 2, '.', ',')  }}
+							</th>
+						</tr> 
 					@endif
 
 					@if( $result['scpwd_discount'] > 0)
-					<tr class="right aligned">
-		  			<th colspan="5">
-		  				<strong>Total SC/PWD Discount :  </strong> 
-		  			</th>
-		  			<th class="right aligned" style="padding-right: 25px;">
-		  				{{ number_format( $result['scpwd_discount'] , 2, '.', ',')  }}
-		  			</th>
-		  		</tr> 
+						<tr class="right aligned">
+							<th colspan="5">
+								<strong>Total SC/PWD Discount :  </strong> 
+							</th>
+							<th class="right aligned" style="padding-right: 25px;">
+								{{ number_format( $result['scpwd_discount'] , 2, '.', ',')  }}
+							</th>
+						</tr> 
 					@endif 
 					
 		  		<tr class="right aligned">

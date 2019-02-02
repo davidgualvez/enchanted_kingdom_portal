@@ -24,7 +24,7 @@ class CustomerServices{
 
         if ($this->customer->customer_type == 0) {
             $ctype = [ 
-                'type'      => 'NORMAL',
+                'type'      => 'REGULAR',
                 'discount'   => 0
             ];
         }

@@ -535,9 +535,9 @@ class PurchaseController extends Controller
              * @return Success
              */
             return response()->json([
-                'success' => true,
-                'status' => 200,
-                'message' => 'success'
+                'success'   => true,
+                'status'    => 200,
+                'message'   => 'success'
             ]);
 
         }catch (\Exception $e) {
@@ -549,9 +549,7 @@ class PurchaseController extends Controller
                 //'message'   => 'Something went wrong. \nPlease try again.'
                  'message' => $e->getMessage()
             ]); 
-        }  
-
-      
+        }   
     }
  
     private function ifMultiTicketRides(Part $part){
