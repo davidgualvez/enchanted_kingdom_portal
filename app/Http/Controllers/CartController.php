@@ -104,7 +104,7 @@ class CartController extends Controller
 				$cart->save(); 
 
 				// update components with new quantity
-				$this->updateComponentsQty($cart);
+				$this->updateComponentsQty($cart,'increase');
 				
 			}else{
 
@@ -176,9 +176,10 @@ class CartController extends Controller
             // if something went wrong
 			DB::rollback();
 			return response()->json([
-				'success' => false,
-				'status' => 500,
-				'message' => $e->getMessage()
+				'success' 	=> false,
+				'status' 	=> 500,
+				'message'	=> 'Unable adding to cart. Please try again.'
+				//'message' => $e->getMessage()
 			]);
 		}  
     }
@@ -373,8 +374,6 @@ class CartController extends Controller
                 'count'         => 		$carts->count()
             ]);
     }
-
-
 
 	public function checkout1(Request $request)
 	{

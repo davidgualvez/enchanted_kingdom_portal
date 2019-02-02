@@ -212,32 +212,50 @@ class PurchaseController extends Controller
 
                     // dd($sod);
 
-                    $ifPartsTypeIsY = trim(strtolower($item->cart->product->parts_type));
-                    if($ifPartsTypeIsY == null || $ifPartsTypeIsY == '') {
+                    //$ifPartsTypeIsY = trim(strtolower($item->cart->product->parts_type));
+                    //if($ifPartsTypeIsY == null || $ifPartsTypeIsY == '') {
                         // save all components to kitchen
                         //saving to kitchen 
-                        $item->cart->product->components->each(function ($v, $k) use ($blin, $pt, $sod, $item, $helper, $now) {
-                            if ($v->modifiable != 1) { 
-                             // saving none modifiable item into kitchen 
-                                $ko = new KitchenOrder;
-                                $ko->branch_id = config('app.branch_id');
-                                $ko->ko_id = $blin->getNewIdForKitchenOrder();
-                                $ko->transact_type = 2;
-                                $ko->header_id = $pt->sales_order_id;
-                                $ko->detail_id = $sod;
-                                $ko->part_id = $item->product_id;
-                                $ko->comp_id = (int)$v->product_id;
-                                $ko->location_id = $v->componentProduct->kitchen_loc;
-                                $ko->qty = (int)$v->quantity;
-                                $ko->balance = (int)$v->quantity;
-                                $ko->status = 'P';
-                                $ko->created_at = $now;
-                                $ko->created_date = $helper->getClarionDate($now);
-                                $ko->created_time = $helper->getClarionTime($now);
-                                $ko->save();
-                            }
-                        }); 
-                    
+                        // $item->cart->product->components->each(function ($v, $k) use ($blin, $pt, $sod, $item, $helper, $now) {
+                        //     if ($v->modifiable != 1) { 
+                        //      // saving none modifiable item into kitchen 
+                        //         $ko = new KitchenOrder;
+                        //         $ko->branch_id = config('app.branch_id');
+                        //         $ko->ko_id = $blin->getNewIdForKitchenOrder();
+                        //         $ko->transact_type = 2;
+                        //         $ko->header_id = $pt->sales_order_id;
+                        //         $ko->detail_id = $sod;
+                        //         $ko->part_id = $item->product_id;
+                        //         $ko->comp_id = (int)$v->product_id;
+                        //         $ko->location_id = $v->componentProduct->kitchen_loc;
+                        //         $ko->qty = (int)$v->quantity;
+                        //         $ko->balance = (int)$v->quantity;
+                        //         $ko->status = 'P';
+                        //         $ko->created_at = $now;
+                        //         $ko->created_date = $helper->getClarionDate($now);
+                        //         $ko->created_time = $helper->getClarionTime($now);
+                        //         $ko->save();
+                        //     }
+                        // }); 
+                            
+                         // save base sitepart to the kitchen
+                        $ko = new KitchenOrder;
+                        $ko->branch_id = config('app.branch_id');
+                        $ko->ko_id = $blin->getNewIdForKitchenOrder();
+                        $ko->transact_type = 2;
+                        $ko->header_id = $pt->sales_order_id;
+                        $ko->detail_id = $sod;
+                        $ko->part_id = $item->cart->product->sitepart_id;
+                        $ko->comp_id = $item->cart->product->sitepart_id;
+                        $ko->location_id = $item->cart->product->kitchen_loc;
+                        $ko->qty = (int)$item->qty;
+                        $ko->balance = (int)$item->qty;
+                        $ko->status = 'P';
+                        $ko->created_at = $now;
+                        $ko->created_date = $helper->getClarionDate($now);
+                        $ko->created_time = $helper->getClarionTime($now);
+                        $ko->save();
+
                         //saving cart component to the kitchen
                         $item->cart->components->each(function ($v, $k) use ($blin, $pt, $sod, $item, $helper, $now) {
                             $ko = new KitchenOrder;
@@ -257,27 +275,27 @@ class PurchaseController extends Controller
                             $ko->created_time = $helper->getClarionTime($now);
                             $ko->save();
                         });
-                    }
+                    //}
 
-                    if ( $ifPartsTypeIsY == 'y') {
-                        // save base sitepart to the kitchen
-                        $ko = new KitchenOrder;
-                        $ko->branch_id          = config('app.branch_id');
-                        $ko->ko_id              = $blin->getNewIdForKitchenOrder();
-                        $ko->transact_type      = 2;
-                        $ko->header_id          = $pt->sales_order_id;
-                        $ko->detail_id          = $sod;
-                        $ko->part_id            = $item->cart->product->sitepart_id;
-                        $ko->comp_id            = $item->cart->product->sitepart_id;
-                        $ko->location_id        = $item->cart->product->kitchen_loc;
-                        $ko->qty                = (int)$item->qty;
-                        $ko->balance            = (int)$item->qty;
-                        $ko->status             = 'P';
-                        $ko->created_at         = $now;
-                        $ko->created_date       = $helper->getClarionDate($now);
-                        $ko->created_time       = $helper->getClarionTime($now);
-                        $ko->save();
-                    }
+                    // if ( $ifPartsTypeIsY == 'y') {
+                    //     // save base sitepart to the kitchen
+                    //     $ko = new KitchenOrder;
+                    //     $ko->branch_id          = config('app.branch_id');
+                    //     $ko->ko_id              = $blin->getNewIdForKitchenOrder();
+                    //     $ko->transact_type      = 2;
+                    //     $ko->header_id          = $pt->sales_order_id;
+                    //     $ko->detail_id          = $sod;
+                    //     $ko->part_id            = $item->cart->product->sitepart_id;
+                    //     $ko->comp_id            = $item->cart->product->sitepart_id;
+                    //     $ko->location_id        = $item->cart->product->kitchen_loc;
+                    //     $ko->qty                = (int)$item->qty;
+                    //     $ko->balance            = (int)$item->qty;
+                    //     $ko->status             = 'P';
+                    //     $ko->created_at         = $now;
+                    //     $ko->created_date       = $helper->getClarionDate($now);
+                    //     $ko->created_time       = $helper->getClarionTime($now);
+                    //     $ko->save();
+                    // }
                     
                 }
 
@@ -498,8 +516,15 @@ class PurchaseController extends Controller
                     'points' => $virtual_points,
                 ]); 
 
-            //remove cart from this current branch
-            $cart = Cart::removeCartByUserIDAndType($user->id, 'wallet');
+            //remove cart from this current branch 
+            foreach($result->items as $item){
+                $item = (object)$item;
+                $item->cart->components->each( function($component){
+                    $component->delete();
+                });
+                $item->cart->delete();
+            }
+            // $cart = Cart::removeCartByUserIDAndType($user->id, 'wallet');
 
             /**
              * Committing all changes in the database
@@ -528,260 +553,7 @@ class PurchaseController extends Controller
 
       
     }
-
-    public function checkout1(Request $request){
-         
-        $points_payment = null;
-        if(is_null($request->points_payment)){
-            $points_payment = 0;
-        }else{
-            $points_payment = $request->points_payment;
-        }
-
-        DB::beginTransaction();
-
-        $blin = new BranchLastIssuedNumberServices;
-        $blin->findOrCreate();    
-
-        $user   = Auth::user();
-        $carts  = Cart::findByUserAndType($user->id,'wallet');   
-
-        try {  
-
-            //check if the cart has not contain an item 
-            if($carts->isEmpty()){
-                DB::rollback();
-                return response()->json([
-                    'success'   => false,
-                    'status'    => 401,
-                    'message'   => 'Please maintain atleast 1 item from your cart to continue.'
-                ]);
-            }
-
-        	//create a purchase header
-            $new_sales_order_id         = $blin->getNewIdForSalesOrderHeader();
-        	$ph = new Purchase;
-        	$ph->branch_id 		        = config('app.branch_id');
-            $ph->sales_order_id         = $new_sales_order_id;
-        	$ph->customer_id	        = $user->customer->customer_id;
-        	$ph->transaction_type_id    = 1;
-        	$ph->save();  
-             
-            //===============================================  
-            $st = new SiteTerminal;
-            $st = $st->terminalSetting();
-            
-            $tax = new TaxServices(
-                $user->customer->specialDiscount, 
-                $user->customer->is_zero_rated,
-                $st->amusement_tax
-            );
-
-        	$total_gross = 0;
-        	$total_discount = 0;
-        	$total_net = 0;
-            $cartList = [];
-            
-        	foreach ($carts as $key => $value) {
-        	    # code... 
-                $partt = new SitePart;
-                $part = $partt->where('branch_id', config('app.branch_id'))
-                            ->where('sitepart_id', $value->product_id)
-                            ->first();
-
-                // //----------------------
-                // $x = [
-                //     'ref_id' => $new_sales_order_id,
-                //     'price' => $part->srp,
-                //     'qty'   => $value->qty,
-                //     'is_vat' => $part->is_vat,
-                //     'is_admission'  => $part->pre_part_no,
-                //     'admission_fee' => $part->admission_fee,
-                //     'amusement_tax' => $part->amusement_tax,
-                // ];
-                // $tax->getItem($x);
-                // //----------------------
  
-                if($part->postmix == 1 && $part->is_food == 0){ 
-
-                    // the all the postmix items at postmix
-                    $postmix = Postmix::where('parent_id', $part->sitepart_id)
-                                ->get();
-
-                    for($i = 0 ; $i < $value->qty; $i++){
-                        foreach($postmix as $pm){  
-
-                            $ppart = SitePart::where('branch_id', config('app.branch_id'))
-                                    ->where('sitepart_id', $pm->PARTSID)
-                                    ->first();
-
-                            //if the product is a group of wallet
-                            // do not allow to proceed and display a warning message
-                            if($ppart->group_id == config('app.group_wallet_id')){
-                                DB::rollback();
-                                return response()->json([
-                                    'success'   => false,
-                                    'status'    => 401,
-                                    'message'   => 'You cannot purchase Load using a e-Wallet'
-                                ]);
-                            }  
-
-                            $result = $this->saveToSalesOrderDetail($user, $ppart, (int)$pm->QUANTITY, $new_sales_order_id);
-
-                        } 
-                    }
-                    
-                    //logic
-                    $product_id            = $part->sitepart_id;
-                    $name                  = $part->product_name;
-                    $description           = '';
-                    $qty                   = $value->qty;
-                    $srp                   = $part->srp;
-                    $product_promotion_id  = null;
-                    $discount_type         = 0;
-                    $discount_value        = 0;
-                    $discount_amount       = 0;
-                    $selling_price         = $qty * $srp;
-                    $buying_price          = 0;
-                    $is_unli               = $part->is_unli;
-
-                    //get the buying price
-                    $buying_price   = ($selling_price) - $discount_amount;
-
-                    $total_gross       += $selling_price;
-                    $total_discount    += $discount_amount;
-                    $total_net         += $buying_price;
-
-                }else{
-
-                    //if the product is a group of wallet
-                    // do not allow to proceed and display a warning message
-                    if($part->group_id == config('app.group_wallet_id')){
-                        DB::rollback();
-                        return response()->json([
-                            'success'   => false,
-                            'status'    => 401,
-                            'message'   => 'You cannot purchase e-Wallet using a e-Wallet'
-                        ]);
-                    }  
-
-                    $result = $this->saveToSalesOrderDetail($user, $part, $value->qty, $new_sales_order_id);
-
-                    $total_gross       += $result['selling_price'];
-                    $total_discount    += $result['discount_amount'];
-                    $total_net         += $result['buying_price'];
-                } 
-        	}
-        	//===============================================  
-
-            //--
-            // DB::rollback();
-            // dd($tax->result() );
-            // return response()->json([
-            //     'success' => false,
-            //     'status' => 500,
-            //     'data' => $tax->result()
-            // ]); 
-            //--
-
-            $virtual_wallet     = $user->customer->wallet;
-            $virtual_points     = $user->customer->points;  
-
-            // check the points entered as payment if greater than the customer wallet
-            if($points_payment > $user->customer->points){
-                DB::rollback();
-                return response()->json([
-                    'success'   => false,
-                    'status'    => 401,
-                    'message'   => 'The points you entered as payment is greater than your actual points!'
-                ]);
-            } 
-
-            // check and not allow if the points payment is greater than the total net
-            if($points_payment > $total_net){
-                DB::rollback();
-                return response()->json([
-                    'success'   => false,
-                    'status'    => 401,
-                    'message'   => 'The points you entered as payment must be equal or less than the NET Amount!'
-                ]);
-            }
-
-            $wallet_payment     = $total_net - $points_payment;
-
-        	//check if the e money is enough to purchase this transaction 
-        	if($user->customer->wallet < $wallet_payment ){
-        		DB::rollback();
-        		return response()->json([
-		        	'success' 	=> false,
-		        	'status' 	=> 401,
-		        	'message' 	=> 'Your wallet is not enough to purchase this order!'
-                ]);
-                
-        	} 
-
-            //-------------------------
-            //earned points 
-            $ept    = new  EarnPointTransactionServices;
-            $ep     = $ept->earnPoints(
-                            $new_sales_order_id, 
-                            $total_net, 
-                            $user->customer->customer_id, 
-                            $points_payment //this will be the amount excemption for points earning
-                        );
-            $eps    = $ept->save();
-
-
-            $virtual_points -= $points_payment;
-            $virtual_wallet -= $wallet_payment; 
-
-            //adding earned point to virtual points
-            $virtual_points += $eps->earned_points;
-
-        	//update purchase header for total;
-            Purchase::where('sales_order_id', $new_sales_order_id) 
-                      ->update([
-                        'total_amount'        => $total_gross,
-                        'total_discount'      => $total_discount,
-                        'net_amount'          => $total_net,
-                        'used_wallet'         => $wallet_payment,
-                        'used_points'         => $points_payment,
-                        'added_points'        => $eps->earned_points,
-                        'wallet_balance'      => $virtual_wallet,
-                        'points_balance'      => $virtual_points
-                    ]);
-
-            //update customer points for new earned point
-            $customerrr = Customer::where('CUSTOMERID',$user->customer->customer_id)
-                            ->update([
-                            'wallet'    => $virtual_wallet,
-                            'points'    => $virtual_points, 
-                        ]); 
-                        
- 
-        	//remove cart from this current branch
-        	$cart = Cart::removeCartByUserIDAndType($user->id, 'wallet');
- 
-		    DB::commit();
-		    // all good
-            return response()->json([
-                'success'   => true,
-                'status'    => 200,
-                'message'   => 'success'
-            ]);
-
-		} catch (\Exception $e) {
-		    DB::rollback();
-            //dd($e); 
-            return response()->json([
-                'success'   => false,
-                'status'    => 500,
-                'message'   => $e->getMessage()
-            ]);
-		    // something went wrong 
-		}  
-    } 
-
     private function ifMultiTicketRides(Part $part){
         if($part->SSBUFFER == 1 && $part->GROUP == 30301){
             return true;
