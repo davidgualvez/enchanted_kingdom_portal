@@ -24,7 +24,7 @@ class CartController extends Controller
     public function showCart(){
         $user   = Auth::user();
 
-        $customer = new CustomerServices($user->customer);
+        $customer = new CustomerServices($user->customer); 
 
         $carts  = Cart::findByUserAndType($user->id,'wallet');  
  
