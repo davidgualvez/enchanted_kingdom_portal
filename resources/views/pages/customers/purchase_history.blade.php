@@ -154,11 +154,11 @@
             <div class="tiny ui buttons">
                 <button class="ui button" id="prev_page_url_purchase_history">
                 <i class="angle left icon"></i>
-                Prev
+                    Prev
                 </button> 
                 <button class="ui button" id="next_page_url_purchase_history">
                 <i class="angle right icon"></i>
-                Next
+                    Next
                 </button>
             </div> 
             <br>

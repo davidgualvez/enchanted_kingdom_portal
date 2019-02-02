@@ -110,8 +110,8 @@ function dataDisplayerPurchaseHistory(data, from) {
             '<th class="right aligned">Price</th>' +
             '<th class="right aligned">Qty</th>' +
             '<th class="right aligned">Amount</th>' +
-            '<th class="right aligned">Discount</th>' +
-            '<th class="right aligned">Discounted Amount</th>' +
+            // '<th class="right aligned">Discount</th>' +
+            // '<th class="right aligned">Discounted Amount</th>' +
             '<th class="right aligned">Valid Until</th>' +
             '</tr>' +
             '</thead>' +
@@ -123,8 +123,8 @@ function dataDisplayerPurchaseHistory(data, from) {
                 '<td class="right aligned">' + value1.srp + '</td>' +
                 '<td class="right aligned">' + value1.qty + '</td>' +
                 '<td class="right aligned">' + value1.amount + '</td>' +
-                '<td class="right aligned">' + value1.discount + '</td>' +
-                '<td class="right aligned">' + value1.net_amount + '</td>' +
+                // '<td class="right aligned">' + value1.discount + '</td>' +
+                // '<td class="right aligned">' + value1.net_amount + '</td>' +
                 '<td class="right aligned">' + value1.valid_until + '</td>' +
                 '</tr> ';
         });
@@ -375,7 +375,7 @@ function orLayout(v,sales_order_id) {
                         text: val.qty + ' x ' + val.product_name ,
                     },
                     {
-                        text: parseFloat(val.net_amount).toFixed(2),
+                        text: parseFloat(val.retail_price).toFixed(2),
                         style: 'amount',
                         width: 50
                     }
@@ -394,7 +394,7 @@ function orLayout(v,sales_order_id) {
                             text: 'Less VAT 12%',
                         },
                         {
-                            text: '-' + parseFloat(val.r_vat_amount).toFixed(2),
+                            text: '-' + parseFloat(val.r_vat_amount).toFixed(2) + '',
                             style: 'amount',
                             width: 50
                         }
@@ -411,7 +411,27 @@ function orLayout(v,sales_order_id) {
                             text: 'Less Amu.Tax 10%',
                         },
                         { 
-                            text: '-' + parseFloat(val.r_amusement_tax_amount).toFixed(2),
+                            text: '-' + parseFloat(val.r_amusement_tax_amount).toFixed(2) + '',
+                            style: 'amount',
+                            width: 50
+                        }
+                    ],
+                    style: 'productSubSub'
+                }
+            );
+        }
+
+        if (parseFloat(val.r_amusement_tax_amount) > 0) {
+            var sales = parseFloat(val.vat_exempt_sales) + parseFloat(val.admission_sales);
+            console.log(val.vat_exempt_sales, val.admission_sales, sales);
+            transItems.push(
+                {
+                    columns: [
+                        {
+                            text: 'SC / PWD Discount 20% x ' + parseFloat( sales ).toFixed(2),
+                        },
+                        {
+                            text: '-' + parseFloat(val.discount_amount).toFixed(2) ,
                             style: 'amount',
                             width: 50
                         }
@@ -804,7 +824,7 @@ function orLayout(v,sales_order_id) {
                         text: 'Total SC / PWD Discount', 
                     },
                     {
-                        text: parseFloat(transaction.scpwd_discount).toFixed(2),
+                        text: '(' + parseFloat(transaction.scpwd_discount).toFixed(2) + ')',
                         style: 'amount',
                         width: 50
                     }
@@ -945,7 +965,7 @@ function orLayout(v,sales_order_id) {
 
             productSubSub: {
                 margin: [35, 0, 25, 0],
-                fontSize: '9',
+                fontSize: '8',
             },
 
             /**
