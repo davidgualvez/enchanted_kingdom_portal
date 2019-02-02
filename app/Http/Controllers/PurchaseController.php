@@ -486,9 +486,9 @@ class PurchaseController extends Controller
             $virtual_points += $eps->earned_points;
 
             //update purchase header for total;
-            dd(
-                $result
-            );
+            // dd(
+            //     $result
+            // );
             Purchase::where('sales_order_id', $new_sales_order_id)
                 ->update([
                     'total_amount'      => $result->gross_amount,
