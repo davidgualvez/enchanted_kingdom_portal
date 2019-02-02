@@ -31,35 +31,53 @@ class CartController extends Controller
         $ts = new TaxServices;
 		$result = $ts->items($carts, $customer, $user);
 
-		$carts_modifiable_components = null;
-		$carts_none_modifiable_components = null;
-		if(	count($result['items']) > 0 ){
-			$carts_modifiable_components = $result['items'][0]['cart']->components->filter( function($v) {
-				if ($v->base_product_id == $v->product_id) {
-					return $v;
-				}
-			});
 
-			$carts_none_modifiable_components = $result['items'][0]['cart']->components->filter( function($v) {
-				if ($v->base_product_id != $v->product_id) {
-					return $v;
+		$carts2 = Cart::findByUserAndType($user->id, 'wallet');
+		//dd($carts2);  
+		$carts_modifiable_components = [];
+		$carts_none_modifiable_components = [];
+		if(	count($result['items']) > 0 ){
+
+			foreach ($carts2 as $key => $cart) {
+			# code..
+				//dd($cart->components);
+				$_carts_modifiable_components  = $cart->components->filter( function($value){
+					if ($value->base_product_id == $value->product_id) {
+						return $value; 
+					}
+				});
+
+				if( !$_carts_modifiable_components->isEmpty()){
+					array_push($carts_modifiable_components, $_carts_modifiable_components);
 				}
-			});
+				
+				//dd($carts_modifiable_components);
+				
+
+				$carts_none_modifiable_components = $cart->components->filter(function ($value) {
+					if ($value->base_product_id != $value->product_id) {
+						return $value;
+					}
+				});
+			}
+			// foreach($result['items'] as $v){
+			// 		$carts_modifiable_components = $v['cart']->components->filter(function ($v) {
+			// 			if ($v->base_product_id == $v->product_id) {
+			// 				return $v; 
+			// 			}
+			// 		});
+
+			// 		$carts_none_modifiable_components = $v['cart']->components->filter(function ($v) {
+			// 			if ($v->base_product_id != $v->product_id) {
+			// 				return $v;
+			// 			}
+			// 		});
+			// }  
+
 		}
-		  
-		// return [
-		// 	"_id" 				=> $v->id,
-		// 	"cart_id" 			=> $v->cart_id,
-		// 	"base_product_id" 	=> $v->base_product_id,
-		// 	"product_id" 		=> $v->product_id,
-		// 	"base_qty" 			=> $v->base_qty,
-		// 	"qty" 				=> $v->qty,
-		// 	"price" 			=> $v->price
-		// ];
-		// dd(
-		// 	$carts_modifiable_components,
-		// 	$carts_none_modifiable_components
-		// );
+		
+		//dd($carts_modifiable_components[0], $carts_none_modifiable_components);
+
         return view('pages.customers.cart', 
             compact(
                 'result',

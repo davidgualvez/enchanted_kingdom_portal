@@ -375,7 +375,7 @@ function orLayout(v,sales_order_id) {
                         text: val.qty + ' x ' + val.product_name ,
                     },
                     {
-                        text: parseFloat(val.retail_price).toFixed(2),
+                        text: parseInt(val.qty) * parseFloat(val.retail_price).toFixed(2),
                         style: 'amount',
                         width: 50
                     }
@@ -559,7 +559,9 @@ function orLayout(v,sales_order_id) {
                 text: [
                     'ENCHANTED KINGDOM\n'+
                     'San Lorenzo South, Sta. Rosa Laguna\n'+
-                    'VAT Registered TIN: 000-000-000-0000\n',
+                    'VAT Registered TIN: 004-149-597-0000\n',
+                    'Tel No. 584-3535 (Sta Rosa Park)\n',
+                    'Tel no. 830-3535 (Makati Sales Office)\n',
                     'MIN: XXXXXXXX \t',
                     'SN: XXXXXXXX\n\n',
                     'FOR EVALUATION PURPOSES ONLY\n\n',

@@ -54,8 +54,59 @@
   			      	</td>
   			      	<td class="right aligned" style="padding-right: 25px;">{{ number_format( $cart['net_amount'] , 2, '.', ',') }}</td>
   			    </tr>  
+			 
+				@foreach($cart['cart']->components as $cm)
+					@if( !is_null($cm) )
+						@if($cm->base_product_id == $cm->product_id)
+							<tr class="positive">
+								<td></td>
+								<td>
+									<i class="caret right icon"></i>
+									{{ $cm->product->product_description }}
+									<a href="/cart/{{$cart['cart_id']}}/component/{{$cm->id}}" class="ui mini icon basic button" style="float:right">
+										<i class="edit icon"></i>
+										PRESS TO CHANGE
+									</a>
+								</td>
+								<td class="center aligned">
+									{{ $cm->qty }}
+								</td>
+								<td colspan="3" class="right aligned">
+									Additional cost 
+									<strong>
+									{{ 
+										number_format( $cm->qty * $cm->price , 2, '.', ',')  
+									}} 
+									</strong>
+								</td>
+							</tr>
+						@endif
+						@if($cm->base_product_id != $cm->product_id)
+							<tr class="positive">
+								<td></td>
+								<td>
+									&nbsp;
+									&nbsp;
+									<i class="caret right icon"></i>
+									{{ $cm->product->product_description }} 
+								</td>
+								<td class="center aligned">
+									{{ $cm->qty }}
+								</td>
+								<td colspan="3" class="right aligned">
+									Additional cost 
+									<strong>
+									{{ 
+										number_format( $cm->qty * $cm->price , 2, '.', ',')  
+									}} 
+									</strong>
+								</td>
+							</tr>
+						@endif
+					@endif
+				@endforeach
 
-				@foreach($carts_modifiable_components as $key=>$cmc)
+				{{-- @foreach($carts_modifiable_components as $key=>$cmc)
 					@if( $cmc->cart->id == $cart['cart_id'])
 						<tr class="positive">
 							<td></td>
@@ -104,31 +155,9 @@
 							@endif
 						@endforeach
 					@endif
-				@endforeach
-				{{-- @foreach ($cart['cart']->components as $component ) 
-					<tr class="positive">
-						<td></td>
-						<td>
-							<i class="caret right icon"></i>
-							{{ $component->product->product_description }}
-							<a href="/cart/{{$cart['cart_id']}}/component/{{$component->id}}" class="ui mini icon basic button" style="float:right">
-								<i class="edit icon"></i>
-								PRESS TO CHANGE
-							</a>
-						</td>
-						<td class="center aligned">
-							{{ $component->qty }}
-						</td>
-						<td colspan="3" class="right aligned">
-							Additional cost 
-							<strong>
-							{{ 
-								number_format( $component->qty * $component->price , 2, '.', ',')  
-							}} 
-							</strong>
-						</td> 
-					</tr>
 				@endforeach --}}
+				 
+
 		  	@empty
 		  		<div class="center aligned">
 		  			<h3 class="ui header center aligned">Nothing to display..</h3>
