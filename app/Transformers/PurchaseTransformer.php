@@ -46,7 +46,7 @@ class PurchaseTransformer {
          'details' 			    => $dtls,
          'type'             => trim($value->transType->DESCRIPTION),
          'purchase_transaction' => $value->purchaseTransaction,
-         'purchase_transaction_details'   => $value->purchaseTransaction->details,
+         //'purchase_transaction_details'   => $value->purchaseTransaction->details,
          'created_at'       => $datee->toDayDateTimeString()
       ];
       return $nValue;

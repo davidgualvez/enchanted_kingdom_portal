@@ -461,25 +461,25 @@ function orLayout(v,sales_order_id) {
             );
         }
 
-        if (parseFloat(val.r_amusement_tax_amount) > 0) {
-            var sales = parseFloat(val.vat_exempt_sales) + parseFloat(val.admission_sales);
-            console.log(val.vat_exempt_sales, val.admission_sales, sales);
-            transItems.push(
-                {
-                    columns: [
-                        {
-                            text: 'SC / PWD Discount 20% x ' + parseFloat( sales ).toFixed(2),
-                        },
-                        {
-                            text: '-' + parseFloat(val.discount_amount).toFixed(2) ,
-                            style: 'amount',
-                            width: 50
-                        }
-                    ],
-                    style: 'productSubSub'
-                }
-            );
-        }
+        // if (parseFloat(val.r_amusement_tax_amount) > 0) {
+        //     var sales = parseFloat(val.vat_exempt_sales) + parseFloat(val.admission_sales);
+        //     console.log(val.vat_exempt_sales, val.admission_sales, sales);
+        //     transItems.push(
+        //         {
+        //             columns: [
+        //                 {
+        //                     text: 'SC / PWD Discount 20% x ' + parseFloat( sales ).toFixed(2),
+        //                 },
+        //                 {
+        //                     text: '-' + parseFloat(val.discount_amount).toFixed(2) ,
+        //                     style: 'amount',
+        //                     width: 50
+        //                 }
+        //             ],
+        //             style: 'productSubSub'
+        //         }
+        //     );
+        // }
 
         // Item Counter
         if(key == 0){
