@@ -29,7 +29,7 @@ class BannerController extends Controller
     		];
     	});
 
-		dd($bt);
+	
 
     	$banner_img = config('app.url').Storage::url($b->image); 
 		return view('pages.customers.today_special', compact('b','bt','banner_img') ); 
