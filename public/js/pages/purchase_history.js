@@ -375,7 +375,7 @@ function orLayout(v,sales_order_id) {
                         text: val.qty + ' x ' + val.product_name ,
                     },
                     {
-                        text: parseInt(val.qty) * parseFloat(val.retail_price).toFixed(2),
+                        text: (parseInt(val.qty) * parseFloat(val.retail_price) ).toFixed(2),
                         style: 'amount',
                         width: 50
                     }
@@ -412,6 +412,46 @@ function orLayout(v,sales_order_id) {
                         },
                         { 
                             text: '-' + parseFloat(val.r_amusement_tax_amount).toFixed(2) + '',
+                            style: 'amount',
+                            width: 50
+                        }
+                    ],
+                    style: 'productSubSub'
+                }
+            );
+        }
+
+        if (parseFloat(val.vat_exempt_sales) > 0) {
+            // var sales = parseFloat(val.vat_exempt_sales) + parseFloat(val.admission_sales);
+            // console.log(val.vat_exempt_sales, val.admission_sales, sales);
+            transItems.push(
+                {
+                    columns: [
+                        {
+                            text: 'Senior 20% x ' + parseFloat(val.vat_exempt_sales),
+                        },
+                        {
+                            text: '-' + parseFloat(val.vat_exempt_sales * .20).toFixed(2),
+                            style: 'amount',
+                            width: 50
+                        }
+                    ],
+                    style: 'productSubSub'
+                }
+            );
+        }
+
+        if (parseFloat(val.admission_sales) > 0) {
+            // var sales = parseFloat(val.vat_exempt_sales) + parseFloat(val.admission_sales);
+            // console.log(val.vat_exempt_sales, val.admission_sales, sales);
+            transItems.push(
+                {
+                    columns: [
+                        {
+                            text: 'Senior 20% x ' + parseFloat(val.admission_sales),
+                        },
+                        {
+                            text: '-' + parseFloat(val.admission_sales * .20).toFixed(2),
                             style: 'amount',
                             width: 50
                         }

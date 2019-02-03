@@ -17,7 +17,7 @@ class SitePartTransformer {
                'srp'             => $value->srp,
                'category_id'     => $value->category_id, 
                'group_id'        => $value->group_id,
-               'group_name'      => $value->group->description,
+//               'group_name'      => $value->group->description,
                'image'           => $url,
                //'promo'      => $value->activePromo 
             ]; 
