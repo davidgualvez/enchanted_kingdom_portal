@@ -52,8 +52,6 @@ class CartController extends Controller
 				}
 				
 				//dd($carts_modifiable_components);
-				
-
 				$carts_none_modifiable_components = $cart->components->filter(function ($value) {
 					if ($value->base_product_id != $value->product_id) {
 						return $value;

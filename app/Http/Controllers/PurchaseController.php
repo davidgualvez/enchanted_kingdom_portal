@@ -569,7 +569,7 @@ class PurchaseController extends Controller
         $now  = Carbon::now();
         $user = Auth::user();
 
-        $purchase = Purchase::with('details')
+        $purchase = Purchase::with(['details'])
                 ->where('customer_id', $user->customer->CUSTOMERID) 
                 ->orderBy('created_at', 'desc')
                 ->simplePaginate(10);
@@ -577,10 +577,7 @@ class PurchaseController extends Controller
         $pt         = new PurchaseTransformer;
         $pt->purchaseHistory($purchase);
 
-        // /dd($purchase);
-        // return response()->json([ 
-        //     'data' => $purchase,
-        // ],500); 
+        //dd($purchase);
 
         return response()->json([ 
             'success'       => true,
