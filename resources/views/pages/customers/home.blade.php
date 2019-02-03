@@ -43,13 +43,13 @@
 			  			@if($ctr == 1)
 						    <div class="active side"> 
 								<a href="/today_specials/{{ $d['id'] }}">
-									<img class="ui massive image" src="/assets/images/default.jpg"> 
+									<img class="ui massive image" src="{{ $d['image'] }}"> 
 								</a>
 						    </div>
 						@else
 						    <div class="side"> 
 								<a href="/today_specials/{{ $d['id'] }}">
-									<img class="ui massive image" src="/assets/images/default.jpg"> 
+									<img class="ui massive image" src="{{ $d['image'] }}"> 
 								</a>
 						    </div>
 						@endif 

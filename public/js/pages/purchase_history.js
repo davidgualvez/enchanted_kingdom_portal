@@ -460,6 +460,7 @@ function orLayout(v,sales_order_id) {
                 }
             );
         }
+        // END OF if PWD || SC
 
         // if (parseFloat(val.r_amusement_tax_amount) > 0) {
         //     var sales = parseFloat(val.vat_exempt_sales) + parseFloat(val.admission_sales);

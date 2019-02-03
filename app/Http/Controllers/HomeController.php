@@ -29,6 +29,8 @@ class HomeController extends Controller
                 'created_at' 	=> $x->created_at,
             ];
         });  
+
+        // dd($dash);
         
         return view('pages.customers.home', compact('dash') );
     }
