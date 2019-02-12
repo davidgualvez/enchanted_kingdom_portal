@@ -115,6 +115,8 @@ class TurnSiteServices{
         $newTs->total_sales  = 0;
         $newTs->po           = 0;
         $newTs->prepay       = 0;
+        $newTs->shift_posted = 0;
+        $newTs->day_posted   = 0;
         $newTs->save();  
         return $newTs;
     }

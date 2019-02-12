@@ -328,9 +328,9 @@ function btnOrDownload() {
     });
 }
 
-  /**
-   * OR Layout
-   */
+/**
+ * OR Layout
+ */
 
 function orLayout(v,sales_order_id) {
     //console.log(current_data_purchase_history);
@@ -361,6 +361,7 @@ function orLayout(v,sales_order_id) {
     var transChange = null;
     var scPwdDetail = null;
     var transItemCounter = null;
+    var taxInfo = [];
 
     //populating item to be display
     $.each(transaction.details, function(key,val){
@@ -543,6 +544,139 @@ function orLayout(v,sales_order_id) {
         ],
         style: 'productSubChange'
     };
+
+    /**
+     * Tax Infor
+     */ 
+    if (transaction.vatable_sales_total > 0){
+        taxInfo.push(
+            {
+                columns: [
+                    {
+                        text: 'VATable Sales',
+
+                    },
+                    {
+                        text: parseFloat(transaction.vatable_sales_total).toFixed(2),
+                        style: 'amount',
+                        width: 50
+                    }
+                ],
+                style: 'vatFirst'
+            }
+        );
+    }
+
+    if (transaction.vat_exempt_sales_total > 0){
+        taxInfo.push(
+            {
+                columns: [
+                    {
+                        text: 'Vat-Exempt Sales',
+
+                    },
+                    {
+                        text: parseFloat(transaction.vat_exempt_sales_total).toFixed(2),
+                        style: 'amount',
+                        width: 50
+                    }
+                ],
+                style: 'vatMiddle'
+            }
+        );
+    }
+
+    if (transaction.vat_zerorated_sales_total > 0) {
+        taxInfo.push(
+            {
+                columns: [
+                    {
+                        text: 'Vat Zero-Rated Sales',
+
+                    },
+                    {
+                        text: parseFloat(transaction.vat_zerorated_sales_total).toFixed(2),
+                        style: 'amount',
+                        width: 50
+                    }
+                ],
+                style: 'vatMiddle'
+            }
+        );
+    }
+
+    if (transaction.vat_amount_total > 0) {
+        taxInfo.push(
+            {
+                columns: [
+                    {
+                        text: 'Vat Amount',
+
+                    },
+                    {
+                        text: parseFloat(transaction.vat_amount_total).toFixed(2),
+                        style: 'amount',
+                        width: 50
+                    }
+                ],
+                style: 'vatMiddle'
+            }
+        );
+    }
+
+    if (transaction.admission_sales_total > 0) {
+        taxInfo.push(
+            {
+                columns: [
+                    {
+                        text: 'Admission Fee',
+                    },
+                    {
+                        text: parseFloat(transaction.admission_sales_total).toFixed(2),
+                        style: 'amount',
+                        width: 50
+                    }
+                ],
+                style: 'vatMiddle'
+            }
+        );
+    }
+
+    if (transaction.amusement_tax_amount_total > 0) {
+        taxInfo.push(
+            {
+                columns: [
+                    {
+                        text: 'Amusement Tax 10%',
+                    },
+                    {
+                        text: parseFloat(transaction.amusement_tax_amount_total).toFixed(2),
+                        style: 'amount',
+                        width: 50
+                    }
+                ],
+                style: 'vatMiddle'
+            }
+        );
+    } 
+
+    if (transaction.scpwd_discount > 0) {
+        taxInfo.push(
+            {
+                columns: [
+                    {
+                        text: 'Total SC / PWD Discount',
+                    },
+                    {
+                        text: '(' + parseFloat(transaction.scpwd_discount).toFixed(2) + ')',
+                        style: 'amount',
+                        width: 50
+                    }
+                ],
+                style: 'vatLast'
+            } 
+        );
+    }
 
      // SCPWD Detail
     if (transaction.customer_type == '1' || transaction.customer_type == '2' || transaction.customer_type == '3'){
@@ -779,102 +913,11 @@ function orLayout(v,sales_order_id) {
             /**
              * VAT's 
              */
-            {
-                columns: [
-                    {
-                        text: 'VATable Sales',
+            taxInfo, 
 
-                    },
-                    { 
-                        text: parseFloat(transaction.vatable_sales_total).toFixed(2),
-                        style: 'amount',
-                        width: 50
-                    }
-                ],
-                style: 'vatFirst'
-            }, 
-            {
-                columns: [
-                    {
-                        text: 'Vat-Exempt Sales',
-
-                    },
-                    { 
-                        text: parseFloat(transaction.vat_exempt_sales_total).toFixed(2),
-                        style: 'amount',
-                        width: 50
-                    }
-                ],
-                style: 'vatMiddle'
-            }, 
-            {
-                columns: [
-                    {
-                        text: 'Vat Zero-Rated Sales',
-
-                    },
-                    { 
-                        text: parseFloat(transaction.vat_zerorated_sales_total).toFixed(2),
-                        style: 'amount', 
-                        width: 50
-                    }
-                ],
-                style: 'vatMiddle'
-            }, 
-            {
-                columns: [
-                    {
-                        text: 'Vat Amount',
-
-                    },
-                    { 
-                        text: parseFloat(transaction.vat_amount_total).toFixed(2),
-                        style: 'amount',
-                        width: 50
-                    }
-                ],
-                style: 'vatMiddle'
-            }, 
-            {
-                columns: [
-                    {
-                        text: 'Admission Fee', 
-                    },
-                    { 
-                        text: parseFloat(transaction.admission_sales_total).toFixed(2),
-                        style: 'amount',
-                        width: 50
-                    }
-                ],
-                style: 'vatMiddle'
-            }, 
-            {
-                columns: [
-                    {
-                        text: 'Amusement Tax 10%', 
-                    },
-                    { 
-                        text: parseFloat(transaction.amusement_tax_amount_total).toFixed(2),
-                        style: 'amount',
-                        width: 50
-                    }
-                ],
-                style: 'vatMiddle'
-            }, 
-            {
-                columns: [
-                    {
-                        text: 'Total SC / PWD Discount', 
-                    },
-                    {
-                        text: '(' + parseFloat(transaction.scpwd_discount).toFixed(2) + ')',
-                        style: 'amount',
-                        width: 50
-                    }
-                ],
-                style: 'vatLast'
-            },
-
+            /**
+             * SC PWD Detail
+             */
             scPwdDetail, 
 
             transItemCounter, 

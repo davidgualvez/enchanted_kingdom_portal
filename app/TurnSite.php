@@ -30,6 +30,8 @@ class TurnSite extends Model
         'total_sales'       => 'TOTALSALE',     // net amount of sales
         'po'                => 'PO',            // used points
         'prepay'            => 'PREPAY',         // used wallet
+        'shift_posted'      => 'SHIFTPOSTED',
+        'day_posted'        => 'DAYPOSTED'
     ];
 
     protected $getterMutators = [ 

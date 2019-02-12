@@ -54,7 +54,7 @@ class TaxServices
 
             // for tax computation with non SC/PWD 
             if ($v->product->is_vat == 1) {
-                if ($customer->getType()['type'] == 'NORMAL') {
+                if ($customer->getType()['type'] == 'REGULAR') {
                     $newPrice = $priceWithoutAdmission;
                     $vatable_sales = $newPrice / 1.12;
                     $vat_amount = $vatable_sales * .12;
