@@ -347,10 +347,9 @@ class PurchaseController extends Controller
                     $ko->detail_id          = $sod;
                     $ko->part_id            = $item->product_id;
                     $ko->comp_id            = $item->product_id;
-                    $ko->location_id        = $item->cart->product->kitchen_loc;
-                    dd($v->qty);
-                    $ko->qty                = (int)$v->qty;
-                    $ko->balance            = (int)$v->qty;
+                    $ko->location_id        = $item->cart->product->kitchen_loc; 
+                    $ko->qty                = $item->cart->qty;
+                    $ko->balance            = $item->cart->qty;
                     $ko->status             = 'P';
                     $ko->created_at         = $now;
                     $ko->created_date       = $helper->getClarionDate($now);
