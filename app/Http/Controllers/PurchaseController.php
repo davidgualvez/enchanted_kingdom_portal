@@ -348,6 +348,7 @@ class PurchaseController extends Controller
                     $ko->part_id            = $item->product_id;
                     $ko->comp_id            = $item->product_id;
                     $ko->location_id        = $item->cart->product->kitchen_loc;
+                    dd($v->qty);
                     $ko->qty                = (int)$v->qty;
                     $ko->balance            = (int)$v->qty;
                     $ko->status             = 'P';
