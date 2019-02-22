@@ -19,6 +19,7 @@ use App\PurchaseDetail;
 use App\PurchaseTransaction;
 use App\PurchaseTransactionDetail;
 use App\TurnSite;
+use App\ProductStock;
 
 use App\Transformers\CartTransformer;
 use App\Transformers\PurchaseTransformer;
@@ -28,10 +29,12 @@ use App\AppServices\BranchLastIssuedNumberServices;
 use App\AppServices\TaxServices;
 use App\AppServices\CustomerServices;
 use App\AppServices\TurnSiteServices;
+use App\AppServices\ProductStockServices;
  
-use DB;
+use DB,Storage;
 use App\KitchenOrder;
-use App\AppServices\Helper; 
+use App\AppServices\Helper;
+use App\Jobs\ProcessEJournalEntry; 
 
 class PurchaseController extends Controller 
 {
@@ -116,7 +119,7 @@ class PurchaseController extends Controller
 
             // from array to object
             $result = (object)$result; 
-            
+
             /**
              * Saving the items one by one into its designated details
              */
@@ -125,6 +128,31 @@ class PurchaseController extends Controller
                 # cast $item array into object
                 $item = (object)$item; 
 
+                // /**
+                //  * CHECK STOCK STATUS FOR AVAILABILITY
+                //  */
+                // $product_stock = new ProductStock;
+                // // product stock result
+                // $psr = $product_stock->getStock(config('app.branch_id'), $item->product_id); 
+                // if( is_null($psr) ){
+                //     DB::rollback();
+                //     return response()->json([
+                //         'success'   => false,
+                //         'status'    => 2,
+                //         'message'   => 'No Available Stock for "'.$item->product_name.'"'
+                //     ]);
+                // } 
+
+                // if($psr->balance < $item->qty){
+                //     DB::rollback();
+                //     return response()->json([
+                //         'success'   => false,
+                //         'status'    => 2,
+                //         'message'   => 'No Available Stock for "' . $item->product_name . '"'
+                //     ]);
+                // }
+
+                
                 /**
                  * FOR POSTMIX BUT NOT FOOD
                  */
@@ -520,7 +548,14 @@ class PurchaseController extends Controller
                 ->update([
                     'wallet' => $virtual_wallet,
                     'points' => $virtual_points,
-                ]); 
+                ]);
+
+            $helper->EJournalEntry($pt,$result); 
+            return response()->json([
+                'success'   => false,
+                'data'      => $result,
+                'purchase-transaction'  => $pt
+            ]);
 
             //remove cart from this current branch 
             foreach($result->items as $item){
@@ -548,8 +583,7 @@ class PurchaseController extends Controller
 
         }catch (\Exception $e) {
             // if something went wrong
-            DB::rollback(); 
-            dd($e);
+            DB::rollback();  
             return response()->json([
                 'success'   => false,
                 'status'    => 500,

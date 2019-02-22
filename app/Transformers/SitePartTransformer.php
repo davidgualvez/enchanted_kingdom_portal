@@ -12,8 +12,8 @@ class SitePartTransformer {
             return [
                'id'              => $value->sitepart_id,
                'branch_id'       => $value->branch_id,
-               'name'            => $value->product_name,
-               'description'     => $value->product_description,
+               'name'            => $value->product_description,
+               'description'     => $value->product_name ,
                'srp'             => $value->srp,
                'category_id'     => $value->category_id, 
                'group_id'        => $value->group_id,

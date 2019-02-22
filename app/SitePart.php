@@ -45,7 +45,7 @@ class SitePart extends Model
         'is_vat'                => 'VAT',               // is vatable
         'admission_fee'         => 'ADMISSIONFEE',      // admission fee amount
         'amusement_tax'         => 'AMUSEMENTTAX',      // 
-        'special_discount'      => 'STDCARCASSWEIGHT'   //  
+        'special_discount'      => 'STDCARCASSWEIGHT'   // 
     ];
     
     protected $getterMutators = [

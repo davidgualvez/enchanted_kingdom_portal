@@ -1,4 +1,13 @@
 # Change Log
+### Feb 20, 2019
+- added jobs table with corresping columns
+    - id | bigint | PK (auto increment)
+    - queue | nvarchar(255)
+    - payload | nvarchar(MAX)
+    - attempts | tinyint
+    - reserved_at | int
+    - available_at | int
+    - created_at | int
 
 ### Jan 27, 2019
 - Added Kitchen functionality

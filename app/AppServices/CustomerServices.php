@@ -8,6 +8,7 @@ use App\Customer;
 class CustomerServices{
 
     private $customer;
+    
     /**
      * Create a new controller instance.
      *
