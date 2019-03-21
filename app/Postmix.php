@@ -45,18 +45,8 @@ class Postmix extends Model
         'comp_cat_id'       => 'COMPCATID'
     ];
 
-    protected $getterMutators = [
-        //'custom_column_name => 'string_manipulation'
-        // 'parent_id'        => 'PRODUCT_ID',
-        // 'product_id'       => 'PARTSID',
-        // 'quantity'         => 'QUANTITY',
-        // 'unit_cost'        => 'UNITCOST',
-        // 'extend_cost'      => 'EXTENDCOST',
-        // 'type'             => 'TYPE',
-        // 'partno'           => 'trim',
-        // 'yield'            => 'YIELD'
-        'description'       => 'trim',
-        //'comp_cat_id'       => 'trim'
+    protected $getterMutators = [ 
+        'description'       => 'trim', 
         
     ];
 

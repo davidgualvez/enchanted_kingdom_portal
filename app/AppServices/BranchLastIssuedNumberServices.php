@@ -136,6 +136,18 @@ class BranchLastIssuedNumberServices {
 	public function getKitchenOrder()
 	{ 
 		return $this->blin->kitchen_order_no;
+    }
+
+    public function getNewIdForWebUser(){ 
+    	$this->findOrCreate();
+        $this->blin->kitchen_order_no += 1;
+        $this->blin->save();
+        return $this->blin->kitchen_order_no;
+    }
+
+    public function getWebUser()
+    {
+        return $this->blin->kitchen_order_no;
 	}
 
 }
