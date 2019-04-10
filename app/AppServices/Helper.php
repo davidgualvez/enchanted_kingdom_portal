@@ -71,7 +71,7 @@ class Helper
         $this->EjWriter($this->EjCenterAlign('', $paper_size));
         $this->EjWriter($this->EjCenterAlign('========================================', $paper_size));
         $this->EjWriter($this->EjCenterAlign('', $paper_size));
-        $this->EjWriter($this->EjCenterAlign( $this->EjJustifyAlign([$header->created_at, 'or #: 000 - '.$FormatNumberLength() ], $paper_size - 4), $paper_size) );
+        //$this->EjWriter($this->EjCenterAlign( $this->EjJustifyAlign([$header->created_at, 'or #: 000 - '.$FormatNumberLength() ], $paper_size - 4), $paper_size) );
         $this->EjWriter($this->EjCenterAlign('', $paper_size));
         $this->EjWriter($this->EjCenterAlign('', $paper_size));
         $this->EjWriter($this->EjCenterAlign('', $paper_size));

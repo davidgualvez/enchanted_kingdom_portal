@@ -107,7 +107,7 @@ function dataDisplayerOrderHistory(data, from) {
             '<thead>' +
             '<tr>' +
             '<th>Name</th>' +
-            '<th class="right aligned">Retail Price</th>' +
+            '<th class="right aligned">Price</th>' +
             '<th class="right aligned">Qty</th>' +
             '<th class="right aligned">Amount</th>' +
             '</tr>' +

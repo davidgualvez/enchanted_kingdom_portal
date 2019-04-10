@@ -60,8 +60,7 @@ class PurchaseController extends Controller
 
             $user = Auth::user();
             $customer = new CustomerServices($user->customer);
-            $carts = Cart::findByUserAndType($user->id, 'wallet');   
-
+            $carts = Cart::findByUserAndType($user->id, 'wallet');    
             //check if the cart has not contain an item 
             if ($carts->isEmpty()) {
                 DB::rollback();
@@ -550,12 +549,12 @@ class PurchaseController extends Controller
                     'points' => $virtual_points,
                 ]);
 
-            $helper->EJournalEntry($pt,$result); 
-            return response()->json([
-                'success'   => false,
-                'data'      => $result,
-                'purchase-transaction'  => $pt
-            ]);
+            // $helper->EJournalEntry($pt,$result); 
+            // return response()->json([
+            //     'success'   => false,
+            //     'data'      => $result,
+            //     'purchase-transaction'  => $pt
+            // ]);
 
             //remove cart from this current branch 
             foreach($result->items as $item){
@@ -584,12 +583,12 @@ class PurchaseController extends Controller
         }catch (\Exception $e) {
             // if something went wrong
             DB::rollback();  
-            return response()->json([
-                'success'   => false,
-                'status'    => 500,
-                //'message'   => 'Something went wrong. \nPlease try again.'
-                 'message' => $e->getMessage()
-            ]); 
+            // return response()->json([
+            //     'success'   => false,
+            //     'status'    => 500,
+            //     //'message'   => 'Something went wrong. \nPlease try again.'
+            //      'message' => $e->getMessage()
+            // ]); 
         }   
     }
  

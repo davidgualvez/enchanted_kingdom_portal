@@ -69,6 +69,7 @@ class SignupController extends Controller
             DB::beginTransaction();
 
             $user = new User;
+            $user->id               = $user->getNewId();
             $user->name             = $request->name;
             $user->email            = $request->email;
             $user->mobile_number    = $mobile;
@@ -88,11 +89,12 @@ class SignupController extends Controller
                 return back()->withInput()->with('error', "Opps.. Your're not a human! Please put a valid and correct birthdate.");
             }
             //dd($now->year, $birthdate->year, $age);
-
+ 
             $b = new BranchLastIssuedNumberServices; 
             $customer = new Customer;
             $customer->BRANCHID     = config('cpp.branch_id');
             $customer->CUSTOMERID   = $b->getNewIdForCustomer();
+            $customer->customer_code= $customer->BRANCHID.'-'.$customer->CUSTOMERID;
             $customer->user_id      = $user->id;
             $customer->NAME         = $user->name;
             $customer->points       = 0;

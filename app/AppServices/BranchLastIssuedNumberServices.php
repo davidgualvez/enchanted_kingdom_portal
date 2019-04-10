@@ -140,14 +140,14 @@ class BranchLastIssuedNumberServices {
 
     public function getNewIdForWebUser(){ 
     	$this->findOrCreate();
-        $this->blin->kitchen_order_no += 1;
+        $this->blin->customer_no += 1;
         $this->blin->save();
-        return $this->blin->kitchen_order_no;
+        return $this->blin->customer_no;
     }
 
     public function getWebUser()
     {
-        return $this->blin->kitchen_order_no;
+        return $this->blin->customer_no;
 	}
 
 }

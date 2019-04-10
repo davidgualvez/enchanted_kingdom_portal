@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     protected $table = 'web_users';
+    public $incrementing = false;
 
     use Notifiable;
 
@@ -73,5 +74,6 @@ class User extends Authenticatable
         }
         return $result->id + 1;
     } 
+    
 
 }
