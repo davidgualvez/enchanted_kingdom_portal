@@ -31,9 +31,10 @@ use App\AppServices\CustomerServices;
 use App\AppServices\TurnSiteServices;
 use App\AppServices\ProductStockServices;
  
-use DB;
+use DB,Storage;
 use App\KitchenOrder;
-use App\AppServices\Helper; 
+use App\AppServices\Helper;
+use App\Jobs\ProcessEJournalEntry; 
 
 class PurchaseController extends Controller 
 {
@@ -118,7 +119,7 @@ class PurchaseController extends Controller
 
             // from array to object
             $result = (object)$result; 
-            
+
             /**
              * Saving the items one by one into its designated details
              */
@@ -267,20 +268,20 @@ class PurchaseController extends Controller
                             
                          // save base sitepart to the kitchen
                         $ko = new KitchenOrder;
-                        $ko->branch_id = config('app.branch_id');
-                        $ko->ko_id = $blin->getNewIdForKitchenOrder();
-                        $ko->transact_type = 2;
-                        $ko->header_id = $pt->sales_order_id;
-                        $ko->detail_id = $sod;
-                        $ko->part_id = $item->cart->product->sitepart_id;
-                        $ko->comp_id = $item->cart->product->sitepart_id;
-                        $ko->location_id = $item->cart->product->kitchen_loc;
-                        $ko->qty = (int)$item->qty;
-                        $ko->balance = (int)$item->qty;
-                        $ko->status = 'P';
-                        $ko->created_at = $now;
-                        $ko->created_date = $helper->getClarionDate($now);
-                        $ko->created_time = $helper->getClarionTime($now);
+                        $ko->branch_id      = config('app.branch_id');
+                        $ko->ko_id          = $blin->getNewIdForKitchenOrder();
+                        $ko->transact_type  = 2;
+                        $ko->header_id      = $pt->sales_order_id;
+                        $ko->detail_id      = $sod;
+                        $ko->part_id        = $item->cart->product->sitepart_id;
+                        $ko->comp_id        = $item->cart->product->sitepart_id;
+                        $ko->location_id    = $item->cart->product->kitchen_loc;
+                        $ko->qty            = (int)$item->qty;
+                        $ko->balance        = (int)$item->qty;
+                        $ko->status         = 'P';
+                        $ko->created_at     = $now;
+                        $ko->created_date   = $helper->getClarionDate($now);
+                        $ko->created_time   = $helper->getClarionTime($now);
                         $ko->save();
 
                         //saving cart component to the kitchen
@@ -547,7 +548,14 @@ class PurchaseController extends Controller
                 ->update([
                     'wallet' => $virtual_wallet,
                     'points' => $virtual_points,
-                ]); 
+                ]);
+
+            $helper->EJournalEntry($pt,$result); 
+            return response()->json([
+                'success'   => false,
+                'data'      => $result,
+                'purchase-transaction'  => $pt
+            ]);
 
             //remove cart from this current branch 
             foreach($result->items as $item){
@@ -575,8 +583,7 @@ class PurchaseController extends Controller
 
         }catch (\Exception $e) {
             // if something went wrong
-            DB::rollback(); 
-            dd($e);
+            DB::rollback();  
             return response()->json([
                 'success'   => false,
                 'status'    => 500,

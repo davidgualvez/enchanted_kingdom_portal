@@ -1133,7 +1133,7 @@ function orLayout(v,sales_order_id) {
         },
 
          //pageSize: 'A5',
-        pageSize: { width: 250, height: 'auto' },
+        pageSize: { width: 220, height: 'auto' },
         // [left, top, right, bottom] or [horizontal, vertical] or just a number for equal margins
         pageMargins: [5, 25, 5, 5],
     };

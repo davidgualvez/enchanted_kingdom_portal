@@ -65,4 +65,13 @@ class User extends Authenticatable
     public static function findByMobile($val){
         return static::where('mobile_number',$val)->first();
     }
+
+    public function getNewId(){ 
+        $result = static::orderBy('id','d esc')->first();
+        if( is_null($result)){ 
+            return 1;
+        }
+        return $result->id + 1;
+    } 
+
 }
