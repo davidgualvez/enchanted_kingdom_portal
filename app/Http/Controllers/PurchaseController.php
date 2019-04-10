@@ -19,6 +19,7 @@ use App\PurchaseDetail;
 use App\PurchaseTransaction;
 use App\PurchaseTransactionDetail;
 use App\TurnSite;
+use App\ProductStock;
 
 use App\Transformers\CartTransformer;
 use App\Transformers\PurchaseTransformer;
@@ -28,6 +29,7 @@ use App\AppServices\BranchLastIssuedNumberServices;
 use App\AppServices\TaxServices;
 use App\AppServices\CustomerServices;
 use App\AppServices\TurnSiteServices;
+use App\AppServices\ProductStockServices;
  
 use DB;
 use App\KitchenOrder;
@@ -125,6 +127,31 @@ class PurchaseController extends Controller
                 # cast $item array into object
                 $item = (object)$item; 
 
+                // /**
+                //  * CHECK STOCK STATUS FOR AVAILABILITY
+                //  */
+                // $product_stock = new ProductStock;
+                // // product stock result
+                // $psr = $product_stock->getStock(config('app.branch_id'), $item->product_id); 
+                // if( is_null($psr) ){
+                //     DB::rollback();
+                //     return response()->json([
+                //         'success'   => false,
+                //         'status'    => 2,
+                //         'message'   => 'No Available Stock for "'.$item->product_name.'"'
+                //     ]);
+                // } 
+
+                // if($psr->balance < $item->qty){
+                //     DB::rollback();
+                //     return response()->json([
+                //         'success'   => false,
+                //         'status'    => 2,
+                //         'message'   => 'No Available Stock for "' . $item->product_name . '"'
+                //     ]);
+                // }
+
+                
                 /**
                  * FOR POSTMIX BUT NOT FOOD
                  */

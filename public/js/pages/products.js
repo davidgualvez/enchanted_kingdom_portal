@@ -146,7 +146,7 @@ function dataDisplayerProduct(data, from) {
         btnProductAddToCart(value.id);
     });
 
-     productImageOnClick();
+    productImageOnClick();
 
 }
 //end of pagination================
