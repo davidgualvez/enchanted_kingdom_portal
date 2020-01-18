@@ -88,7 +88,7 @@ class SignupController extends Controller
                 DB::rollback();
                 return back()->withInput()->with('error', "Opps.. Your're not a human! Please put a valid and correct birthdate.");
             }
-            //dd($now->year, $birthdate->year, $age\);
+            //dd($now->year, $birthdate->year, $age\); 
  
             $b = new BranchLastIssuedNumberServices;
             $customer = new Customer;

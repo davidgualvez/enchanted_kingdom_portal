@@ -15,11 +15,11 @@
 ### Jan 26, 2019 
 - Remove the added is_component_of_pid(int) column in HODB carts table.
 - Added new Table named carts_component
-
+ 
 ### Jan 25, 2019
 - HODB carts Column changes
     - Added is_component_of_pid(int) column
-    
+     
 ### Jan 24, 2019
 - Added TurnSite log for reporting
 - TurnSite Column Changes
@@ -31,10 +31,10 @@
 
 ### Jan 21, 2019
 - Added computed data into transaction receipt for record purposes in Transaction History page.
-- Change the Category casing from Camel case to Upper case 
+- Change the Category casing from Camel case to Upper case
 
 ### Jan 20, 2019
-- Added HODB branch_last_issued_numbers Table column
+- Added HODB branch_last_issued_numbers Table column 
     - Column name   |   DataType
     - invoice_no    |   decimal(18,0)
     - none_invoice_no   |   decimal(18,0)

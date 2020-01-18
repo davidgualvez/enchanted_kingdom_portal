@@ -9,3 +9,4 @@ class BranchLastIssuedNumber extends Model
     //
     protected $table 		= 'branch_last_issued_numbers'; 
 }
+ 

@@ -11,3 +11,4 @@ class Dashboard extends Model
    	public $timestamps 		= false;
 
 }
+ 
