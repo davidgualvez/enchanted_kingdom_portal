@@ -197,8 +197,8 @@ class CartController extends Controller
 			return response()->json([
 				'success' 	=> false,
 				'status' 	=> 500,
-				'message'	=> 'Unable adding to cart. Please try again.'
-				//'message' => $e->getMessage()
+				'message'	=> 'Unable adding to cart. Please try again.',
+				'systemMessage' => $e->getMessage()
 			]);
 		}  
     }

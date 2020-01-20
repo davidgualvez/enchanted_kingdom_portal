@@ -15,11 +15,11 @@ class AlterBranchLastIssuedNumber1 extends Migration
     {
         Schema::table('branch_last_issued_numbers', function (Blueprint $table) {
             //
-            $table->double('invoice_no',18)->default(0)->nullable();
-            $table->double('none_invoice_no',18)->default(0)->nullable();
-            $table->double('invoice_max_no',18)->default(0)->nullable();
-            $table->integer('invoice_max_counter')->default(0)->nullable();
-            $table->double('transaction_no', 18)->default(0)->nullable();
+            $table->integer('invoice_no')->nullable();
+            $table->integer('none_invoice_no')->nullable();
+            $table->integer('invoice_max_no')->nullable();
+            $table->integer('invoice_max_counter')->nullable();
+            $table->integer('transaction_no')->nullable();
 
         });
     }

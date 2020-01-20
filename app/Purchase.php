@@ -15,7 +15,7 @@ class Purchase extends Model
 
 
     //ISBUFFER == 0 / 1 for unli or not unli
-
+ 
     /**
      * relationship
      */

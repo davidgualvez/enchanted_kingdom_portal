@@ -18,7 +18,7 @@ class TransactionType extends Model
     protected $maps = [  
       // simple alias
 	    'id'		=> 'TRANSACTTYPEID',
-		'desc' 		=> 'DESCRIPTION', 
+		  'desc' 		=> 'DESCRIPTION', 
     ];
     protected $getterMutators = [
 

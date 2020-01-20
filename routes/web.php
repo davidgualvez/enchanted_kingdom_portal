@@ -134,7 +134,7 @@ Route::post('/cart/points/{id}/decrease',				'CartController@decreasePoints');
 
 
 //checkout
-Route::post('/checkout', 								'PurchaseController@checkout');
+Route::post('/checkout', 								'PurchaseController@checkout'); 
 Route::post('/points/checkout', 						'PurchaseController@checkoutReward');
 
 //products and promo 

@@ -53,7 +53,8 @@ class OrderController extends Controller
 
     		$osh = new OrderSlipHeader;
     		$osh->orderslip_header_id	= $blin->getNewIdForOrderSlipHeader();
-	      	$osh->branch_id 			= config('cpp.branch_id');
+			\Log::debug('ORDERSLIP HEADER: '. $osh->orderslip_header_id);
+			$osh->branch_id 			= config('cpp.branch_id');
 	      	$osh->transaction_type_id	= 1;
 	      	$osh->total_amount			= 0;
 	      	$osh->discount_amount		= 0;
@@ -89,7 +90,8 @@ class OrderController extends Controller
     			$osd = new OrderSlipDetail;
     			$osd->orderslip_detail_id 		= $blin->getNewIdForOrderSlipDetails();
     			$osd->orderslip_header_id 		= $osh->orderslip_header_id;
-    			$osd->branch_id 				= config('cpp.branch_id');
+				\Log::debug('ORDERSLIP DETAIL: '.$osd->orderslip_detail_id);
+				$osd->branch_id 				= config('cpp.branch_id');
     			$osd->product_id 				= $sp->sitepart_id;
     			$osd->part_number 				= $sp->part_no;
     			$osd->product_group_id 			= $sp->group_id;
@@ -123,7 +125,8 @@ class OrderController extends Controller
             ]);
 
     	}catch(\Exception $e){
-    		DB::rollback();
+			DB::rollback();
+			\Log::debug( 'ERROR MESSAGE: '.$e->getMessage() );
     		return response()->json([
                 'success'   => false,
                 'status'    => 500, 

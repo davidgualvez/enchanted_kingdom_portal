@@ -226,7 +226,7 @@ function dataDisplayerOrderHistory(data, from) {
     });
 
     $('.ui.accordion').accordion();
-}
+} 
 //end of pagination================
 
 function showOrderCode(id) {

@@ -89,7 +89,7 @@ class PurchaseController extends Controller
             /**
              * Create Purchase Transaction
              */
-            $now    = Carbon::now();
+            $now    = Carbon::now(); 
             $pt     = new PurchaseTransaction; 
             $pt->sales_order_id             = $new_sales_order_id;
             $pt->created_at                 = $now;
@@ -495,7 +495,7 @@ class PurchaseController extends Controller
                     'message' => 'Your wallet is not enough to purchase this order!'
                 ]); 
             } 
-
+            
             //earned points 
             $ept = new EarnPointTransactionServices;
             $ep = $ept->earnPoints(
@@ -512,7 +512,7 @@ class PurchaseController extends Controller
              //adding earned point to virtual points
             $virtual_points += $eps->earned_points;
 
-            //update purchase header for total;
+            //update purchase header for total; 
             // dd(
             //     $result
             // );
@@ -527,6 +527,7 @@ class PurchaseController extends Controller
                     'wallet_balance'    => $virtual_wallet,
                     'points_balance'    => $virtual_points
                 ]);
+            
 
             /**
              * Turn Site
@@ -583,12 +584,12 @@ class PurchaseController extends Controller
         }catch (\Exception $e) {
             // if something went wrong
             DB::rollback();  
-            // return response()->json([
-            //     'success'   => false,
-            //     'status'    => 500,
-            //     //'message'   => 'Something went wrong. \nPlease try again.'
-            //      'message' => $e->getMessage()
-            // ]); 
+            return response()->json([
+                'success'   => false,
+                'status'    => 500,
+                'message'   => 'Something went wrong. \nPlease try again.',
+                 'systemMessage' => $e->getMessage()
+            ]); 
         }   
     }
  

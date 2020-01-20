@@ -10,7 +10,7 @@ class PurchaseTransaction extends Model
     protected $table    = 'purchase_transactions';
     public $timestamps  = false;
 
-
+ 
     /**
      * Relationship
      */

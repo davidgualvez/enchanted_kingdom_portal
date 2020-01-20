@@ -6,7 +6,7 @@
   </a>
   <!-- <div class="header item">Admin</div> -->
   <div class="right menu">  
-    @auth  
+    @auth   
     	<div class="ui buttons fluid" style="height: 30px; margin: 10px;">
     	   	<button class="ui button">
     	   		<i class="copyright icon"></i>
@@ -145,3 +145,4 @@
 	    </div> 
   	</div>   
 </div>
+ 
