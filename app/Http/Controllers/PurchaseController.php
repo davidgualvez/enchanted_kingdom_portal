@@ -666,7 +666,7 @@ class PurchaseController extends Controller
         /**
          * BARCODE
          */
-        $barcode = $new_sales_order_detail_id.'-'.$product_id;
+        $barcode = '4'.sprintf("%02d", config('app.outlet_id')).now()->timestamp;
         //$pd->product_promotion_id     = $product_promotion_id;
         $pd->part_description    = $description;
         $pd->qty                 = $qty;
