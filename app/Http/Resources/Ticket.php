@@ -22,7 +22,7 @@ class Ticket extends JsonResource
             'purchased_at' => (int)$this->PURCHASED, 
             'expired_at' => (int)$this->EXPIRY,
             'status' => strtolower(trim($this->STATUS)),
-            'balance' => (double)$this->BALANCE,
+            'balance' => (double)$this->TicketBalance,
             'date_today' => getClarionDate(now())
         ];
     }
