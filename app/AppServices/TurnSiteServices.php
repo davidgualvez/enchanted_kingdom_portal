@@ -23,6 +23,7 @@ class TurnSiteServices{
     private $employee_number;
     private $pos_number;
     private $type_number;
+    private $outlet_id;
     //----------
     private $startOfTheDay;
     
@@ -33,6 +34,8 @@ class TurnSiteServices{
         $this->employee_number  = config('app.employee_number');
         $this->pos_number       = config('app.pos_number');
         $this->type_number      = config('app.type_number');
+        $this->outlet_id      = config('app.outlet_id');
+
         $this->created_at       = Carbon::now();
 
         $helper = new Helper;
@@ -101,7 +104,7 @@ class TurnSiteServices{
 
         $newTs = new TurnSite;
         $newTs->station_code        = $this->station_code;
-        $newTs->turn_over_id        = $lastRecord->turn_over_id + 1;
+        $newTs->turn_over_id        = $lastRecord ?  $lastRecord->turn_over_id + 1:1;
         $newTs->clarion_date_now    = $this->created_at_clarion_date;
         $newTs->clarion_entry_date  = $this->created_at_clarion_date;
         $newTs->clarion_entry_time  = $this->created_at_clarion_time;
@@ -110,7 +113,8 @@ class TurnSiteServices{
         $newTs->employee_number     = $this->employee_number;
         $newTs->pos_number          = $this->pos_number;
         $newTs->type                = 'WEB POS';
-        $newTs->type_number         = $this->type_number; 
+        $newTs->type_number         = $this->type_number;
+        $newTs->outlet_id           = $this->outlet_id;
         
         $newTs->total_sales  = 0;
         $newTs->po           = 0;

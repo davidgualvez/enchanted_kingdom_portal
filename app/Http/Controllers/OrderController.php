@@ -53,7 +53,7 @@ class OrderController extends Controller
 
     		$osh = new OrderSlipHeader;
     		$osh->orderslip_header_id	= $blin->getNewIdForOrderSlipHeader();
-			\Log::debug('ORDERSLIP HEADER: '. $osh->orderslip_header_id);
+			// \Log::debug('ORDERSLIP HEADER: '. $osh->orderslip_header_id);
 			$osh->branch_id 			= config('cpp.branch_id');
 	      	$osh->transaction_type_id	= 1;
 	      	$osh->total_amount			= 0;
@@ -65,6 +65,9 @@ class OrderController extends Controller
 	      	$osh->customer_name 		= $user->customer->NAME;
 			$osh->created_at            = $now;
 			$osh->orig_invoice_date 	= $helper->getClarionDate($now);
+
+			$osh->device_id = config('cpp.device_id');
+			$osh->outlet_id = config('cpp.outlet_id');
  	      	$osh->save(); 
 	      	 
 
@@ -77,7 +80,7 @@ class OrderController extends Controller
     			
     			$amount = $value->qty * $sp->srp;
     			//discount
-    			$discount 		= 0;
+    			$discount 		= 0; 
     			//total sub amount
     			$sub_amount 	= $amount - $discount;
 
@@ -89,15 +92,23 @@ class OrderController extends Controller
     			//save each of the item in OrderSlip
     			$osd = new OrderSlipDetail;
     			$osd->orderslip_detail_id 		= $blin->getNewIdForOrderSlipDetails();
-    			$osd->orderslip_header_id 		= $osh->orderslip_header_id;
-				\Log::debug('ORDERSLIP DETAIL: '.$osd->orderslip_detail_id);
+    			$osd->orderslip_header_id 		= $osh->orderslip_header_id; 
 				$osd->branch_id 				= config('cpp.branch_id');
     			$osd->product_id 				= $sp->sitepart_id;
     			$osd->part_number 				= $sp->part_no;
     			$osd->product_group_id 			= $sp->group_id;
     			$osd->qty 						= $value->qty;
     			$osd->srp 						= $sp->srp;
-    			$osd->amount 					= $amount;
+				$osd->amount 					= $amount;
+				
+				$osd->device_id = config('cpp.device_id');
+				$osd->outlet_id = config('cpp.outlet_id');
+
+				// \Log::debug('branchId : '.config('cpp.branch_id'));
+				// \Log::debug('orderSlipNo: '.$osh->orderslip_header_id);
+				// \Log::debug('ORDERSLIP DETAIL: '.$osd->orderslip_detail_id);
+				// \Log::debug('deviceId : '.config('cpp.device_id'));
+				// \Log::debug('outletId: '.config('cpp.outlet_id'));
     			$osd->save();
  
     		} 
@@ -145,6 +156,7 @@ class OrderController extends Controller
                     ->orderBy('orderslip_header_id', 'desc')
                     ->simplePaginate(10);
 
+		// dd($osh);
         $ot     = new OrderTransformer;
         $history= $ot->orderHistory($osh);
 

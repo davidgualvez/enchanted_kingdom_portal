@@ -18,7 +18,7 @@ class SitePartServices {
                                 ->where('srp','>',0)
                                 ->where('product_name','LIKE','%'.$search.'%')
                                 ->orderBy('sitepart_id','desc')
-                                ->simplePaginate($limit);
+                                ->simplePaginate($limit); 
                 }else{
                         $p = $part->where('branch_id',config('cpp.branch_id'))
                                 //->where('pre_part_no', 0)

@@ -26,10 +26,13 @@ class OrderSlipDetail extends Model
     	'orderslip_detail_id' 	=> 'ORDERSLIPDETAILID', 
      	'orderslip_header_id' 	=> 'ORDERSLIPNO', 
     	'product_id' 			=> 'PRODUCT_ID', 
-    	'part_number'			=> 'PARTNO' , 
-    	'product_group_id'		=> 'PRODUCTGROUP' , 
-    	'qty' 					=> 'QUANTITY' , 
+    	'part_number'			=> 'PARTNO', 
+    	'product_group_id'		=> 'PRODUCTGROUP', 
+    	'qty' 					=> 'QUANTITY', 
     	'srp' 					=> 'RETAILPRICE',
-    	'amount' 				=> 'AMOUNT' ,
+		'amount' 				=> 'AMOUNT',
+		
+		'outlet_id'             => 'OUTLETID',
+        'device_id'             => 'DEVICENO'
     ];
 }

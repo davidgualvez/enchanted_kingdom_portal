@@ -117,7 +117,7 @@
 			</div>
 		</div> 
 	</div> 
-
+	
 	{{-- //DIMMER --}}
 	<div class="ui page dimmer">
 	    <div class="content">

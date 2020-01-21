@@ -16,7 +16,7 @@ class SitePart extends Model
     public $timestamps 		= false;
 
     //model mapping 
-    protected $maps = [
+    protected $maps = [ 
       // implicit relation mapping:
       'group' => ['group_code', 'description'],
 

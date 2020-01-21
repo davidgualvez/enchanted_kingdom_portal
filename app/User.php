@@ -68,7 +68,7 @@ class User extends Authenticatable
     }
 
     public function getNewId(){ 
-        $result = static::orderBy('id','d esc')->first();
+        $result = static::orderBy('id','desc')->first();
         if( is_null($result)){ 
             return 1;
         }

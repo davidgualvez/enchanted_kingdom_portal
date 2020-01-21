@@ -9,7 +9,7 @@ class TicketType extends Model
     //
     protected $table = 'TicketType';
     public $incrementing = false;
-    protected $connection = 'sqlsrv2';
+    // protected $connection = 'sqlsrv2';
 
     //model mapping 
     protected $maps = [

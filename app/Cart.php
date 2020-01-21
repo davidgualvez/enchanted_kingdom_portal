@@ -15,6 +15,10 @@ class Cart extends Model
         return $this->belongsTo('App\SitePart','product_id');
     }
 
+    public function masterProduct(){
+        return $this->belongsTo('App\MasterProduct','product_id');
+    }
+
     public function components()
     {
         return $this->hasMany('App\CartComponent', 'cart_id');

@@ -12,7 +12,8 @@ class Ticket extends Model
     //
     protected $table = 'Tickets';
     public $incrementing = false;
-    protected $connection = 'sqlsrv2';
+    public $timestamps 		= false;
+    // protected $connection = 'sqlsrv2';
 
     //model mapping 
     protected $maps = [
@@ -26,4 +27,13 @@ class Ticket extends Model
     public function ticketType(){
         return $this->belongsTo('App\TicketType','type');
     }
+
+    public function getNewId(){ 
+        $result = static::where('TYPE',4)
+                ->orderBy('TICKETNO','desc')->first();
+        if( is_null($result)){ 
+            return 1;
+        }
+        return $result->TICKETNO + 1;
+    } 
 }

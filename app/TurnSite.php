@@ -31,7 +31,9 @@ class TurnSite extends Model
         'po'                => 'PO',            // used points
         'prepay'            => 'PREPAY',         // used wallet
         'shift_posted'      => 'SHIFTPOSTED',
-        'day_posted'        => 'DAYPOSTED'
+        'day_posted'        => 'DAYPOSTED',
+
+        'outlet_id'             => 'OUTLETID',
     ];
 
     protected $getterMutators = [ 

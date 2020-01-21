@@ -14,6 +14,7 @@ return [
     'pos_number'            =>  env('POS_NUMBER'),
     'shift'                 =>  env('SHIFT'),
     'type_number'           =>  env('TYPE_NUMBER'),
+    'outlet_id'             =>  env('OUTLET_ID'),
     //=========================================================
 
     /*

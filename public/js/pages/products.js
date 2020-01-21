@@ -51,22 +51,22 @@ function paginateProduct() {
 
     //end 
     get(routes.products + "?page=" + current_page_product, data, function (response) {
-        current_page_product = response.data.current_page; 
+        current_page_product = response.meta.current_page; 
 
         $('#current_page_product').html(current_page_product);
-        if (response.data.next_page_url == null) {
+        if (response.links.next_page_url == null) {
             $('#next_page_url_product').addClass('disabled');
         } else {
             $('#next_page_url_product').removeClass('disabled');
         }
 
-        if (response.data.prev_page_url == null) {
+        if (response.links.prev_page_url == null) {
             $('#prev_page_url_product').addClass('disabled');
         } else {
             $('#prev_page_url_product').removeClass('disabled');
         }
 
-        dataDisplayerProduct(response.data.data, response.data.from); 
+        dataDisplayerProduct(response.data, response.meta.from); 
     });
 }
 

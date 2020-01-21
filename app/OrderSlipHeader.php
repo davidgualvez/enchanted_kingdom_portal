@@ -27,7 +27,10 @@ class OrderSlipHeader extends Model
 		'mobile_number' 		=> 'CELLULARNUMBER',
 		'customer_name' 		=> 'CUSTOMERNAME',
         'created_at' 			=> 'OSDATE',
-        'orig_invoice_date'     => 'ORIGINALINVOICEDATE'
+        'orig_invoice_date'     => 'ORIGINALINVOICEDATE',
+
+        'outlet_id'             => 'OUTLETID',
+        'device_id'             => 'DEVICENO'
     ];
     protected $getterMutators = [
 

@@ -36,6 +36,8 @@ use App\KitchenOrder;
 use App\AppServices\Helper;
 use App\Jobs\ProcessEJournalEntry; 
 
+use App\Ticket;
+
 class PurchaseController extends Controller 
 {
     //
@@ -76,6 +78,7 @@ class PurchaseController extends Controller
             $ph = new Purchase;
             $ph->branch_id              = config('app.branch_id');
             $ph->sales_order_id         = $new_sales_order_id;
+            \Log::debug('sales_order_id: '.$new_sales_order_id);
             $ph->customer_id            = $user->customer->customer_id;
             $ph->transaction_type_id    = 1;
             $ph->save();
@@ -410,8 +413,10 @@ class PurchaseController extends Controller
                         'product_name'  => $item->product_name,
                         'srp'           => $item->price,
                         'is_unli'       => $item->is_unli,
-                        'is_food'       => $item->is_food
+                        'is_food'       => $item->is_food,
+                        'is_ticket'     => $item->is_ticket
                     ];
+                    // \Log::debug($arr_sitepart);
                     $obj_sitepart = (object)$arr_sitepart;
                     if( !$this->saveToSalesOrderDetail($user, $obj_sitepart, $item->qty, $new_sales_order_id) ) {
                         DB::rollback();
@@ -548,7 +553,7 @@ class PurchaseController extends Controller
                 ->update([
                     'wallet' => $virtual_wallet,
                     'points' => $virtual_points,
-                ]);
+                ]); 
 
             // $helper->EJournalEntry($pt,$result); 
             // return response()->json([
@@ -655,8 +660,13 @@ class PurchaseController extends Controller
         $pd->branch_id           = config('cpp.branch_id');
         $pd->sales_order_detail_id = $new_sales_order_detail_id;
         $pd->sales_order_id      = $new_sales_order_id; 
+        \Log::debug('sales_order_detail_id: '.$new_sales_order_detail_id);
         $pd->sitepart_id         = $product_id; 
- 
+        
+        /**
+         * BARCODE
+         */
+        $barcode = $new_sales_order_detail_id.'-'.$product_id;
         //$pd->product_promotion_id     = $product_promotion_id;
         $pd->part_description    = $description;
         $pd->qty                 = $qty;
@@ -672,7 +682,7 @@ class PurchaseController extends Controller
         $pd->customer_id         = $user->customer->customer_id;
         $pd->customer_number     = $user->mobile_number;
         $pd->transaction_type    = 'WEB';
-        $pd->barcode             = $new_sales_order_detail_id.'-'.$product_id;
+        $pd->barcode             = $barcode;
         $pd->is_food             = $part->is_food;
 
         if($is_unli == 1){
@@ -681,6 +691,28 @@ class PurchaseController extends Controller
 
         //saving
         $pd->save();
+
+        // creating of ticket
+        if($part->is_ticket == 1){
+            $ticket = new Ticket;
+            $ticket->TYPE = 4;
+            $ticket->TICKETNO = $ticket->getNewId();
+            $ticket->SHIFT = config('app.shift');
+            $ticket->EMPNO = config('app.employee_number');
+            $ticket->POSNO = config('app.pos_number');
+            $ticket->PRODID = $product_id;
+            $ticket->AMOUNT = $selling_price;
+            $ticket->RATE = $selling_price;
+            $ticket->STATUS = 'S';
+            $ticket->PRINTCOUNT = 1;
+            $ticket->DATE = getClarionDate(now());
+            $ticket->PURCHASED = getClarionDate(now());
+            $ticket->EXPIRY = getClarionDate(now());
+            $ticket->BARCODE = $barcode; 
+            $ticket->TicketQuantity = $qty;
+            $ticket->TicketBalance = $qty;
+            $ticket->save();
+        }
         
         return $new_sales_order_detail_id;
     }

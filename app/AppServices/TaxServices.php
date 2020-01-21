@@ -128,7 +128,8 @@ class TaxServices
                 'r_amusement_tax_amount' => $r_admission_tax_amount,
                 'gross_amount'  => $price,
                 'scpwd_discount' => $sc_pwd_discount,
-                'net_amount' => $priceWithDiscount
+                'net_amount' => $priceWithDiscount,
+                'is_ticket' => $v->masterProduct->is_ticket
             ];
         });
         //======================================================================

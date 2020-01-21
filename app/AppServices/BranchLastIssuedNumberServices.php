@@ -80,7 +80,7 @@ class BranchLastIssuedNumberServices {
 
 	public function getNewIdForOrderSlipDetails(){
 		$this->findOrCreate();
-		$this->blin->order_slip_detail_no += 1;
+		$this->blin->order_slip_detail_no = $this->blin->order_slip_detail_no + 1;
 		$this->blin->save(); 
 		return $this->blin->order_slip_detail_no;
 	}
