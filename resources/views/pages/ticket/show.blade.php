@@ -106,7 +106,7 @@
         @csrf
         <div class="field">
             <label>Place Your Ticket Number Here to Scan for Validity.</label>
-            <input type="text" name="ticket-number" placeholder="Ticket Number...">
+            <input type="text" name="barcode" placeholder="Ticket Number...">
         </div> 
         <div class="ui container center aligned">
             <button class="ui button" type="submit">Click here to scan</button>

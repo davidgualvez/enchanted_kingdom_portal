@@ -8,7 +8,15 @@ class SitePartTransformer {
 		//dd($data);
 		$data->getCollection()->transform(function ($value) { 
 
-            $url = Storage::url($value->IMAGE);
+            
+
+            if($value->IMAGE == '' || $value->IMAGE == null){
+               $url = '/img/default.JPG';
+            }else{
+               $url = Storage::url($value->IMAGE);
+            }
+
+
             return [
                'id'              => $value->sitepart_id,
                'branch_id'       => $value->branch_id,

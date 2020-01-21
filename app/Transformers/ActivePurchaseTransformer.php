@@ -18,7 +18,13 @@ class ActivePurchaseTransformer {
 
 			$d = Carbon::parse($value->valid_at);
 			 
-			$url = Storage::url($p->IMAGE);
+			// $url = Storage::url($p->IMAGE);
+			if($p->IMAGE == '' || $p->IMAGE == null){
+				$url = '/img/default.JPG';
+			 }else{
+				$url = Storage::url($value->IMAGE);
+			 }
+
 			array_push($newValue, [
 				'purchase_detail_id' 	=> $value->sales_order_detail_id,
 				'product_id' 			=> $value->sitepart_id,
