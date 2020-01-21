@@ -666,7 +666,7 @@ class PurchaseController extends Controller
         /**
          * BARCODE
          */
-        $barcode = '4'.sprintf("%02d", config('app.outlet_id')).now()->timestamp;
+        $barcode = '4'.sprintf("%02d", config('app.outlet_id')).sprintf("%010d", $new_sales_order_detail_id.getClarionDate(now()));
         //$pd->product_promotion_id     = $product_promotion_id;
         $pd->part_description    = $description;
         $pd->qty                 = $qty;
@@ -707,10 +707,11 @@ class PurchaseController extends Controller
             $ticket->PRINTCOUNT = 1;
             $ticket->DATE = getClarionDate(now());
             $ticket->PURCHASED = getClarionDate(now());
-            $ticket->EXPIRY = getClarionDate(now());
-            $ticket->BARCODE = $barcode; 
+            $ticket->EXPIRY = getClarionDate(now()); 
             $ticket->TicketQuantity = $qty;
             $ticket->TicketBalance = $qty;
+
+            $ticket->BARCODE = $barcode; 
             $ticket->save();
         }
         
