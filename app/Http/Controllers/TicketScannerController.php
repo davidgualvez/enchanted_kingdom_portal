@@ -7,6 +7,7 @@ use App\Ticket;
 use App\TicketType;
 use DB;
 use App\AppServices\Helper;
+use App\Http\Resources\Ticket as TicketResource;
 
 class TicketScannerController extends Controller
 {
@@ -21,9 +22,17 @@ class TicketScannerController extends Controller
         $ticket = Ticket::where( DB::RAW('RTRIM( LTRIM(BARCODE) )'), $request->barcode)
             ->first();
 
-        dd($ticket);
-
-
-        return back();
+        if( !$ticket ){
+            return response()->json([
+                'success' => false,
+                'message' => 'Ticket Not Found'
+            ]);
+        }
+  
+        return response()->json([
+            'success' => true,
+            'message' => 'Ticket Found',
+            'data' => new TicketResource($ticket)
+        ]);
     }
 }

@@ -63,7 +63,8 @@
         });
     </script> -->
 
-    <script>
+    <script> 
+
         $('.message .close')
             .on('click', function() {
                 $(this)
@@ -72,6 +73,102 @@
                 ;
             })
         ;
+
+        $('#btn-submit').on('click', function(){
+            console.log('clicked');
+
+            var c = $('.result-container');
+            c.empty();
+
+            post('{{ route("ticket-scanner") }}', {
+                barcode : $('#barcode').val().trim()
+            }, function(response){ 
+
+                console.log(response);
+
+                if(response.success == false){ 
+                    c.append( 
+                        `
+                        <div class="ui red message">
+                            <i class="close icon"></i>
+                            <div class="header">
+                                Ticket not found!
+                            </div>
+                        </div>
+                        `
+                    );
+                    return;
+                }
+
+                if(response.data.date_today > response.data.expired_at){
+                    c.append( 
+                        `
+                        <div class="ui red message">
+                            <i class="close icon"></i>
+                            <div class="header">
+                                Invalid Ticket
+                            </div>
+                            <p>expired since <b>${response.data.expired_at}</b></p>
+                        </div>
+                        `
+                    );
+                    return;
+                }
+                
+                
+
+                if(response.data.date_today <= response.data.expired_at){
+
+                    if( response.data.status == 'u'){
+                        c.append( 
+                            `
+                            <div class="ui red message">
+                                <i class="close icon"></i>
+                                <div class="header">
+                                    Invalid Ticket
+                                </div>
+                                <br>
+                                <p><b>Ticket has been use.</b></p> 
+                                
+                            </div>
+                            `
+                        );
+                        return; 
+                    }
+
+                    if( response.data.status == 's'){
+                        c.append( 
+                            `
+                            <div class="ui green message">
+                                <i class="close icon"></i>
+                                <div class="header">
+                                    Valid Ticket
+                                </div>
+                                <br>
+                                <p> Until : <b>${response.data.expired_at}</b></p> 
+                                
+                                ${
+                                    response.data.balance > 1 ? 
+                                    `
+                                    <p>Consumable Qty Balance : <b>${ response.data.balance } </b></p>
+                                    `
+                                    : 
+                                    ``
+                                }
+                                
+                                
+                            </div>
+                            `
+                        );
+                        return; 
+                    }
+
+
+                    return;
+                }
+            });
+        });
+
     </script>
 @endsection
 
@@ -102,37 +199,43 @@
     </main> -->
 
     <br>
-    <form method="post" action="{{ route('ticket-scanner') }}" class="ui form">
-        @csrf
+    <div class="ui form"> 
+        <!-- <h1>1031050673390</h1>
+        <h1>1031066205676</h1>
+        <h1>1031239445522</h1> -->
+        
         <div class="field">
             <label>Place Your Ticket Number Here to Scan for Validity.</label>
-            <input type="text" name="barcode" placeholder="Ticket Number...">
+            <input type="text" id="barcode" placeholder="Ticket Number...">
         </div> 
         <div class="ui container center aligned">
-            <button class="ui button" type="submit">Click here to scan</button>
+            <button id="btn-submit" class="ui button" >Click here to scan</button>
         </div>
         
-    </form>
+        </div>
 
     <br> 
-    <div class="ui container center aligned">
-        <div class="ui green message">
+    <div class="ui container center aligned result-container">
+
+
+        <!-- <div class="ui green message">
             <i class="close icon"></i>
             <div class="header">
                 Valid Ticket
             </div>
-            <p>until <b>yyyy-mm-dd</b></p>
-            <!-- <hr> -->
+            <p>until <b>yyyy-mm-dd</b></p> 
             <p>Consumable Qty Balance : <b>0</b></p>
-        </div>
+        </div> -->
 
-        <div class="ui red message">
+        <!-- <div class="ui red message">
             <i class="close icon"></i>
             <div class="header">
                 Invalid Ticket
             </div>
             <p>expired since <b>yyyy-mm-dd</b></p>
             <p>date consumed : <b>yyyy-mm-dd</b></p>
-        </div> 
+        </div>  -->
 
+
+    </div
 @endsection
