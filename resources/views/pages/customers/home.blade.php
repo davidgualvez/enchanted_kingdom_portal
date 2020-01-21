@@ -136,7 +136,7 @@
 	      <div class="header">Order Something.</div>
 	      <div class="description">
 	        Now there’s more magic and more memories to create with the EKsperience the Magic eWallet!
-Enjoy EKsclusive perks and start your magical year today!
+	Enjoy EKsclusive perks and start your magical year today!
 	      </div>
 	    </div>
 	    <a href="/store" class="ui bottom attached button" id="step4">
@@ -166,8 +166,6 @@ From family friendly to exhilarating and extreme thrill rides!
 </div>
 {{-- end --}}
 
-
-	
-
+ 
  
 @endsection

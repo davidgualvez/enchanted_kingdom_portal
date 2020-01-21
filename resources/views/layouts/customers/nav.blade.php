@@ -50,12 +50,19 @@
     	    <img src="/assets/images/cropped-EK-Fav2018-192x192.png">
     	 </div>
   	</div>
+
+
 	<a href="/" class=" item">
 	    Home
 	</a>  
-  <a href="/store" class=" item">
-      Store
-  </a>    
+	<a href="/store" class=" item">
+		Store
+	</a>   
+	<a href="{{ route('ticket-scanner') }}" class=" item">
+		Ticket Scanner
+	</a>  
+
+
 	<div class="right menu" style="padding-right: 5px;">  
 	  	@auth 
 	  		{{-- <a href="#" class="ui item"> --}}
