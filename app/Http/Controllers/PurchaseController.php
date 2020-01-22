@@ -710,6 +710,7 @@ class PurchaseController extends Controller
             $ticket->EXPIRY = getClarionDate(now()); 
             $ticket->TicketQuantity = $qty;
             $ticket->TicketBalance = $qty;
+            $ticket->Paid = 1;
 
             $ticket->BARCODE = $barcode; 
             $ticket->save();
