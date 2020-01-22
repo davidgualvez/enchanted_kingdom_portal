@@ -133,7 +133,7 @@
 	    <div class="menu">
 	      	<a href="/"><div class="item">	<h4>Home</h4> </div></a>  
 			<a href="/store"><div class="item">  <h4>Store</h4> </div></a>  
-			<a href="{{ route('ticket-scanner') }}" class=" item"> Ticket Scanner </a>  
+			<a href="{{ route('ticket-scanner') }}"><div class=" item"> <h4>Ticket Scanner</h4></div>  </a>  
 	    </div> 
   	</div> 
 
