@@ -33,7 +33,8 @@ class ActivePurchaseTransformer {
 				'image' 				=> $url,
 				'valid_until'	 		=> $d->toFormattedDateString() ,
 				'remaining_qty' 		=> $value->qty_remaining,
-				'is_unli'				=> $value->is_unli
+				'is_unli'				=> $value->is_unli,
+				'barcode'				=> $value->barcode
 			]);
 		}
 

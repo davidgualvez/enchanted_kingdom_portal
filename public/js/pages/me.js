@@ -141,14 +141,14 @@ function activePurchase(){
 		   	  '</div>'
 			);
 
-			showBarcode(value.purchase_detail_id,value.product_id);
+			showBarcode(value.purchase_detail_id,value.product_id, value.barcode);
 		});
 
 		
 	});
 }
 
-function showBarcode(id,product_id){
+function showBarcode(id,product_id, barcode = ''){
 	$('.btnActiveOrder#'+id).on('click', function(){
 		 
 		$('.ui.dimmer').dimmer("show",
@@ -159,7 +159,7 @@ function showBarcode(id,product_id){
 		});  
         $('#barcode').empty(); 
         var qrcode = new QRCode(document.getElementById("barcode"), {
-            text: id+'-'+product_id , 
+            text: barcode , 
             width: 128,
             height: 128,
             colorDark : "#000000",
@@ -167,7 +167,7 @@ function showBarcode(id,product_id){
             correctLevel : QRCode.CorrectLevel.H
         });  
 		
-		$('#code-name').text('ref # : ' + id + '-' + product_id);
+		$('#code-name').text('ref # : ' + barcode);
 	}); 
 } 
 
