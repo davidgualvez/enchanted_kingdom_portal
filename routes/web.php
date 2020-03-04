@@ -82,7 +82,7 @@ Route::post('/login',                           'Auth\LoginController@login');
 Route::get('/logout',                           'Auth\LoginController@logout');
 Route::get('/me', 								'UserController@info')->middleware('auth');
 Route::post('/me', 								'UserController@updateInfo')->middleware('auth');
-
+ 
 //forgot password
 Route::get('/forgot-password',                  'ForgotPasswordController@index');
 Route::post('/forgot-password',                 'ForgotPasswordController@checkMobileIfValid');
@@ -159,6 +159,7 @@ Route::post('/purchase/history', 						'PurchaseController@customerHistory');
 Route::get('/order/history',                            'OrderController@show')->middleware('auth');
 Route::post('/order', 									'OrderController@order');
 Route::post('/order/history', 							'OrderController@customerHistory');
+
 
 /**
  * ADDED FEATURE
